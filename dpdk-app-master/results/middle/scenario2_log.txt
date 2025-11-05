@@ -1,0 +1,2517 @@
+Script started on 2025-02-24 00:11:52+03:00 [COMMAND="./middlenode" TERM="xterm-256color" TTY="/dev/pts/6" COLUMNS="82" LINES="31"]
+Enter  (0-1): 1
+You entered: 1
+EAL: Detected CPU lcores: 2
+EAL: Detected NUMA nodes: 1
+EAL: Detected shared linkage of DPDK
+EAL: Multi-process socket /var/run/dpdk/rte/mp_socket
+EAL: Selected IOVA mode 'PA'
+EAL: Probe PCI driver: net_e1000_em (8086:100e) device: 0000:00:03.0 (socket -1)
+EAL: Probe PCI driver: net_e1000_em (8086:100e) device: 0000:00:08.0 (socket -1)
+TELEMETRY: No legacy callbacks, legacy socket not created
+MAC address of port 0: 08:00:27:C6:79:2A
+MAC address of port 1: 08:00:27:8E:4F:BC
+TSC frequency: 3950000000 Hz
+Capturing packets on port 0...
+All operations are bypassed. 
+Latency = 120277 cycles
+number of packets: 1
+Latency: 30.450 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 161594 cycles
+number of packets: 1
+Latency: 40.910 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 122134 cycles
+number of packets: 1
+Latency: 30.920 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 86979 cycles
+number of packets: 1
+Latency: 22.020 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 131654 cycles
+number of packets: 1
+Latency: 33.330 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 174116 cycles
+number of packets: 1
+Latency: 44.080 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 81212 cycles
+number of packets: 1
+Latency: 20.560 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 81844 cycles
+number of packets: 1
+Latency: 20.720 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 106453 cycles
+number of packets: 1
+Latency: 26.950 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 116248 cycles
+number of packets: 1
+Latency: 29.430 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 129639 cycles
+number of packets: 1
+Latency: 32.820 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 40606 cycles
+number of packets: 1
+Latency: 10.280 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 234156 cycles
+number of packets: 1
+Latency: 59.280 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 264097 cycles
+number of packets: 1
+Latency: 66.860 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 112378 cycles
+number of packets: 1
+Latency: 28.450 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 186440 cycles
+number of packets: 1
+Latency: 47.200 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 135485 cycles
+number of packets: 1
+Latency: 34.300 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 123674 cycles
+number of packets: 1
+Latency: 31.310 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 168586 cycles
+number of packets: 1
+Latency: 42.680 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 169613 cycles
+number of packets: 1
+Latency: 42.940 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 115300 cycles
+number of packets: 1
+Latency: 29.190 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 193155 cycles
+number of packets: 1
+Latency: 48.900 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 118658 cycles
+number of packets: 1
+Latency: 30.040 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 123240 cycles
+number of packets: 1
+Latency: 31.200 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 176960 cycles
+number of packets: 1
+Latency: 44.800 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 146940 cycles
+number of packets: 1
+Latency: 37.200 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 127704 cycles
+number of packets: 1
+Latency: 32.330 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 191970 cycles
+number of packets: 1
+Latency: 48.600 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 82515 cycles
+number of packets: 1
+Latency: 20.890 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 129363 cycles
+number of packets: 1
+Latency: 32.750 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 114195 cycles
+number of packets: 1
+Latency: 28.910 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 155433 cycles
+number of packets: 1
+Latency: 39.350 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 145913 cycles
+number of packets: 1
+Latency: 36.940 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 122766 cycles
+number of packets: 1
+Latency: 31.080 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 113800 cycles
+number of packets: 1
+Latency: 28.810 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 179804 cycles
+number of packets: 1
+Latency: 45.520 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 117631 cycles
+number of packets: 1
+Latency: 29.780 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 73944 cycles
+number of packets: 1
+Latency: 18.720 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 54470 cycles
+number of packets: 1
+Latency: 13.790 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 256829 cycles
+number of packets: 1
+Latency: 65.020 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 142476 cycles
+number of packets: 1
+Latency: 36.070 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 154682 cycles
+number of packets: 1
+Latency: 39.160 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 75089 cycles
+number of packets: 1
+Latency: 19.010 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 85675 cycles
+number of packets: 1
+Latency: 21.690 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 247112 cycles
+number of packets: 1
+Latency: 62.560 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 130073 cycles
+number of packets: 1
+Latency: 32.930 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 132009 cycles
+number of packets: 1
+Latency: 33.420 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 114747 cycles
+number of packets: 1
+Latency: 29.050 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 110324 cycles
+number of packets: 1
+Latency: 27.930 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 106927 cycles
+number of packets: 1
+Latency: 27.070 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 90613 cycles
+number of packets: 1
+Latency: 22.940 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 117512 cycles
+number of packets: 1
+Latency: 29.750 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 103530 cycles
+number of packets: 1
+Latency: 26.210 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 150297 cycles
+number of packets: 1
+Latency: 38.050 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 147532 cycles
+number of packets: 1
+Latency: 37.350 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 126677 cycles
+number of packets: 1
+Latency: 32.070 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 140502 cycles
+number of packets: 1
+Latency: 35.570 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 114353 cycles
+number of packets: 1
+Latency: 28.950 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 64543 cycles
+number of packets: 1
+Latency: 16.340 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 158672 cycles
+number of packets: 1
+Latency: 40.170 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 92588 cycles
+number of packets: 1
+Latency: 23.440 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 93181 cycles
+number of packets: 1
+Latency: 23.590 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 215156 cycles
+number of packets: 1
+Latency: 54.470 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 102898 cycles
+number of packets: 1
+Latency: 26.050 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 139554 cycles
+number of packets: 1
+Latency: 35.330 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 94958 cycles
+number of packets: 1
+Latency: 24.040 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 116446 cycles
+number of packets: 1
+Latency: 29.480 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 208521 cycles
+number of packets: 1
+Latency: 52.790 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 73154 cycles
+number of packets: 1
+Latency: 18.520 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 230404 cycles
+number of packets: 1
+Latency: 58.330 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 133945 cycles
+number of packets: 1
+Latency: 33.910 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 122766 cycles
+number of packets: 1
+Latency: 31.080 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 108349 cycles
+number of packets: 1
+Latency: 27.430 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 123240 cycles
+number of packets: 1
+Latency: 31.200 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 69085 cycles
+number of packets: 1
+Latency: 17.490 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 129916 cycles
+number of packets: 1
+Latency: 32.890 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 248968 cycles
+number of packets: 1
+Latency: 63.030 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 91087 cycles
+number of packets: 1
+Latency: 23.060 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 101712 cycles
+number of packets: 1
+Latency: 25.750 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 173563 cycles
+number of packets: 1
+Latency: 43.940 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 124346 cycles
+number of packets: 1
+Latency: 31.480 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 104477 cycles
+number of packets: 1
+Latency: 26.450 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 198922 cycles
+number of packets: 1
+Latency: 50.360 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 129362 cycles
+number of packets: 1
+Latency: 32.750 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 117315 cycles
+number of packets: 1
+Latency: 29.700 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 69678 cycles
+number of packets: 1
+Latency: 17.640 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 149113 cycles
+number of packets: 1
+Latency: 37.750 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 124939 cycles
+number of packets: 1
+Latency: 31.630 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 57710 cycles
+number of packets: 1
+Latency: 14.610 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 185848 cycles
+number of packets: 1
+Latency: 47.050 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 109612 cycles
+number of packets: 1
+Latency: 27.750 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 96617 cycles
+number of packets: 1
+Latency: 24.460 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 238304 cycles
+number of packets: 1
+Latency: 60.330 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 142318 cycles
+number of packets: 1
+Latency: 36.030 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 113365 cycles
+number of packets: 1
+Latency: 28.700 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 134182 cycles
+number of packets: 1
+Latency: 33.970 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 105742 cycles
+number of packets: 1
+Latency: 26.770 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 177237 cycles
+number of packets: 1
+Latency: 44.870 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 122331 cycles
+number of packets: 1
+Latency: 30.970 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 148402 cycles
+number of packets: 1
+Latency: 37.570 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 133708 cycles
+number of packets: 1
+Latency: 33.850 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 128889 cycles
+number of packets: 1
+Latency: 32.630 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 52930 cycles
+number of packets: 1
+Latency: 13.400 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 187388 cycles
+number of packets: 1
+Latency: 47.440 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 85754 cycles
+number of packets: 1
+Latency: 21.710 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 88994 cycles
+number of packets: 1
+Latency: 22.530 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 156973 cycles
+number of packets: 1
+Latency: 39.740 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 116999 cycles
+number of packets: 1
+Latency: 29.620 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 258212 cycles
+number of packets: 1
+Latency: 65.370 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 144886 cycles
+number of packets: 1
+Latency: 36.680 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 210021 cycles
+number of packets: 1
+Latency: 53.170 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 148796 cycles
+number of packets: 1
+Latency: 37.670 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 107558 cycles
+number of packets: 1
+Latency: 27.230 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 184741 cycles
+number of packets: 1
+Latency: 46.770 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 76551 cycles
+number of packets: 1
+Latency: 19.380 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 50955 cycles
+number of packets: 1
+Latency: 12.900 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 101713 cycles
+number of packets: 1
+Latency: 25.750 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 146229 cycles
+number of packets: 1
+Latency: 37.020 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 92786 cycles
+number of packets: 1
+Latency: 23.490 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 58855 cycles
+number of packets: 1
+Latency: 14.900 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 178066 cycles
+number of packets: 1
+Latency: 45.080 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 143227 cycles
+number of packets: 1
+Latency: 36.260 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 131930 cycles
+number of packets: 1
+Latency: 33.400 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 92312 cycles
+number of packets: 1
+Latency: 23.370 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 120752 cycles
+number of packets: 1
+Latency: 30.570 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 86189 cycles
+number of packets: 1
+Latency: 21.820 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 56841 cycles
+number of packets: 1
+Latency: 14.390 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 92865 cycles
+number of packets: 1
+Latency: 23.510 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 115933 cycles
+number of packets: 1
+Latency: 29.350 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 51469 cycles
+number of packets: 1
+Latency: 13.030 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 111351 cycles
+number of packets: 1
+Latency: 28.190 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 106492 cycles
+number of packets: 1
+Latency: 26.960 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 101278 cycles
+number of packets: 1
+Latency: 25.640 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 255091 cycles
+number of packets: 1
+Latency: 64.580 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 101317 cycles
+number of packets: 1
+Latency: 25.650 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 105742 cycles
+number of packets: 1
+Latency: 26.770 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 101199 cycles
+number of packets: 1
+Latency: 25.620 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 180594 cycles
+number of packets: 1
+Latency: 45.720 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 103727 cycles
+number of packets: 1
+Latency: 26.260 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 164834 cycles
+number of packets: 1
+Latency: 41.730 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 119685 cycles
+number of packets: 1
+Latency: 30.300 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 218633 cycles
+number of packets: 1
+Latency: 55.350 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 90968 cycles
+number of packets: 1
+Latency: 23.030 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 66281 cycles
+number of packets: 1
+Latency: 16.780 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 61422 cycles
+number of packets: 1
+Latency: 15.550 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 187941 cycles
+number of packets: 1
+Latency: 47.580 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 104004 cycles
+number of packets: 1
+Latency: 26.330 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 130745 cycles
+number of packets: 1
+Latency: 33.100 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 117592 cycles
+number of packets: 1
+Latency: 29.770 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 78487 cycles
+number of packets: 1
+Latency: 19.870 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 159145 cycles
+number of packets: 1
+Latency: 40.290 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 97486 cycles
+number of packets: 1
+Latency: 24.680 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 87887 cycles
+number of packets: 1
+Latency: 22.250 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 213181 cycles
+number of packets: 1
+Latency: 53.970 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 108665 cycles
+number of packets: 1
+Latency: 27.510 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 67545 cycles
+number of packets: 1
+Latency: 17.100 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 102937 cycles
+number of packets: 1
+Latency: 26.060 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 92588 cycles
+number of packets: 1
+Latency: 23.440 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 126479 cycles
+number of packets: 1
+Latency: 32.020 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 95827 cycles
+number of packets: 1
+Latency: 24.260 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 237514 cycles
+number of packets: 1
+Latency: 60.130 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 109928 cycles
+number of packets: 1
+Latency: 27.830 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 153023 cycles
+number of packets: 1
+Latency: 38.740 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 197737 cycles
+number of packets: 1
+Latency: 50.060 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 111627 cycles
+number of packets: 1
+Latency: 28.260 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 105505 cycles
+number of packets: 1
+Latency: 26.710 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 121897 cycles
+number of packets: 1
+Latency: 30.860 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 120831 cycles
+number of packets: 1
+Latency: 30.590 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 94524 cycles
+number of packets: 1
+Latency: 23.930 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 197302 cycles
+number of packets: 1
+Latency: 49.950 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 160765 cycles
+number of packets: 1
+Latency: 40.700 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 71021 cycles
+number of packets: 1
+Latency: 17.980 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 97486 cycles
+number of packets: 1
+Latency: 24.680 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 113563 cycles
+number of packets: 1
+Latency: 28.750 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 112062 cycles
+number of packets: 1
+Latency: 28.370 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 131614 cycles
+number of packets: 1
+Latency: 33.320 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 64938 cycles
+number of packets: 1
+Latency: 16.440 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 140936 cycles
+number of packets: 1
+Latency: 35.680 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 92667 cycles
+number of packets: 1
+Latency: 23.460 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 76669 cycles
+number of packets: 1
+Latency: 19.410 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 202003 cycles
+number of packets: 1
+Latency: 51.140 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 249640 cycles
+number of packets: 1
+Latency: 63.200 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 227915 cycles
+number of packets: 1
+Latency: 57.700 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 101001 cycles
+number of packets: 1
+Latency: 25.570 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 205795 cycles
+number of packets: 1
+Latency: 52.100 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 98394 cycles
+number of packets: 1
+Latency: 24.910 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 50994 cycles
+number of packets: 1
+Latency: 12.910 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 75169 cycles
+number of packets: 1
+Latency: 19.030 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 111983 cycles
+number of packets: 1
+Latency: 28.350 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 101633 cycles
+number of packets: 1
+Latency: 25.730 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 188415 cycles
+number of packets: 1
+Latency: 47.700 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 105307 cycles
+number of packets: 1
+Latency: 26.660 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 107282 cycles
+number of packets: 1
+Latency: 27.160 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 153023 cycles
+number of packets: 1
+Latency: 38.740 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 77262 cycles
+number of packets: 1
+Latency: 19.560 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 141371 cycles
+number of packets: 1
+Latency: 35.790 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 111074 cycles
+number of packets: 1
+Latency: 28.120 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 106176 cycles
+number of packets: 1
+Latency: 26.880 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 121305 cycles
+number of packets: 1
+Latency: 30.710 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 193747 cycles
+number of packets: 1
+Latency: 49.050 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 115380 cycles
+number of packets: 1
+Latency: 29.210 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 115932 cycles
+number of packets: 1
+Latency: 29.350 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 173682 cycles
+number of packets: 1
+Latency: 43.970 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 162503 cycles
+number of packets: 1
+Latency: 41.140 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 199870 cycles
+number of packets: 1
+Latency: 50.600 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 78724 cycles
+number of packets: 1
+Latency: 19.930 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 67466 cycles
+number of packets: 1
+Latency: 17.080 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 119250 cycles
+number of packets: 1
+Latency: 30.190 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 79355 cycles
+number of packets: 1
+Latency: 20.090 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 122924 cycles
+number of packets: 1
+Latency: 31.120 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 143899 cycles
+number of packets: 1
+Latency: 36.430 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 124741 cycles
+number of packets: 1
+Latency: 31.580 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 151878 cycles
+number of packets: 1
+Latency: 38.450 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 91758 cycles
+number of packets: 1
+Latency: 23.230 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 104477 cycles
+number of packets: 1
+Latency: 26.450 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 103451 cycles
+number of packets: 1
+Latency: 26.190 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 94642 cycles
+number of packets: 1
+Latency: 23.960 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 184228 cycles
+number of packets: 1
+Latency: 46.640 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 84885 cycles
+number of packets: 1
+Latency: 21.490 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 104636 cycles
+number of packets: 1
+Latency: 26.490 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 175775 cycles
+number of packets: 1
+Latency: 44.500 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 168704 cycles
+number of packets: 1
+Latency: 42.710 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 86939 cycles
+number of packets: 1
+Latency: 22.010 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 106571 cycles
+number of packets: 1
+Latency: 26.980 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 144175 cycles
+number of packets: 1
+Latency: 36.500 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 118895 cycles
+number of packets: 1
+Latency: 30.100 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 190429 cycles
+number of packets: 1
+Latency: 48.210 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 180792 cycles
+number of packets: 1
+Latency: 45.770 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 123951 cycles
+number of packets: 1
+Latency: 31.380 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 127585 cycles
+number of packets: 1
+Latency: 32.300 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 49889 cycles
+number of packets: 1
+Latency: 12.630 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 122608 cycles
+number of packets: 1
+Latency: 31.040 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 117986 cycles
+number of packets: 1
+Latency: 29.870 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 96578 cycles
+number of packets: 1
+Latency: 24.450 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 215788 cycles
+number of packets: 1
+Latency: 54.630 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 89783 cycles
+number of packets: 1
+Latency: 22.730 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 59329 cycles
+number of packets: 1
+Latency: 15.020 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 108428 cycles
+number of packets: 1
+Latency: 27.450 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 116130 cycles
+number of packets: 1
+Latency: 29.400 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 52732 cycles
+number of packets: 1
+Latency: 13.350 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 99224 cycles
+number of packets: 1
+Latency: 25.120 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 159580 cycles
+number of packets: 1
+Latency: 40.400 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 208481 cycles
+number of packets: 1
+Latency: 52.780 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 108506 cycles
+number of packets: 1
+Latency: 27.470 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 60040 cycles
+number of packets: 1
+Latency: 15.200 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 105426 cycles
+number of packets: 1
+Latency: 26.690 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 66557 cycles
+number of packets: 1
+Latency: 16.850 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 136196 cycles
+number of packets: 1
+Latency: 34.480 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 225782 cycles
+number of packets: 1
+Latency: 57.160 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 129047 cycles
+number of packets: 1
+Latency: 32.670 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 270022 cycles
+number of packets: 1
+Latency: 68.360 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 114392 cycles
+number of packets: 1
+Latency: 28.960 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 86742 cycles
+number of packets: 1
+Latency: 21.960 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 174274 cycles
+number of packets: 1
+Latency: 44.120 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 84451 cycles
+number of packets: 1
+Latency: 21.380 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 89112 cycles
+number of packets: 1
+Latency: 22.560 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 197816 cycles
+number of packets: 1
+Latency: 50.080 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 98513 cycles
+number of packets: 1
+Latency: 24.940 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 90652 cycles
+number of packets: 1
+Latency: 22.950 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 171390 cycles
+number of packets: 1
+Latency: 43.390 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 98315 cycles
+number of packets: 1
+Latency: 24.890 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 188573 cycles
+number of packets: 1
+Latency: 47.740 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 146940 cycles
+number of packets: 1
+Latency: 37.200 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 121384 cycles
+number of packets: 1
+Latency: 30.730 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 46649 cycles
+number of packets: 1
+Latency: 11.810 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 58105 cycles
+number of packets: 1
+Latency: 14.710 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 80896 cycles
+number of packets: 1
+Latency: 20.480 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 180397 cycles
+number of packets: 1
+Latency: 45.670 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 129994 cycles
+number of packets: 1
+Latency: 32.910 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 105228 cycles
+number of packets: 1
+Latency: 26.640 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 112575 cycles
+number of packets: 1
+Latency: 28.500 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 122095 cycles
+number of packets: 1
+Latency: 30.910 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 112298 cycles
+number of packets: 1
+Latency: 28.430 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 110521 cycles
+number of packets: 1
+Latency: 27.980 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 76946 cycles
+number of packets: 1
+Latency: 19.480 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 119567 cycles
+number of packets: 1
+Latency: 30.270 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 111824 cycles
+number of packets: 1
+Latency: 28.310 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 136235 cycles
+number of packets: 1
+Latency: 34.490 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 239884 cycles
+number of packets: 1
+Latency: 60.730 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 169218 cycles
+number of packets: 1
+Latency: 42.840 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 107756 cycles
+number of packets: 1
+Latency: 27.280 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 159422 cycles
+number of packets: 1
+Latency: 40.360 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 155038 cycles
+number of packets: 1
+Latency: 39.250 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 102305 cycles
+number of packets: 1
+Latency: 25.900 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 154840 cycles
+number of packets: 1
+Latency: 39.200 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 126203 cycles
+number of packets: 1
+Latency: 31.950 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 111588 cycles
+number of packets: 1
+Latency: 28.250 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 179409 cycles
+number of packets: 1
+Latency: 45.420 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 109850 cycles
+number of packets: 1
+Latency: 27.810 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 76195 cycles
+number of packets: 1
+Latency: 19.290 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 54471 cycles
+number of packets: 1
+Latency: 13.790 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 66795 cycles
+number of packets: 1
+Latency: 16.910 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 145242 cycles
+number of packets: 1
+Latency: 36.770 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 87098 cycles
+number of packets: 1
+Latency: 22.050 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 45978 cycles
+number of packets: 1
+Latency: 11.640 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 145834 cycles
+number of packets: 1
+Latency: 36.920 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 74102 cycles
+number of packets: 1
+Latency: 18.760 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 285190 cycles
+number of packets: 1
+Latency: 72.200 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 488417 cycles
+number of packets: 1
+Latency: 123.650 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 89112 cycles
+number of packets: 1
+Latency: 22.560 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 99856 cycles
+number of packets: 1
+Latency: 25.280 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 181463 cycles
+number of packets: 1
+Latency: 45.940 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 111429 cycles
+number of packets: 1
+Latency: 28.210 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 56959 cycles
+number of packets: 1
+Latency: 14.420 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 97644 cycles
+number of packets: 1
+Latency: 24.720 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 117197 cycles
+number of packets: 1
+Latency: 29.670 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 148520 cycles
+number of packets: 1
+Latency: 37.600 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 98790 cycles
+number of packets: 1
+Latency: 25.010 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 246559 cycles
+number of packets: 1
+Latency: 62.420 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 139356 cycles
+number of packets: 1
+Latency: 35.280 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 110600 cycles
+number of packets: 1
+Latency: 28.000 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 120238 cycles
+number of packets: 1
+Latency: 30.440 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 92628 cycles
+number of packets: 1
+Latency: 23.450 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 120120 cycles
+number of packets: 1
+Latency: 30.410 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 160251 cycles
+number of packets: 1
+Latency: 40.570 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 103766 cycles
+number of packets: 1
+Latency: 26.270 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 125610 cycles
+number of packets: 1
+Latency: 31.800 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 121818 cycles
+number of packets: 1
+Latency: 30.840 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 152035 cycles
+number of packets: 1
+Latency: 38.490 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 97999 cycles
+number of packets: 1
+Latency: 24.810 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 60040 cycles
+number of packets: 1
+Latency: 15.200 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 229692 cycles
+number of packets: 1
+Latency: 58.150 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 116051 cycles
+number of packets: 1
+Latency: 29.380 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 104675 cycles
+number of packets: 1
+Latency: 26.500 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 139000 cycles
+number of packets: 1
+Latency: 35.190 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 183438 cycles
+number of packets: 1
+Latency: 46.440 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 117750 cycles
+number of packets: 1
+Latency: 29.810 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 257935 cycles
+number of packets: 1
+Latency: 65.300 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 99027 cycles
+number of packets: 1
+Latency: 25.070 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 137263 cycles
+number of packets: 1
+Latency: 34.750 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 169811 cycles
+number of packets: 1
+Latency: 42.990 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 66320 cycles
+number of packets: 1
+Latency: 16.790 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 53641 cycles
+number of packets: 1
+Latency: 13.580 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 106848 cycles
+number of packets: 1
+Latency: 27.050 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 111943 cycles
+number of packets: 1
+Latency: 28.340 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 126992 cycles
+number of packets: 1
+Latency: 32.150 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 109612 cycles
+number of packets: 1
+Latency: 27.750 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 106334 cycles
+number of packets: 1
+Latency: 26.920 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 135485 cycles
+number of packets: 1
+Latency: 34.300 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 264852 cycles
+number of packets: 1
+Latency: 67.051 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 118500 cycles
+number of packets: 1
+Latency: 30.000 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 116446 cycles
+number of packets: 1
+Latency: 29.480 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 137144 cycles
+number of packets: 1
+Latency: 34.720 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 117671 cycles
+number of packets: 1
+Latency: 29.790 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 159540 cycles
+number of packets: 1
+Latency: 40.390 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 151088 cycles
+number of packets: 1
+Latency: 38.250 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 236766 cycles
+number of packets: 1
+Latency: 59.941 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 120120 cycles
+number of packets: 1
+Latency: 30.410 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 112377 cycles
+number of packets: 1
+Latency: 28.450 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 263939 cycles
+number of packets: 1
+Latency: 66.820 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 132246 cycles
+number of packets: 1
+Latency: 33.480 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 199633 cycles
+number of packets: 1
+Latency: 50.540 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 117473 cycles
+number of packets: 1
+Latency: 29.740 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 185334 cycles
+number of packets: 1
+Latency: 46.920 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 145360 cycles
+number of packets: 1
+Latency: 36.800 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 255605 cycles
+number of packets: 1
+Latency: 64.710 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 162621 cycles
+number of packets: 1
+Latency: 41.170 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 236210 cycles
+number of packets: 1
+Latency: 59.800 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 259317 cycles
+number of packets: 1
+Latency: 65.650 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 189442 cycles
+number of packets: 1
+Latency: 47.960 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 313986 cycles
+number of packets: 1
+Latency: 79.490 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 247073 cycles
+number of packets: 1
+Latency: 62.550 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 632119 cycles
+number of packets: 1
+Latency: 160.030 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 225268 cycles
+number of packets: 1
+Latency: 57.030 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 304782 cycles
+number of packets: 1
+Latency: 77.160 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 210496 cycles
+number of packets: 1
+Latency: 53.290 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 304861 cycles
+number of packets: 1
+Latency: 77.180 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 207651 cycles
+number of packets: 1
+Latency: 52.570 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 184149 cycles
+number of packets: 1
+Latency: 46.620 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 169889 cycles
+number of packets: 1
+Latency: 43.010 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 358107 cycles
+number of packets: 1
+Latency: 90.660 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 116880 cycles
+number of packets: 1
+Latency: 29.590 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 162463 cycles
+number of packets: 1
+Latency: 41.130 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 205795 cycles
+number of packets: 1
+Latency: 52.100 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 117710 cycles
+number of packets: 1
+Latency: 29.800 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 160015 cycles
+number of packets: 1
+Latency: 40.510 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 191535 cycles
+number of packets: 1
+Latency: 48.490 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 133273 cycles
+number of packets: 1
+Latency: 33.740 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 111864 cycles
+number of packets: 1
+Latency: 28.320 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 124306 cycles
+number of packets: 1
+Latency: 31.470 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 176526 cycles
+number of packets: 1
+Latency: 44.690 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 291589 cycles
+number of packets: 1
+Latency: 73.820 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 181266 cycles
+number of packets: 1
+Latency: 45.890 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 153141 cycles
+number of packets: 1
+Latency: 38.770 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 118974 cycles
+number of packets: 1
+Latency: 30.120 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 185650 cycles
+number of packets: 1
+Latency: 47.000 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 94445 cycles
+number of packets: 1
+Latency: 23.910 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 125136 cycles
+number of packets: 1
+Latency: 31.680 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 105268 cycles
+number of packets: 1
+Latency: 26.650 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 99580 cycles
+number of packets: 1
+Latency: 25.210 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 131298 cycles
+number of packets: 1
+Latency: 33.240 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 105781 cycles
+number of packets: 1
+Latency: 26.780 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 167914 cycles
+number of packets: 1
+Latency: 42.510 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 123911 cycles
+number of packets: 1
+Latency: 31.370 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 163846 cycles
+number of packets: 1
+Latency: 41.480 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 304821 cycles
+number of packets: 1
+Latency: 77.170 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 147888 cycles
+number of packets: 1
+Latency: 37.440 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 131179 cycles
+number of packets: 1
+Latency: 33.210 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 148244 cycles
+number of packets: 1
+Latency: 37.530 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 139632 cycles
+number of packets: 1
+Latency: 35.350 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 96973 cycles
+number of packets: 1
+Latency: 24.550 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 126163 cycles
+number of packets: 1
+Latency: 31.940 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 175933 cycles
+number of packets: 1
+Latency: 44.540 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 122252 cycles
+number of packets: 1
+Latency: 30.950 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 96143 cycles
+number of packets: 1
+Latency: 24.340 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 117513 cycles
+number of packets: 1
+Latency: 29.750 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 89863 cycles
+number of packets: 1
+Latency: 22.750 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 172062 cycles
+number of packets: 1
+Latency: 43.560 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 92074 cycles
+number of packets: 1
+Latency: 23.310 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 112535 cycles
+number of packets: 1
+Latency: 28.490 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 84451 cycles
+number of packets: 1
+Latency: 21.380 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 119961 cycles
+number of packets: 1
+Latency: 30.370 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 176684 cycles
+number of packets: 1
+Latency: 44.730 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 260305 cycles
+number of packets: 1
+Latency: 65.900 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 121028 cycles
+number of packets: 1
+Latency: 30.640 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 147848 cycles
+number of packets: 1
+Latency: 37.430 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 154761 cycles
+number of packets: 1
+Latency: 39.180 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 131140 cycles
+number of packets: 1
+Latency: 33.200 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 328601 cycles
+number of packets: 1
+Latency: 83.190 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 132720 cycles
+number of packets: 1
+Latency: 33.600 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 202240 cycles
+number of packets: 1
+Latency: 51.200 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 264097 cycles
+number of packets: 1
+Latency: 66.860 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 174195 cycles
+number of packets: 1
+Latency: 44.100 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 261213 cycles
+number of packets: 1
+Latency: 66.130 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 212233 cycles
+number of packets: 1
+Latency: 53.730 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 164123 cycles
+number of packets: 1
+Latency: 41.550 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 98552 cycles
+number of packets: 1
+Latency: 24.950 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 117552 cycles
+number of packets: 1
+Latency: 29.760 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 156973 cycles
+number of packets: 1
+Latency: 39.740 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 235144 cycles
+number of packets: 1
+Latency: 59.530 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 96854 cycles
+number of packets: 1
+Latency: 24.520 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 359884 cycles
+number of packets: 1
+Latency: 91.110 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 354038 cycles
+number of packets: 1
+Latency: 89.630 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 465824 cycles
+number of packets: 1
+Latency: 117.930 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 200541 cycles
+number of packets: 1
+Latency: 50.770 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 66005 cycles
+number of packets: 1
+Latency: 16.710 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 143543 cycles
+number of packets: 1
+Latency: 36.340 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 240871 cycles
+number of packets: 1
+Latency: 60.980 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 151799 cycles
+number of packets: 1
+Latency: 38.430 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 127190 cycles
+number of packets: 1
+Latency: 32.200 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 90771 cycles
+number of packets: 1
+Latency: 22.980 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 216499 cycles
+number of packets: 1
+Latency: 54.810 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 109494 cycles
+number of packets: 1
+Latency: 27.720 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 189205 cycles
+number of packets: 1
+Latency: 47.900 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 192246 cycles
+number of packets: 1
+Latency: 48.670 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 185848 cycles
+number of packets: 1
+Latency: 47.050 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 142635 cycles
+number of packets: 1
+Latency: 36.110 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 124622 cycles
+number of packets: 1
+Latency: 31.550 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 100488 cycles
+number of packets: 1
+Latency: 25.440 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 93852 cycles
+number of packets: 1
+Latency: 23.760 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 73154 cycles
+number of packets: 1
+Latency: 18.520 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 66202 cycles
+number of packets: 1
+Latency: 16.760 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 72759 cycles
+number of packets: 1
+Latency: 18.420 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 72404 cycles
+number of packets: 1
+Latency: 18.330 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 68058 cycles
+number of packets: 1
+Latency: 17.230 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 167480 cycles
+number of packets: 1
+Latency: 42.400 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 98908 cycles
+number of packets: 1
+Latency: 25.040 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 69797 cycles
+number of packets: 1
+Latency: 17.670 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 189600 cycles
+number of packets: 1
+Latency: 48.000 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 107440 cycles
+number of packets: 1
+Latency: 27.200 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 113997 cycles
+number of packets: 1
+Latency: 28.860 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 92785 cycles
+number of packets: 1
+Latency: 23.490 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 159264 cycles
+number of packets: 1
+Latency: 40.320 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 139119 cycles
+number of packets: 1
+Latency: 35.220 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 96143 cycles
+number of packets: 1
+Latency: 24.340 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 129283 cycles
+number of packets: 1
+Latency: 32.730 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 232299 cycles
+number of packets: 1
+Latency: 58.810 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 201134 cycles
+number of packets: 1
+Latency: 50.920 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 180950 cycles
+number of packets: 1
+Latency: 45.810 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 142714 cycles
+number of packets: 1
+Latency: 36.130 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 110403 cycles
+number of packets: 1
+Latency: 27.950 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 108270 cycles
+number of packets: 1
+Latency: 27.410 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 131061 cycles
+number of packets: 1
+Latency: 33.180 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 103214 cycles
+number of packets: 1
+Latency: 26.130 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 181423 cycles
+number of packets: 1
+Latency: 45.930 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 163412 cycles
+number of packets: 1
+Latency: 41.370 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 328206 cycles
+number of packets: 1
+Latency: 83.090 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 116525 cycles
+number of packets: 1
+Latency: 29.500 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 127032 cycles
+number of packets: 1
+Latency: 32.160 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 160805 cycles
+number of packets: 1
+Latency: 40.710 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 115064 cycles
+number of packets: 1
+Latency: 29.130 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 99105 cycles
+number of packets: 1
+Latency: 25.090 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 149863 cycles
+number of packets: 1
+Latency: 37.940 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 171707 cycles
+number of packets: 1
+Latency: 43.470 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 140107 cycles
+number of packets: 1
+Latency: 35.470 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 242530 cycles
+number of packets: 1
+Latency: 61.400 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 214327 cycles
+number of packets: 1
+Latency: 54.260 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 438217 cycles
+number of packets: 1
+Latency: 110.941 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 131456 cycles
+number of packets: 1
+Latency: 33.280 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 139672 cycles
+number of packets: 1
+Latency: 35.360 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 114629 cycles
+number of packets: 1
+Latency: 29.020 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 144609 cycles
+number of packets: 1
+Latency: 36.610 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 161989 cycles
+number of packets: 1
+Latency: 41.010 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 153220 cycles
+number of packets: 1
+Latency: 38.790 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 132128 cycles
+number of packets: 1
+Latency: 33.450 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 75169 cycles
+number of packets: 1
+Latency: 19.030 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 217724 cycles
+number of packets: 1
+Latency: 55.120 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 126716 cycles
+number of packets: 1
+Latency: 32.080 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 145597 cycles
+number of packets: 1
+Latency: 36.860 µs
+IPV6 packet sent
+All operations are bypassed. 
+Latency = 83700 cycles
+number of packets: 1
+Latency: 21.190 µs
+IPV6 packet sent
+^C
+Script done on 2025-02-24 00:12:20+03:00 [COMMAND_EXIT_CODE="130"]

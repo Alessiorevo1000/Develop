@@ -1,0 +1,4018 @@
+Script started on 2025-02-23 17:45:51+03:00 [COMMAND="./creator" TERM="xterm-256color" TTY="/dev/pts/5" COLUMNS="110" LINES="24"]
+Enter  (0-1-2): 2
+You entered: 2
+EAL: Detected CPU lcores: 2
+EAL: Detected NUMA nodes: 1
+EAL: Detected shared linkage of DPDK
+EAL: Multi-process socket /var/run/dpdk/rte/mp_socket
+EAL: Selected IOVA mode 'PA'
+EAL: Probe PCI driver: net_e1000_em (8086:100e) device: 0000:00:08.0 (socket -1)
+EAL: Probe PCI driver: net_e1000_em (8086:100e) device: 0000:00:09.0 (socket -1)
+TELEMETRY: No legacy callbacks, legacy socket not created
+number of ports: 2 
+MAC address of port 0: 08:00:27:ED:24:B3
+MAC address of port 1: 08:00:27:91:32:3B
+TSC frequency: 3950000000 Hz
+Capturing packets on port 0...
+
+#######################################################
+Latency = 145399 cycles
+number of packets: 1
+Latency: 36.810 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 129323 cycles
+number of packets: 1
+Latency: 32.740 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 114195 cycles
+number of packets: 1
+Latency: 28.910 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 97644 cycles
+number of packets: 1
+Latency: 24.720 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 166888 cycles
+number of packets: 1
+Latency: 42.250 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 203267 cycles
+number of packets: 1
+Latency: 51.460 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 246638 cycles
+number of packets: 1
+Latency: 62.440 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 129560 cycles
+number of packets: 1
+Latency: 32.800 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 134814 cycles
+number of packets: 1
+Latency: 34.130 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 100132 cycles
+number of packets: 1
+Latency: 25.350 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 118184 cycles
+number of packets: 1
+Latency: 29.920 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 77657 cycles
+number of packets: 1
+Latency: 19.660 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 94089 cycles
+number of packets: 1
+Latency: 23.820 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 97249 cycles
+number of packets: 1
+Latency: 24.620 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 360754 cycles
+number of packets: 1
+Latency: 91.330 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 197737 cycles
+number of packets: 1
+Latency: 50.060 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 416804 cycles
+number of packets: 1
+Latency: 105.520 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 290838 cycles
+number of packets: 1
+Latency: 73.630 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 445758 cycles
+number of packets: 1
+Latency: 112.850 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 129481 cycles
+number of packets: 1
+Latency: 32.780 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 87098 cycles
+number of packets: 1
+Latency: 22.050 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 506193 cycles
+number of packets: 1
+Latency: 128.150 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 520531 cycles
+number of packets: 1
+Latency: 131.780 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 532342 cycles
+number of packets: 1
+Latency: 134.770 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 365256 cycles
+number of packets: 1
+Latency: 92.470 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 179172 cycles
+number of packets: 1
+Latency: 45.360 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 151483 cycles
+number of packets: 1
+Latency: 38.350 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 121858 cycles
+number of packets: 1
+Latency: 30.850 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 193708 cycles
+number of packets: 1
+Latency: 49.040 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 682165 cycles
+number of packets: 1
+Latency: 172.700 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 262714 cycles
+number of packets: 1
+Latency: 66.510 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 100132 cycles
+number of packets: 1
+Latency: 25.350 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 136631 cycles
+number of packets: 1
+Latency: 34.590 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 138250 cycles
+number of packets: 1
+Latency: 35.000 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 332550 cycles
+number of packets: 1
+Latency: 84.190 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 109850 cycles
+number of packets: 1
+Latency: 27.810 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 165821 cycles
+number of packets: 1
+Latency: 41.980 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 203030 cycles
+number of packets: 1
+Latency: 51.400 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 71416 cycles
+number of packets: 1
+Latency: 18.080 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 113681 cycles
+number of packets: 1
+Latency: 28.780 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1044894 cycles
+number of packets: 1
+Latency: 264.530 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 424665 cycles
+number of packets: 1
+Latency: 107.510 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 594278 cycles
+number of packets: 1
+Latency: 150.450 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 444730 cycles
+number of packets: 1
+Latency: 112.590 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 547628 cycles
+number of packets: 1
+Latency: 138.640 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 96380 cycles
+number of packets: 1
+Latency: 24.400 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 125491 cycles
+number of packets: 1
+Latency: 31.770 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 468075 cycles
+number of packets: 1
+Latency: 118.500 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 263504 cycles
+number of packets: 1
+Latency: 66.710 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 870225 cycles
+number of packets: 1
+Latency: 220.310 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 141608 cycles
+number of packets: 1
+Latency: 35.850 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 110205 cycles
+number of packets: 1
+Latency: 27.900 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 145281 cycles
+number of packets: 1
+Latency: 36.780 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 162069 cycles
+number of packets: 1
+Latency: 41.030 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 172220 cycles
+number of packets: 1
+Latency: 43.600 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 195999 cycles
+number of packets: 1
+Latency: 49.620 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 103885 cycles
+number of packets: 1
+Latency: 26.300 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 129126 cycles
+number of packets: 1
+Latency: 32.690 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 103608 cycles
+number of packets: 1
+Latency: 26.230 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 145676 cycles
+number of packets: 1
+Latency: 36.880 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 217566 cycles
+number of packets: 1
+Latency: 55.080 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 318449 cycles
+number of packets: 1
+Latency: 80.620 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 137974 cycles
+number of packets: 1
+Latency: 34.930 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 166374 cycles
+number of packets: 1
+Latency: 42.120 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 170047 cycles
+number of packets: 1
+Latency: 43.050 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 144807 cycles
+number of packets: 1
+Latency: 36.660 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 107993 cycles
+number of packets: 1
+Latency: 27.340 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 112615 cycles
+number of packets: 1
+Latency: 28.510 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 178303 cycles
+number of packets: 1
+Latency: 45.140 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 139909 cycles
+number of packets: 1
+Latency: 35.420 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 4746833 cycles
+number of packets: 1
+Latency: 1201.730 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1635577 cycles
+number of packets: 1
+Latency: 414.070 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 679439 cycles
+number of packets: 1
+Latency: 172.010 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 824365 cycles
+number of packets: 1
+Latency: 208.700 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 2278873 cycles
+number of packets: 1
+Latency: 576.930 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 380030 cycles
+number of packets: 1
+Latency: 96.210 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 492842 cycles
+number of packets: 1
+Latency: 124.770 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 24283178 cycles
+number of packets: 1
+Latency: 6147.640 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 65096 cycles
+number of packets: 1
+Latency: 16.480 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1896632 cycles
+number of packets: 1
+Latency: 480.160 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 944958 cycles
+number of packets: 1
+Latency: 239.230 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 651632 cycles
+number of packets: 1
+Latency: 164.970 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 819941 cycles
+number of packets: 1
+Latency: 207.580 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 692751 cycles
+number of packets: 1
+Latency: 175.380 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 800468 cycles
+number of packets: 1
+Latency: 202.650 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1100351 cycles
+number of packets: 1
+Latency: 278.570 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 3436540 cycles
+number of packets: 1
+Latency: 870.010 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 746392 cycles
+number of packets: 1
+Latency: 188.960 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 549998 cycles
+number of packets: 1
+Latency: 139.240 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 2681221 cycles
+number of packets: 1
+Latency: 678.790 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1497129 cycles
+number of packets: 1
+Latency: 379.020 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 440820 cycles
+number of packets: 1
+Latency: 111.600 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 94247 cycles
+number of packets: 1
+Latency: 23.860 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1044814 cycles
+number of packets: 1
+Latency: 264.510 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 787195 cycles
+number of packets: 1
+Latency: 199.290 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 732725 cycles
+number of packets: 1
+Latency: 185.500 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 479372 cycles
+number of packets: 1
+Latency: 121.360 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 524955 cycles
+number of packets: 1
+Latency: 132.900 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 529734 cycles
+number of packets: 1
+Latency: 134.110 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 987697 cycles
+number of packets: 1
+Latency: 250.050 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 533487 cycles
+number of packets: 1
+Latency: 135.060 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 878796 cycles
+number of packets: 1
+Latency: 222.480 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 451920 cycles
+number of packets: 1
+Latency: 114.410 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 930462 cycles
+number of packets: 1
+Latency: 235.560 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 464322 cycles
+number of packets: 1
+Latency: 117.550 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 682718 cycles
+number of packets: 1
+Latency: 172.840 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 502559 cycles
+number of packets: 1
+Latency: 127.230 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 419529 cycles
+number of packets: 1
+Latency: 106.210 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1430927 cycles
+number of packets: 1
+Latency: 362.260 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 123911 cycles
+number of packets: 1
+Latency: 31.370 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 172497 cycles
+number of packets: 1
+Latency: 43.670 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 552645 cycles
+number of packets: 1
+Latency: 139.910 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 812634 cycles
+number of packets: 1
+Latency: 205.730 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 99935 cycles
+number of packets: 1
+Latency: 25.300 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 123595 cycles
+number of packets: 1
+Latency: 31.290 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 684574 cycles
+number of packets: 1
+Latency: 173.310 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1508860 cycles
+number of packets: 1
+Latency: 381.990 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 111232 cycles
+number of packets: 1
+Latency: 28.160 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1145026 cycles
+number of packets: 1
+Latency: 289.880 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 822429 cycles
+number of packets: 1
+Latency: 208.210 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 861574 cycles
+number of packets: 1
+Latency: 218.120 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 946894 cycles
+number of packets: 1
+Latency: 239.720 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 882272 cycles
+number of packets: 1
+Latency: 223.360 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 126558 cycles
+number of packets: 1
+Latency: 32.040 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 706734 cycles
+number of packets: 1
+Latency: 178.920 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 6867865 cycles
+number of packets: 1
+Latency: 1738.700 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 8684351 cycles
+number of packets: 1
+Latency: 2198.570 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 126044 cycles
+number of packets: 1
+Latency: 31.910 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 738374 cycles
+number of packets: 1
+Latency: 186.930 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 625996 cycles
+number of packets: 1
+Latency: 158.480 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 745879 cycles
+number of packets: 1
+Latency: 188.830 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1012464 cycles
+number of packets: 1
+Latency: 256.320 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 96736 cycles
+number of packets: 1
+Latency: 24.490 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 8414922 cycles
+number of packets: 1
+Latency: 2130.360 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 44588350 cycles
+number of packets: 1
+Latency: 11288.190 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 596845 cycles
+number of packets: 1
+Latency: 151.100 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 663995 cycles
+number of packets: 1
+Latency: 168.100 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1034821 cycles
+number of packets: 1
+Latency: 261.980 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1042089 cycles
+number of packets: 1
+Latency: 263.820 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 756504 cycles
+number of packets: 1
+Latency: 191.520 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 908184 cycles
+number of packets: 1
+Latency: 229.920 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 694726 cycles
+number of packets: 1
+Latency: 175.880 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1142538 cycles
+number of packets: 1
+Latency: 289.250 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1287700 cycles
+number of packets: 1
+Latency: 326.000 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 81212 cycles
+number of packets: 1
+Latency: 20.560 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 13224797 cycles
+number of packets: 1
+Latency: 3348.050 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1178206 cycles
+number of packets: 1
+Latency: 298.280 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1111056 cycles
+number of packets: 1
+Latency: 281.280 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1073413 cycles
+number of packets: 1
+Latency: 271.750 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 947091 cycles
+number of packets: 1
+Latency: 239.770 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 183715 cycles
+number of packets: 1
+Latency: 46.510 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1010805 cycles
+number of packets: 1
+Latency: 255.900 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1074282 cycles
+number of packets: 1
+Latency: 271.970 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 3488758 cycles
+number of packets: 1
+Latency: 883.230 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 120791 cycles
+number of packets: 1
+Latency: 30.580 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 756701 cycles
+number of packets: 1
+Latency: 191.570 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1246896 cycles
+number of packets: 1
+Latency: 315.670 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 84648 cycles
+number of packets: 1
+Latency: 21.430 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 826972 cycles
+number of packets: 1
+Latency: 209.360 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 219976 cycles
+number of packets: 1
+Latency: 55.690 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 166966 cycles
+number of packets: 1
+Latency: 42.270 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 25197366 cycles
+number of packets: 1
+Latency: 6379.080 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 980824 cycles
+number of packets: 1
+Latency: 248.310 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1345884 cycles
+number of packets: 1
+Latency: 340.730 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1407938 cycles
+number of packets: 1
+Latency: 356.440 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 83029 cycles
+number of packets: 1
+Latency: 21.020 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 517805 cycles
+number of packets: 1
+Latency: 131.090 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 246559 cycles
+number of packets: 1
+Latency: 62.420 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 92628 cycles
+number of packets: 1
+Latency: 23.450 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 299844 cycles
+number of packets: 1
+Latency: 75.910 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 860586 cycles
+number of packets: 1
+Latency: 217.870 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 103608 cycles
+number of packets: 1
+Latency: 26.230 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 813542 cycles
+number of packets: 1
+Latency: 205.960 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 334644 cycles
+number of packets: 1
+Latency: 84.720 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 475935 cycles
+number of packets: 1
+Latency: 120.490 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1334586 cycles
+number of packets: 1
+Latency: 337.870 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 650288 cycles
+number of packets: 1
+Latency: 164.630 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 208876 cycles
+number of packets: 1
+Latency: 52.880 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 607194 cycles
+number of packets: 1
+Latency: 153.720 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 323742 cycles
+number of packets: 1
+Latency: 81.960 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 581677 cycles
+number of packets: 1
+Latency: 147.260 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 319674 cycles
+number of packets: 1
+Latency: 80.930 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 294512 cycles
+number of packets: 1
+Latency: 74.560 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 162977 cycles
+number of packets: 1
+Latency: 41.260 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 109217 cycles
+number of packets: 1
+Latency: 27.650 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 122568 cycles
+number of packets: 1
+Latency: 31.030 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 107717 cycles
+number of packets: 1
+Latency: 27.270 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 159145 cycles
+number of packets: 1
+Latency: 40.290 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 141252 cycles
+number of packets: 1
+Latency: 35.760 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 263662 cycles
+number of packets: 1
+Latency: 66.750 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 106255 cycles
+number of packets: 1
+Latency: 26.900 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 108823 cycles
+number of packets: 1
+Latency: 27.550 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 173918 cycles
+number of packets: 1
+Latency: 44.030 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 246717 cycles
+number of packets: 1
+Latency: 62.460 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 232181 cycles
+number of packets: 1
+Latency: 58.780 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 330338 cycles
+number of packets: 1
+Latency: 83.630 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 277250 cycles
+number of packets: 1
+Latency: 70.190 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 115616 cycles
+number of packets: 1
+Latency: 29.270 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 125965 cycles
+number of packets: 1
+Latency: 31.890 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 133510 cycles
+number of packets: 1
+Latency: 33.800 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 191773 cycles
+number of packets: 1
+Latency: 48.550 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 139238 cycles
+number of packets: 1
+Latency: 35.250 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 101357 cycles
+number of packets: 1
+Latency: 25.660 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 509352 cycles
+number of packets: 1
+Latency: 128.950 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 116604 cycles
+number of packets: 1
+Latency: 29.520 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 136473 cycles
+number of packets: 1
+Latency: 34.550 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 250746 cycles
+number of packets: 1
+Latency: 63.480 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 232221 cycles
+number of packets: 1
+Latency: 58.790 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 139040 cycles
+number of packets: 1
+Latency: 35.200 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 497822 cycles
+number of packets: 1
+Latency: 126.031 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 330615 cycles
+number of packets: 1
+Latency: 83.700 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 303518 cycles
+number of packets: 1
+Latency: 76.840 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 473684 cycles
+number of packets: 1
+Latency: 119.920 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 136354 cycles
+number of packets: 1
+Latency: 34.520 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 123201 cycles
+number of packets: 1
+Latency: 31.190 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 98355 cycles
+number of packets: 1
+Latency: 24.900 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 125334 cycles
+number of packets: 1
+Latency: 31.730 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 915254 cycles
+number of packets: 1
+Latency: 231.710 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 9620738 cycles
+number of packets: 1
+Latency: 2435.630 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 300161 cycles
+number of packets: 1
+Latency: 75.990 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 138447 cycles
+number of packets: 1
+Latency: 35.050 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 102621 cycles
+number of packets: 1
+Latency: 25.980 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 150337 cycles
+number of packets: 1
+Latency: 38.060 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 130113 cycles
+number of packets: 1
+Latency: 32.940 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 272353 cycles
+number of packets: 1
+Latency: 68.950 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 177237 cycles
+number of packets: 1
+Latency: 44.870 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 589379 cycles
+number of packets: 1
+Latency: 149.210 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 128770 cycles
+number of packets: 1
+Latency: 32.600 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 290049 cycles
+number of packets: 1
+Latency: 73.430 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 138487 cycles
+number of packets: 1
+Latency: 35.060 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 558846 cycles
+number of packets: 1
+Latency: 141.480 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 109929 cycles
+number of packets: 1
+Latency: 27.830 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 299568 cycles
+number of packets: 1
+Latency: 75.840 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 119487 cycles
+number of packets: 1
+Latency: 30.250 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 251576 cycles
+number of packets: 1
+Latency: 63.690 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 332669 cycles
+number of packets: 1
+Latency: 84.220 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 143859 cycles
+number of packets: 1
+Latency: 36.420 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 206151 cycles
+number of packets: 1
+Latency: 52.190 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 425731 cycles
+number of packets: 1
+Latency: 107.780 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 127506 cycles
+number of packets: 1
+Latency: 32.280 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 117552 cycles
+number of packets: 1
+Latency: 29.760 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 143425 cycles
+number of packets: 1
+Latency: 36.310 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 164754 cycles
+number of packets: 1
+Latency: 41.710 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 125373 cycles
+number of packets: 1
+Latency: 31.740 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 206111 cycles
+number of packets: 1
+Latency: 52.180 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 93062 cycles
+number of packets: 1
+Latency: 23.560 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 162385 cycles
+number of packets: 1
+Latency: 41.110 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 141726 cycles
+number of packets: 1
+Latency: 35.880 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 112812 cycles
+number of packets: 1
+Latency: 28.560 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 211720 cycles
+number of packets: 1
+Latency: 53.600 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 233050 cycles
+number of packets: 1
+Latency: 59.000 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 122450 cycles
+number of packets: 1
+Latency: 31.000 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 158079 cycles
+number of packets: 1
+Latency: 40.020 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 137105 cycles
+number of packets: 1
+Latency: 34.710 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 231233 cycles
+number of packets: 1
+Latency: 58.540 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 157131 cycles
+number of packets: 1
+Latency: 39.780 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 153813 cycles
+number of packets: 1
+Latency: 38.940 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 394842 cycles
+number of packets: 1
+Latency: 99.960 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 59290 cycles
+number of packets: 1
+Latency: 15.010 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 113088 cycles
+number of packets: 1
+Latency: 28.630 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 107479 cycles
+number of packets: 1
+Latency: 27.210 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 149231 cycles
+number of packets: 1
+Latency: 37.780 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 120751 cycles
+number of packets: 1
+Latency: 30.570 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 156736 cycles
+number of packets: 1
+Latency: 39.680 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 162740 cycles
+number of packets: 1
+Latency: 41.200 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 206466 cycles
+number of packets: 1
+Latency: 52.270 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 269430 cycles
+number of packets: 1
+Latency: 68.210 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 136354 cycles
+number of packets: 1
+Latency: 34.520 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 138684 cycles
+number of packets: 1
+Latency: 35.110 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 126440 cycles
+number of packets: 1
+Latency: 32.010 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 174235 cycles
+number of packets: 1
+Latency: 44.110 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 161437 cycles
+number of packets: 1
+Latency: 40.870 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 504139 cycles
+number of packets: 1
+Latency: 127.630 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 148204 cycles
+number of packets: 1
+Latency: 37.520 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 123912 cycles
+number of packets: 1
+Latency: 31.370 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 131219 cycles
+number of packets: 1
+Latency: 33.220 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 321451 cycles
+number of packets: 1
+Latency: 81.380 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 331723 cycles
+number of packets: 1
+Latency: 83.981 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 516739 cycles
+number of packets: 1
+Latency: 130.820 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 200265 cycles
+number of packets: 1
+Latency: 50.700 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 71337 cycles
+number of packets: 1
+Latency: 18.060 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 266941 cycles
+number of packets: 1
+Latency: 67.580 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 417792 cycles
+number of packets: 1
+Latency: 105.770 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 107361 cycles
+number of packets: 1
+Latency: 27.180 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 360951 cycles
+number of packets: 1
+Latency: 91.380 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 177908 cycles
+number of packets: 1
+Latency: 45.040 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 194933 cycles
+number of packets: 1
+Latency: 49.350 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 138329 cycles
+number of packets: 1
+Latency: 35.020 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 189008 cycles
+number of packets: 1
+Latency: 47.850 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 150693 cycles
+number of packets: 1
+Latency: 38.150 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 195090 cycles
+number of packets: 1
+Latency: 49.390 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 170363 cycles
+number of packets: 1
+Latency: 43.130 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 197500 cycles
+number of packets: 1
+Latency: 50.000 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 312326 cycles
+number of packets: 1
+Latency: 79.070 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 88006 cycles
+number of packets: 1
+Latency: 22.280 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 145597 cycles
+number of packets: 1
+Latency: 36.860 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 86742 cycles
+number of packets: 1
+Latency: 21.960 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 115538 cycles
+number of packets: 1
+Latency: 29.250 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 262280 cycles
+number of packets: 1
+Latency: 66.400 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 110560 cycles
+number of packets: 1
+Latency: 27.990 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 759980 cycles
+number of packets: 1
+Latency: 192.400 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 507062 cycles
+number of packets: 1
+Latency: 128.370 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 736280 cycles
+number of packets: 1
+Latency: 186.400 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 161911 cycles
+number of packets: 1
+Latency: 40.990 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 124227 cycles
+number of packets: 1
+Latency: 31.450 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 249601 cycles
+number of packets: 1
+Latency: 63.190 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 296724 cycles
+number of packets: 1
+Latency: 75.120 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 494184 cycles
+number of packets: 1
+Latency: 125.110 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 110324 cycles
+number of packets: 1
+Latency: 27.930 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 147098 cycles
+number of packets: 1
+Latency: 37.240 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 108783 cycles
+number of packets: 1
+Latency: 27.540 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 135445 cycles
+number of packets: 1
+Latency: 34.290 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 215078 cycles
+number of packets: 1
+Latency: 54.450 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 81330 cycles
+number of packets: 1
+Latency: 20.590 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 321728 cycles
+number of packets: 1
+Latency: 81.450 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 622322 cycles
+number of packets: 1
+Latency: 157.550 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 137697 cycles
+number of packets: 1
+Latency: 34.860 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 137341 cycles
+number of packets: 1
+Latency: 34.770 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 146387 cycles
+number of packets: 1
+Latency: 37.060 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 289772 cycles
+number of packets: 1
+Latency: 73.360 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 126163 cycles
+number of packets: 1
+Latency: 31.940 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 179883 cycles
+number of packets: 1
+Latency: 45.540 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 113681 cycles
+number of packets: 1
+Latency: 28.780 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 2015053 cycles
+number of packets: 1
+Latency: 510.140 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 166927 cycles
+number of packets: 1
+Latency: 42.260 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 414868 cycles
+number of packets: 1
+Latency: 105.030 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 191457 cycles
+number of packets: 1
+Latency: 48.470 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 187151 cycles
+number of packets: 1
+Latency: 47.380 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 127427 cycles
+number of packets: 1
+Latency: 32.260 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 222938 cycles
+number of packets: 1
+Latency: 56.440 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 89981 cycles
+number of packets: 1
+Latency: 22.780 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 185768 cycles
+number of packets: 1
+Latency: 47.030 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 168270 cycles
+number of packets: 1
+Latency: 42.600 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 173919 cycles
+number of packets: 1
+Latency: 44.030 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 125096 cycles
+number of packets: 1
+Latency: 31.670 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 310233 cycles
+number of packets: 1
+Latency: 78.540 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 118935 cycles
+number of packets: 1
+Latency: 30.110 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 133233 cycles
+number of packets: 1
+Latency: 33.730 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 146387 cycles
+number of packets: 1
+Latency: 37.060 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 300753 cycles
+number of packets: 1
+Latency: 76.140 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 90574 cycles
+number of packets: 1
+Latency: 22.930 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 116011 cycles
+number of packets: 1
+Latency: 29.370 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 397528 cycles
+number of packets: 1
+Latency: 100.640 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 299015 cycles
+number of packets: 1
+Latency: 75.700 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 104951 cycles
+number of packets: 1
+Latency: 26.570 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 268442 cycles
+number of packets: 1
+Latency: 67.960 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 105860 cycles
+number of packets: 1
+Latency: 26.800 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 627376 cycles
+number of packets: 1
+Latency: 158.829 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 147928 cycles
+number of packets: 1
+Latency: 37.450 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 129718 cycles
+number of packets: 1
+Latency: 32.840 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 157210 cycles
+number of packets: 1
+Latency: 39.800 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 154722 cycles
+number of packets: 1
+Latency: 39.170 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 152668 cycles
+number of packets: 1
+Latency: 38.650 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 342465 cycles
+number of packets: 1
+Latency: 86.700 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 157921 cycles
+number of packets: 1
+Latency: 39.980 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 121897 cycles
+number of packets: 1
+Latency: 30.860 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 230048 cycles
+number of packets: 1
+Latency: 58.240 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 140423 cycles
+number of packets: 1
+Latency: 35.550 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 477278 cycles
+number of packets: 1
+Latency: 120.830 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 158198 cycles
+number of packets: 1
+Latency: 40.050 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 124544 cycles
+number of packets: 1
+Latency: 31.530 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 54628 cycles
+number of packets: 1
+Latency: 13.830 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 159304 cycles
+number of packets: 1
+Latency: 40.330 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 209074 cycles
+number of packets: 1
+Latency: 52.930 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 203543 cycles
+number of packets: 1
+Latency: 51.530 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 292458 cycles
+number of packets: 1
+Latency: 74.040 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 101080 cycles
+number of packets: 1
+Latency: 25.590 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 193984 cycles
+number of packets: 1
+Latency: 49.110 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 100804 cycles
+number of packets: 1
+Latency: 25.520 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 101041 cycles
+number of packets: 1
+Latency: 25.580 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 133273 cycles
+number of packets: 1
+Latency: 33.740 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 205519 cycles
+number of packets: 1
+Latency: 52.030 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 245730 cycles
+number of packets: 1
+Latency: 62.210 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 131891 cycles
+number of packets: 1
+Latency: 33.390 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 193037 cycles
+number of packets: 1
+Latency: 48.870 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 108270 cycles
+number of packets: 1
+Latency: 27.410 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 130113 cycles
+number of packets: 1
+Latency: 32.940 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 127901 cycles
+number of packets: 1
+Latency: 32.380 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 280252 cycles
+number of packets: 1
+Latency: 70.950 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 192602 cycles
+number of packets: 1
+Latency: 48.760 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 186401 cycles
+number of packets: 1
+Latency: 47.190 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 195090 cycles
+number of packets: 1
+Latency: 49.390 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 126756 cycles
+number of packets: 1
+Latency: 32.090 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 121699 cycles
+number of packets: 1
+Latency: 30.810 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 344045 cycles
+number of packets: 1
+Latency: 87.100 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 259041 cycles
+number of packets: 1
+Latency: 65.580 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 392630 cycles
+number of packets: 1
+Latency: 99.400 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 175657 cycles
+number of packets: 1
+Latency: 44.470 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 188139 cycles
+number of packets: 1
+Latency: 47.630 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 146427 cycles
+number of packets: 1
+Latency: 37.070 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 126598 cycles
+number of packets: 1
+Latency: 32.050 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 141450 cycles
+number of packets: 1
+Latency: 35.810 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 377462 cycles
+number of packets: 1
+Latency: 95.560 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 178106 cycles
+number of packets: 1
+Latency: 45.090 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 172378 cycles
+number of packets: 1
+Latency: 43.640 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 125373 cycles
+number of packets: 1
+Latency: 31.740 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 131535 cycles
+number of packets: 1
+Latency: 33.300 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 134971 cycles
+number of packets: 1
+Latency: 34.170 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 396540 cycles
+number of packets: 1
+Latency: 100.390 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 355026 cycles
+number of packets: 1
+Latency: 89.880 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 283136 cycles
+number of packets: 1
+Latency: 71.680 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 250193 cycles
+number of packets: 1
+Latency: 63.340 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 116485 cycles
+number of packets: 1
+Latency: 29.490 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 323347 cycles
+number of packets: 1
+Latency: 81.860 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 232458 cycles
+number of packets: 1
+Latency: 58.850 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 168744 cycles
+number of packets: 1
+Latency: 42.720 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 271286 cycles
+number of packets: 1
+Latency: 68.680 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 150890 cycles
+number of packets: 1
+Latency: 38.200 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 208718 cycles
+number of packets: 1
+Latency: 52.840 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 333815 cycles
+number of packets: 1
+Latency: 84.510 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 133273 cycles
+number of packets: 1
+Latency: 33.740 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 127032 cycles
+number of packets: 1
+Latency: 32.160 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 260226 cycles
+number of packets: 1
+Latency: 65.880 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 139238 cycles
+number of packets: 1
+Latency: 35.250 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 84727 cycles
+number of packets: 1
+Latency: 21.450 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 224202 cycles
+number of packets: 1
+Latency: 56.760 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 354947 cycles
+number of packets: 1
+Latency: 89.860 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 360595 cycles
+number of packets: 1
+Latency: 91.290 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 148678 cycles
+number of packets: 1
+Latency: 37.640 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 75366 cycles
+number of packets: 1
+Latency: 19.080 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 101910 cycles
+number of packets: 1
+Latency: 25.800 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 241306 cycles
+number of packets: 1
+Latency: 61.090 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 152273 cycles
+number of packets: 1
+Latency: 38.550 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 115024 cycles
+number of packets: 1
+Latency: 29.120 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 271365 cycles
+number of packets: 1
+Latency: 68.700 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 581045 cycles
+number of packets: 1
+Latency: 147.100 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 144886 cycles
+number of packets: 1
+Latency: 36.680 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 90416 cycles
+number of packets: 1
+Latency: 22.890 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 230048 cycles
+number of packets: 1
+Latency: 58.240 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 445837 cycles
+number of packets: 1
+Latency: 112.870 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 94208 cycles
+number of packets: 1
+Latency: 23.850 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 580966 cycles
+number of packets: 1
+Latency: 147.080 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 128414 cycles
+number of packets: 1
+Latency: 32.510 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 140304 cycles
+number of packets: 1
+Latency: 35.520 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 86070 cycles
+number of packets: 1
+Latency: 21.790 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 204728 cycles
+number of packets: 1
+Latency: 51.830 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 264136 cycles
+number of packets: 1
+Latency: 66.870 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 350247 cycles
+number of packets: 1
+Latency: 88.670 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 189007 cycles
+number of packets: 1
+Latency: 47.850 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 128809 cycles
+number of packets: 1
+Latency: 32.610 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 339819 cycles
+number of packets: 1
+Latency: 86.030 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 284123 cycles
+number of packets: 1
+Latency: 71.930 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 132483 cycles
+number of packets: 1
+Latency: 33.540 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 146663 cycles
+number of packets: 1
+Latency: 37.130 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 1064644 cycles
+number of packets: 1
+Latency: 269.530 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 534593 cycles
+number of packets: 1
+Latency: 135.340 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 152154 cycles
+number of packets: 1
+Latency: 38.520 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 159619 cycles
+number of packets: 1
+Latency: 40.410 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 195248 cycles
+number of packets: 1
+Latency: 49.430 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 289416 cycles
+number of packets: 1
+Latency: 73.270 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 152983 cycles
+number of packets: 1
+Latency: 38.730 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 132483 cycles
+number of packets: 1
+Latency: 33.540 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 177513 cycles
+number of packets: 1
+Latency: 44.940 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 289535 cycles
+number of packets: 1
+Latency: 73.300 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 89981 cycles
+number of packets: 1
+Latency: 22.780 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 97684 cycles
+number of packets: 1
+Latency: 24.730 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 140975 cycles
+number of packets: 1
+Latency: 35.690 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 244544 cycles
+number of packets: 1
+Latency: 61.910 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 187111 cycles
+number of packets: 1
+Latency: 47.370 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 138092 cycles
+number of packets: 1
+Latency: 34.960 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 106926 cycles
+number of packets: 1
+Latency: 27.070 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 95827 cycles
+number of packets: 1
+Latency: 24.260 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 250667 cycles
+number of packets: 1
+Latency: 63.460 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 274960 cycles
+number of packets: 1
+Latency: 69.610 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 218672 cycles
+number of packets: 1
+Latency: 55.360 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 121897 cycles
+number of packets: 1
+Latency: 30.860 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 130784 cycles
+number of packets: 1
+Latency: 33.110 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 285704 cycles
+number of packets: 1
+Latency: 72.330 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 345862 cycles
+number of packets: 1
+Latency: 87.560 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 139317 cycles
+number of packets: 1
+Latency: 35.270 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 495291 cycles
+number of packets: 1
+Latency: 125.390 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 125492 cycles
+number of packets: 1
+Latency: 31.770 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 80540 cycles
+number of packets: 1
+Latency: 20.390 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 121028 cycles
+number of packets: 1
+Latency: 30.640 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 142516 cycles
+number of packets: 1
+Latency: 36.080 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 147177 cycles
+number of packets: 1
+Latency: 37.260 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 115656 cycles
+number of packets: 1
+Latency: 29.280 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 115735 cycles
+number of packets: 1
+Latency: 29.300 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 76788 cycles
+number of packets: 1
+Latency: 19.440 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 183951 cycles
+number of packets: 1
+Latency: 46.570 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 187072 cycles
+number of packets: 1
+Latency: 47.360 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 72127 cycles
+number of packets: 1
+Latency: 18.260 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 431024 cycles
+number of packets: 1
+Latency: 109.120 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 211325 cycles
+number of packets: 1
+Latency: 53.500 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 126163 cycles
+number of packets: 1
+Latency: 31.940 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 110521 cycles
+number of packets: 1
+Latency: 27.980 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 350444 cycles
+number of packets: 1
+Latency: 88.720 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 102108 cycles
+number of packets: 1
+Latency: 25.850 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 131456 cycles
+number of packets: 1
+Latency: 33.280 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 378292 cycles
+number of packets: 1
+Latency: 95.770 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 115774 cycles
+number of packets: 1
+Latency: 29.310 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 291984 cycles
+number of packets: 1
+Latency: 73.920 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 74576 cycles
+number of packets: 1
+Latency: 18.880 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 88638 cycles
+number of packets: 1
+Latency: 22.440 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 120159 cycles
+number of packets: 1
+Latency: 30.420 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 107005 cycles
+number of packets: 1
+Latency: 27.090 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 131456 cycles
+number of packets: 1
+Latency: 33.280 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 181305 cycles
+number of packets: 1
+Latency: 45.900 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 401280 cycles
+number of packets: 1
+Latency: 101.590 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+
+#######################################################
+Latency = 100488 cycles
+number of packets: 1
+Latency: 25.440 µs
+IPV6 packet sent to:FF:FF:FF:FF:FF:FF
+
+#######################################################
+^C
+Script done on 2025-02-23 17:46:30+03:00 [COMMAND_EXIT_CODE="130"]

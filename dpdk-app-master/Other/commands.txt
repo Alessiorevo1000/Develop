@@ -1,0 +1,247 @@
+sudo dpdk-testpmd -c7 --vdev=net_tap0,iface=eth0 --vdev=net_tap1,iface=eth1 -- -i --nb-cores=2 --nb-ports=2 --total-num-mbufs=2048
+
+  mkdir -p /dev/hugepages
+  mountpoint -q /dev/hugepages || mount -t hugetlbfs nodev /dev/hugepages
+  echo 64 > /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages
+
+
+sudo ./build/my_rte_app --vdev=net_tap0,iface=tap0,persist
+
+
+// irrelevant for the creator this is part of controller to display information i accidentally implemented this here but never deleted it
+void process_ip6_with_srh(struct rte_ether_hdr *eth_hdr, struct rte_mbuf *mbuf, int i)
+{
+    printf("\nip6 packet is encountered\n");
+    // struct rte_ipv6_hdr *ipv6_hdr;
+    struct ipv6_srh *srh;
+    struct hmac_tlv *hmac;
+    struct rte_ipv6_hdr *ipv6_hdr = (struct rte_ipv6_hdr *)(eth_hdr + 1);
+    srh = (struct ipv6_srh *)(ipv6_hdr + 1); // SRH follows IPv6 header
+    hmac = (struct hmac_tlv *)(srh + 1);
+
+    // Display source and destination MAC addresses
+    printf("Packet %d:\n", i + 1);
+    printf("  Src MAC: %02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 "\n",
+           eth_hdr->src_addr.addr_bytes[0], eth_hdr->src_addr.addr_bytes[1],
+           eth_hdr->src_addr.addr_bytes[2], eth_hdr->src_addr.addr_bytes[3],
+           eth_hdr->src_addr.addr_bytes[4], eth_hdr->src_addr.addr_bytes[5]);
+    printf("  Dst MAC: %02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 "\n",
+           eth_hdr->dst_addr.addr_bytes[0], eth_hdr->dst_addr.addr_bytes[1],
+           eth_hdr->dst_addr.addr_bytes[2], eth_hdr->dst_addr.addr_bytes[3],
+           eth_hdr->dst_addr.addr_bytes[4], eth_hdr->dst_addr.addr_bytes[5]);
+    printf("  EtherType: 0x%04x\n", rte_be_to_cpu_16(eth_hdr->ether_type));
+
+    print_ipv6_address((struct in6_addr *)&ipv6_hdr->src_addr, "source");
+    print_ipv6_address((struct in6_addr *)&ipv6_hdr->dst_addr, "destination");
+
+    // Get srh pointer after ipv6 header
+    if (ipv6_hdr->proto == IPPROTO_ROUTING)
+    {
+        printf("The size of srh is %lu\n", sizeof(*srh));
+        printf("The size of hmac is %lu\n", sizeof(*hmac));
+        printf("The size of hmac is %lu\n", sizeof(eth_hdr));
+        // print_ipv6_address(srh->segments, "the only segment in the demo packet");
+        printf("the routing type of srh is %d\n", srh->segments_left);
+        print_ipv6_address(srh->segments + 1, "asd");
+        printf("HMAC type: %u\n", hmac->type);
+        printf("HMAC length: %u\n", hmac->length);
+        printf("HMAC key ID: %u\n", rte_be_to_cpu_32(hmac->hmac_key_id));
+
+        // TODO burayı dinamik olarak bastır çünkü hmac 8 octet (8 byte 64 bit) veya katı olabilir şimdilik i 1 den başıyor ve i-1 yazdırıyor
+        for (int i = 0; i < 32; i++)
+        {
+            printf("HMAC value[%d]: %02x\n", i, hmac->hmac_value[i]);
+        }
+
+        fflush(stdout);
+    }
+}
+
+void add_custom_header(struct rte_mbuf *pkt)
+{
+
+    // Copy the ethernet header since it will be removed to add the custom header
+    struct rte_ether_hdr *tmp_eth_hdr = rte_pktmbuf_mtod(pkt, struct rte_ether_hdr *);
+    if (tmp_eth_hdr == NULL)
+    {
+        printf("Failed to prepend space for temporary Ethernet header.\n");
+        return;
+    }
+
+    // need to save this in fresh structs the reason is explained after prepending the custom header
+    struct rte_ether_addr tmp_src = tmp_eth_hdr->src_addr;
+    struct rte_ether_addr tmp_dst = tmp_eth_hdr->dst_addr;
+
+    // Remove the old ethernet header
+
+    rte_pktmbuf_adj(pkt, (uint16_t)sizeof(struct rte_ether_hdr));
+
+    // Reserve space for the custom header at the beginning of the packet
+    struct custom_hdr *cust_hdr = (struct custom_hdr *)rte_pktmbuf_prepend(pkt, sizeof(struct custom_hdr));
+    // !!!!!! Starting from this line the pointer location returned by mtod above (tmp_eth_hdr) points to the custom header address that is why we saved the addresses in seperate structs!!!!!!
+    if (cust_hdr == NULL)
+    {
+        printf("Failed to prepend space for custom header.\n");
+        return;
+    }
+
+    // Populate your custom header fields
+    // snprintf(cust_hdr->str1,7,"HELLO WORLD");
+    strncpy(cust_hdr->str, "melih", sizeof(cust_hdr->str));
+    cust_hdr->num2 = rte_cpu_to_be_32(0xDEADBEEF); // Example value in big-endian format
+
+    // Prepend the Ethernet header as well, if needed
+    struct rte_ether_hdr *eth_hdr = (struct rte_ether_hdr *)rte_pktmbuf_prepend(pkt, sizeof(struct rte_ether_hdr));
+    if (eth_hdr == NULL)
+    {
+        printf("Failed to prepend space for Ethernet header.\n");
+        return;
+    }
+
+    // Set Ethernet header fields
+
+    eth_hdr->ether_type = rte_cpu_to_be_16(CUSTOM_HEADER_TYPE); // Custom EtherType for custom protocol
+    eth_hdr->src_addr = tmp_src;
+    eth_hdr->dst_addr = tmp_dst;
+
+    printf("Inspecting the changed header is network byte order: %02X:%02X:%02X:%02X:%02X:%02X\n",
+           eth_hdr->src_addr.addr_bytes[0], eth_hdr->src_addr.addr_bytes[1],
+           eth_hdr->src_addr.addr_bytes[2], eth_hdr->src_addr.addr_bytes[3],
+           eth_hdr->src_addr.addr_bytes[4], eth_hdr->src_addr.addr_bytes[5]);
+    // rte_ether_addr_copy(&tmp_eth_hdr->src_addr, &eth_hdr->src_addr);
+    // rte_ether_addr_copy(&tmp_eth_hdr->dst_addr, &eth_hdr->dst_addr);
+
+    printf("Custom header added to packet.\n");
+
+
+ struct rte_ipv4_hdr *ipv4_hdr = (struct rte_ipv4_hdr *)(eth_hdr + 1);
+                if (ipv4_hdr->dst_addr == rte_cpu_to_be_32(RTE_IPV4(10, 0, 2, 44)))
+                {
+
+                    printf("number of the packets received is %d", nb_rx);
+                    // Display source and destination MAC addresses
+                    printf("Packet %d:\n", i + 1);
+                    printf("  Src MAC: %02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 "\n",
+                           eth_hdr->src_addr.addr_bytes[0], eth_hdr->src_addr.addr_bytes[1],
+                           eth_hdr->src_addr.addr_bytes[2], eth_hdr->src_addr.addr_bytes[3],
+                           eth_hdr->src_addr.addr_bytes[4], eth_hdr->src_addr.addr_bytes[5]);
+                    printf("  Dst MAC: %02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 "\n",
+                           eth_hdr->dst_addr.addr_bytes[0], eth_hdr->dst_addr.addr_bytes[1],
+                           eth_hdr->dst_addr.addr_bytes[2], eth_hdr->dst_addr.addr_bytes[3],
+                           eth_hdr->dst_addr.addr_bytes[4], eth_hdr->dst_addr.addr_bytes[5]);
+                    printf("  EtherType: 0x%04x\n", rte_be_to_cpu_16(eth_hdr->ether_type));
+
+                    printf("  Src IP: %d.%d.%d.%d\n",
+                           (ipv4_hdr->src_addr & 0xff),
+                           (ipv4_hdr->src_addr >> 8) & 0xff,
+                           (ipv4_hdr->src_addr >> 16) & 0xff,
+                           (ipv4_hdr->src_addr >> 24) & 0xff);
+                    printf(
+                        "  Dst IP: %d.%d.%d.%d\n",
+                        (ipv4_hdr->dst_addr & 0xff),
+                        (ipv4_hdr->dst_addr >> 8) & 0xff,
+                        (ipv4_hdr->dst_addr >> 16) & 0xff,
+                        (ipv4_hdr->dst_addr >> 24) & 0xff);
+
+                    add_custom_header(mbuf);
+
+                    // change the mac address and the ip address to make basically a repeater. This section of the code is specific to my test setup
+
+                    struct rte_ether_hdr *new_eth_hdr = rte_pktmbuf_mtod(mbuf, struct rte_ether_hdr *); // header is changed by above function
+
+                    // struct rte_ether_addr tmp_mac = new_eth_hdr->dst_addr;
+
+                    // dont change the dst in case of broadcast messages comment out below to swap
+                    // new_eth_hdr->dst_addr = new_eth_hdr->src_addr;
+
+                    // Destination mac adddress for now is hard coded
+                    static const struct rte_ether_addr dst_mac = {.addr_bytes = {0x08, 0x00, 0x27, 0x21, 0xad, 0x52}};
+                    rte_ether_addr_copy(&dst_mac, &new_eth_hdr->dst_addr);
+
+                    // Populate source with the MAC address of the port
+                    struct rte_ether_addr *p = &new_eth_hdr->src_addr;
+                    rte_eth_macaddr_get(port_id, p);
+
+                    // or just send a broadcast back (for trsting purposes)
+
+                    // change the ip (swap src dst)
+                    struct custom_hdr *cst_hdr = (struct custom_hdr *)(new_eth_hdr + 1);
+                    ipv4_hdr = (struct rte_ipv4_hdr *)(cst_hdr + 1);
+                    rte_be32_t tmp_ip = ipv4_hdr->dst_addr;
+                    printf("  Tmp IP: %d.%d.%d.%d\n",
+                           (tmp_ip & 0xff),
+                           (tmp_ip >> 8) & 0xff,
+                           (tmp_ip >> 16) & 0xff,
+                           (tmp_ip >> 24) & 0xff);
+
+                    ipv4_hdr->dst_addr = ipv4_hdr->src_addr;
+                    ipv4_hdr->src_addr = tmp_ip;
+
+                    // DEBUG PRINTING DELETE LATER
+                    printf("Custom Header:\n");
+                    printf("  the size of custom header is %ld \n", sizeof(cst_hdr));
+                    printf("  the size of ip header is %ld \n", sizeof(ipv4_hdr));
+                    printf("  String: %s\n", cst_hdr->str);                        // Print up to 5 characters
+                    printf("  Number: 0x%04x\n", rte_be_to_cpu_16(cst_hdr->num2)); // Convert to host byte order
+
+                    // send the packets back with added cutom header
+                    if (rte_eth_tx_burst(port_id, 0, &mbuf, 1) == 0)
+                    {
+                        printf("Error sending packet\n");
+                        rte_pktmbuf_free(mbuf);
+                    }
+                    else
+                    {
+                        printf("Packet sent\n");
+                    }
+                    rte_pktmbuf_free(mbuf);
+                }
+
+
+
+
+pot_hdr->type = 130;  // made it up since it is tbd
+    pot_hdr->length = 48; // 32 b PVF + 16 b nonce
+    pot_hdr->reserved = 0;
+    pot_hdr->nonce_length = 16;
+    pot_hdr->key_set_id = rte_cpu_to_be_32(1234);
+    // Initialize the nonce and PVF values (32 bytes of 0x01)
+    // memset(pot_hdr->nonce, 0, sizeof(pot_hdr->nonce));
+    // memset(pot_hdr->encrypted_hmac, 0, sizeof(pot_hdr->encrypted_hmac));
+
+    printf("Size of POT header: %lu\n", sizeof(struct pot_tlv));
+
+
+int calculate_pvf(uint8_t *k_hmac_ie, uint8_t *hmac, uint8_t *pvf_out)
+{
+    // Calculate PVF
+    unsigned int hmac_len;
+
+    size_t key_len = strlen((char *)k_hmac_ie);
+    uint8_t *digest = (uint8_t *)HMAC(EVP_sha256(), k_hmac_ie, key_len, hmac, HMAC_MAX_LENGTH, NULL, &hmac_len);
+    printf("PVF length is: %d\n", hmac_len);
+    if (!digest)
+    {
+        rte_log(RTE_LOG_ERR, RTE_LOGTYPE_USER1, "PVF computation failed\n");
+        return -1;
+    }
+
+    // Truncate or pad the HMAC to 32 bytes
+    if (hmac_len > HMAC_MAX_LENGTH)
+    {
+        memcpy(pvf_out, digest, HMAC_MAX_LENGTH);
+    }
+    else
+    {
+        memcpy(pvf_out, digest, hmac_len);
+        memset(pvf_out + hmac_len, 0, HMAC_MAX_LENGTH - hmac_len); // Pad with zeros
+    }
+
+    printf("The PVF is: ");
+    for (int i = 0; i < HMAC_MAX_LENGTH; i++)
+    {
+        printf("%02x", pvf_out[i]);
+    }
+    // Write the hmac value in hmac header
+    printf("\n");
+}

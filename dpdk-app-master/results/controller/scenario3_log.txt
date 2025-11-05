@@ -1,0 +1,3016 @@
+Script started on 2025-02-24 02:20:09+03:00 [COMMAND="./controller --vdev=net_tap0,mac=08:00:27:F5:60:C2" TERM="xterm-256color" TTY="/dev/pts/5" COLUMNS="80" LINES="24"]
+Enter  (0-1-2): 2
+You entered: 2
+EAL: Detected CPU lcores: 2
+EAL: Detected NUMA nodes: 1
+EAL: Detected shared linkage of DPDK
+EAL: Multi-process socket /var/run/dpdk/rte/mp_socket
+EAL: Selected IOVA mode 'PA'
+EAL: Probe PCI driver: net_e1000_em (8086:100e) device: 0000:00:03.0 (socket -1)
+TELEMETRY: No legacy callbacks, legacy socket not created
+number of ports: 2 
+MAC address of port 0: 08:00:27:F5:60:C2
+MAC address of port 1: 08:00:27:F5:60:C2
+Capturing packets on port 0...
+packet length: 112
+Payload size: 18
+Latency = 150218 cycles
+number of packets: 1
+Latency: 38.030 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 260858 cycles
+number of packets: 1
+Latency: 66.040 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 190982 cycles
+number of packets: 1
+Latency: 48.350 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 154445 cycles
+number of packets: 1
+Latency: 39.100 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 75761 cycles
+number of packets: 1
+Latency: 19.180 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 139988 cycles
+number of packets: 1
+Latency: 35.440 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 340372 cycles
+number of packets: 1
+Latency: 86.170 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 199199 cycles
+number of packets: 1
+Latency: 50.430 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 193708 cycles
+number of packets: 1
+Latency: 49.040 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 145281 cycles
+number of packets: 1
+Latency: 36.780 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 337804 cycles
+number of packets: 1
+Latency: 85.520 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 212273 cycles
+number of packets: 1
+Latency: 53.740 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 192681 cycles
+number of packets: 1
+Latency: 48.780 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 108862 cycles
+number of packets: 1
+Latency: 27.560 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 186914 cycles
+number of packets: 1
+Latency: 47.320 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 195367 cycles
+number of packets: 1
+Latency: 49.460 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 170482 cycles
+number of packets: 1
+Latency: 43.160 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 118184 cycles
+number of packets: 1
+Latency: 29.920 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 158751 cycles
+number of packets: 1
+Latency: 40.190 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 188612 cycles
+number of packets: 1
+Latency: 47.750 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 149626 cycles
+number of packets: 1
+Latency: 37.880 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 148441 cycles
+number of packets: 1
+Latency: 37.580 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 115814 cycles
+number of packets: 1
+Latency: 29.320 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 139277 cycles
+number of packets: 1
+Latency: 35.260 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 367153 cycles
+number of packets: 1
+Latency: 92.950 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 201016 cycles
+number of packets: 1
+Latency: 50.890 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 138882 cycles
+number of packets: 1
+Latency: 35.160 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 150298 cycles
+number of packets: 1
+Latency: 38.050 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 1019732 cycles
+number of packets: 1
+Latency: 258.160 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 114155 cycles
+number of packets: 1
+Latency: 28.900 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 114866 cycles
+number of packets: 1
+Latency: 29.080 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 193037 cycles
+number of packets: 1
+Latency: 48.870 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 167203 cycles
+number of packets: 1
+Latency: 42.330 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 141054 cycles
+number of packets: 1
+Latency: 35.710 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 136709 cycles
+number of packets: 1
+Latency: 34.610 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 267178 cycles
+number of packets: 1
+Latency: 67.640 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 336579 cycles
+number of packets: 1
+Latency: 85.210 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 148520 cycles
+number of packets: 1
+Latency: 37.600 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 139948 cycles
+number of packets: 1
+Latency: 35.430 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 163135 cycles
+number of packets: 1
+Latency: 41.300 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 185808 cycles
+number of packets: 1
+Latency: 47.040 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 176960 cycles
+number of packets: 1
+Latency: 44.800 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 267573 cycles
+number of packets: 1
+Latency: 67.740 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 127901 cycles
+number of packets: 1
+Latency: 32.380 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 223767 cycles
+number of packets: 1
+Latency: 56.650 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 313235 cycles
+number of packets: 1
+Latency: 79.300 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 424743 cycles
+number of packets: 1
+Latency: 107.530 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 478580 cycles
+number of packets: 1
+Latency: 121.159 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 175261 cycles
+number of packets: 1
+Latency: 44.370 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 382597 cycles
+number of packets: 1
+Latency: 96.860 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 228666 cycles
+number of packets: 1
+Latency: 57.890 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 156183 cycles
+number of packets: 1
+Latency: 39.540 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 175735 cycles
+number of packets: 1
+Latency: 44.490 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 233129 cycles
+number of packets: 1
+Latency: 59.020 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 211799 cycles
+number of packets: 1
+Latency: 53.620 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 112259 cycles
+number of packets: 1
+Latency: 28.420 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 77302 cycles
+number of packets: 1
+Latency: 19.570 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 106650 cycles
+number of packets: 1
+Latency: 27.000 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 167796 cycles
+number of packets: 1
+Latency: 42.480 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 141371 cycles
+number of packets: 1
+Latency: 35.790 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 165781 cycles
+number of packets: 1
+Latency: 41.970 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 148086 cycles
+number of packets: 1
+Latency: 37.490 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 156341 cycles
+number of packets: 1
+Latency: 39.580 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 211404 cycles
+number of packets: 1
+Latency: 53.520 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 142555 cycles
+number of packets: 1
+Latency: 36.090 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 105149 cycles
+number of packets: 1
+Latency: 26.620 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 187507 cycles
+number of packets: 1
+Latency: 47.470 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 164597 cycles
+number of packets: 1
+Latency: 41.670 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 124938 cycles
+number of packets: 1
+Latency: 31.630 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 194103 cycles
+number of packets: 1
+Latency: 49.140 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 139909 cycles
+number of packets: 1
+Latency: 35.420 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 151996 cycles
+number of packets: 1
+Latency: 38.480 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 182490 cycles
+number of packets: 1
+Latency: 46.200 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 104241 cycles
+number of packets: 1
+Latency: 26.390 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 228982 cycles
+number of packets: 1
+Latency: 57.970 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 178343 cycles
+number of packets: 1
+Latency: 45.150 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 335197 cycles
+number of packets: 1
+Latency: 84.860 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 242846 cycles
+number of packets: 1
+Latency: 61.480 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 495014 cycles
+number of packets: 1
+Latency: 125.320 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 109494 cycles
+number of packets: 1
+Latency: 27.720 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 153023 cycles
+number of packets: 1
+Latency: 38.740 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 124386 cycles
+number of packets: 1
+Latency: 31.490 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 177395 cycles
+number of packets: 1
+Latency: 44.910 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 127822 cycles
+number of packets: 1
+Latency: 32.360 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 223333 cycles
+number of packets: 1
+Latency: 56.540 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 144254 cycles
+number of packets: 1
+Latency: 36.520 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 164083 cycles
+number of packets: 1
+Latency: 41.540 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 193787 cycles
+number of packets: 1
+Latency: 49.060 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 203938 cycles
+number of packets: 1
+Latency: 51.630 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 175025 cycles
+number of packets: 1
+Latency: 44.310 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 453065 cycles
+number of packets: 1
+Latency: 114.700 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 144451 cycles
+number of packets: 1
+Latency: 36.570 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 149231 cycles
+number of packets: 1
+Latency: 37.780 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 258962 cycles
+number of packets: 1
+Latency: 65.560 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 246204 cycles
+number of packets: 1
+Latency: 62.330 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 378687 cycles
+number of packets: 1
+Latency: 95.870 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 123240 cycles
+number of packets: 1
+Latency: 31.200 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 257974 cycles
+number of packets: 1
+Latency: 65.310 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 163648 cycles
+number of packets: 1
+Latency: 41.430 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 255683 cycles
+number of packets: 1
+Latency: 64.730 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 520887 cycles
+number of packets: 1
+Latency: 131.870 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 209034 cycles
+number of packets: 1
+Latency: 52.920 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 217803 cycles
+number of packets: 1
+Latency: 55.140 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 177829 cycles
+number of packets: 1
+Latency: 45.020 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 277527 cycles
+number of packets: 1
+Latency: 70.260 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 152549 cycles
+number of packets: 1
+Latency: 38.620 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 143424 cycles
+number of packets: 1
+Latency: 36.310 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 153418 cycles
+number of packets: 1
+Latency: 38.840 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 149744 cycles
+number of packets: 1
+Latency: 37.910 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 149389 cycles
+number of packets: 1
+Latency: 37.820 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 168783 cycles
+number of packets: 1
+Latency: 42.730 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 363044 cycles
+number of packets: 1
+Latency: 91.910 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 121344 cycles
+number of packets: 1
+Latency: 30.720 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 125057 cycles
+number of packets: 1
+Latency: 31.660 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 269548 cycles
+number of packets: 1
+Latency: 68.240 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 115498 cycles
+number of packets: 1
+Latency: 29.240 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 173879 cycles
+number of packets: 1
+Latency: 44.020 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 317642 cycles
+number of packets: 1
+Latency: 80.416 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 197934 cycles
+number of packets: 1
+Latency: 50.110 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 213419 cycles
+number of packets: 1
+Latency: 54.030 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 504455 cycles
+number of packets: 1
+Latency: 127.710 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 230917 cycles
+number of packets: 1
+Latency: 58.460 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 441808 cycles
+number of packets: 1
+Latency: 111.850 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 360656 cycles
+number of packets: 1
+Latency: 91.305 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 213655 cycles
+number of packets: 1
+Latency: 54.090 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 223017 cycles
+number of packets: 1
+Latency: 56.460 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 913259 cycles
+number of packets: 1
+Latency: 231.205 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 241740 cycles
+number of packets: 1
+Latency: 61.200 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 229890 cycles
+number of packets: 1
+Latency: 58.200 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 1480736 cycles
+number of packets: 1
+Latency: 374.870 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 406573 cycles
+number of packets: 1
+Latency: 102.930 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 530327 cycles
+number of packets: 1
+Latency: 134.260 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 425455 cycles
+number of packets: 1
+Latency: 107.710 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 469852 cycles
+number of packets: 1
+Latency: 118.950 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 790118 cycles
+number of packets: 1
+Latency: 200.030 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 339700 cycles
+number of packets: 1
+Latency: 86.000 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 1233348 cycles
+number of packets: 1
+Latency: 312.240 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 8303832 cycles
+number of packets: 1
+Latency: 2102.236 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 113207 cycles
+number of packets: 1
+Latency: 28.660 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 244900 cycles
+number of packets: 1
+Latency: 62.000 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 324413 cycles
+number of packets: 1
+Latency: 82.130 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 83108 cycles
+number of packets: 1
+Latency: 21.040 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 339937 cycles
+number of packets: 1
+Latency: 86.060 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 160962 cycles
+number of packets: 1
+Latency: 40.750 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 380464 cycles
+number of packets: 1
+Latency: 96.320 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 128573 cycles
+number of packets: 1
+Latency: 32.550 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 124267 cycles
+number of packets: 1
+Latency: 31.460 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 499557 cycles
+number of packets: 1
+Latency: 126.470 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 326941 cycles
+number of packets: 1
+Latency: 82.770 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 151838 cycles
+number of packets: 1
+Latency: 38.440 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 271484 cycles
+number of packets: 1
+Latency: 68.730 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 236368 cycles
+number of packets: 1
+Latency: 59.840 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 256039 cycles
+number of packets: 1
+Latency: 64.820 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 142358 cycles
+number of packets: 1
+Latency: 36.040 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 430471 cycles
+number of packets: 1
+Latency: 108.980 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 348351 cycles
+number of packets: 1
+Latency: 88.190 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 175578 cycles
+number of packets: 1
+Latency: 44.450 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 119843 cycles
+number of packets: 1
+Latency: 30.340 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 164399 cycles
+number of packets: 1
+Latency: 41.620 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 106373 cycles
+number of packets: 1
+Latency: 26.930 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 127072 cycles
+number of packets: 1
+Latency: 32.170 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 243202 cycles
+number of packets: 1
+Latency: 61.570 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 128572 cycles
+number of packets: 1
+Latency: 32.550 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 191496 cycles
+number of packets: 1
+Latency: 48.480 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 209350 cycles
+number of packets: 1
+Latency: 53.000 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 142595 cycles
+number of packets: 1
+Latency: 36.100 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 299252 cycles
+number of packets: 1
+Latency: 75.760 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 384528 cycles
+number of packets: 1
+Latency: 97.349 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 234748 cycles
+number of packets: 1
+Latency: 59.430 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 127348 cycles
+number of packets: 1
+Latency: 32.240 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 129797 cycles
+number of packets: 1
+Latency: 32.860 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 273498 cycles
+number of packets: 1
+Latency: 69.240 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 123043 cycles
+number of packets: 1
+Latency: 31.150 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 159935 cycles
+number of packets: 1
+Latency: 40.490 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 122529 cycles
+number of packets: 1
+Latency: 31.020 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 202951 cycles
+number of packets: 1
+Latency: 51.380 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 172338 cycles
+number of packets: 1
+Latency: 43.630 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 164123 cycles
+number of packets: 1
+Latency: 41.550 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 155196 cycles
+number of packets: 1
+Latency: 39.290 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 160567 cycles
+number of packets: 1
+Latency: 40.650 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 154721 cycles
+number of packets: 1
+Latency: 39.170 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 120989 cycles
+number of packets: 1
+Latency: 30.630 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 158593 cycles
+number of packets: 1
+Latency: 40.150 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 126953 cycles
+number of packets: 1
+Latency: 32.140 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 112457 cycles
+number of packets: 1
+Latency: 28.470 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 249285 cycles
+number of packets: 1
+Latency: 63.110 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 267889 cycles
+number of packets: 1
+Latency: 67.820 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 161200 cycles
+number of packets: 1
+Latency: 40.810 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 135248 cycles
+number of packets: 1
+Latency: 34.240 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 254735 cycles
+number of packets: 1
+Latency: 64.490 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 720993 cycles
+number of packets: 1
+Latency: 182.530 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 180081 cycles
+number of packets: 1
+Latency: 45.590 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 139791 cycles
+number of packets: 1
+Latency: 35.390 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 162740 cycles
+number of packets: 1
+Latency: 41.200 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 96696 cycles
+number of packets: 1
+Latency: 24.480 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 272432 cycles
+number of packets: 1
+Latency: 68.970 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 128217 cycles
+number of packets: 1
+Latency: 32.460 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 142951 cycles
+number of packets: 1
+Latency: 36.190 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 220884 cycles
+number of packets: 1
+Latency: 55.920 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 147888 cycles
+number of packets: 1
+Latency: 37.440 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 119922 cycles
+number of packets: 1
+Latency: 30.360 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 110916 cycles
+number of packets: 1
+Latency: 28.080 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 68769 cycles
+number of packets: 1
+Latency: 17.410 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 108388 cycles
+number of packets: 1
+Latency: 27.440 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 139672 cycles
+number of packets: 1
+Latency: 35.360 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 199554 cycles
+number of packets: 1
+Latency: 50.520 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 96104 cycles
+number of packets: 1
+Latency: 24.330 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 145873 cycles
+number of packets: 1
+Latency: 36.930 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 96736 cycles
+number of packets: 1
+Latency: 24.490 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 130468 cycles
+number of packets: 1
+Latency: 33.030 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 148836 cycles
+number of packets: 1
+Latency: 37.680 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 355105 cycles
+number of packets: 1
+Latency: 89.900 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 98000 cycles
+number of packets: 1
+Latency: 24.810 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 645155 cycles
+number of packets: 1
+Latency: 163.330 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 76709 cycles
+number of packets: 1
+Latency: 19.420 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 128533 cycles
+number of packets: 1
+Latency: 32.540 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 89507 cycles
+number of packets: 1
+Latency: 22.660 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 146031 cycles
+number of packets: 1
+Latency: 36.970 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 120554 cycles
+number of packets: 1
+Latency: 30.520 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 261056 cycles
+number of packets: 1
+Latency: 66.090 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 193076 cycles
+number of packets: 1
+Latency: 48.880 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 153537 cycles
+number of packets: 1
+Latency: 38.870 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 178856 cycles
+number of packets: 1
+Latency: 45.280 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 120159 cycles
+number of packets: 1
+Latency: 30.420 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 130469 cycles
+number of packets: 1
+Latency: 33.030 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 186914 cycles
+number of packets: 1
+Latency: 47.320 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 99382 cycles
+number of packets: 1
+Latency: 25.160 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 485889 cycles
+number of packets: 1
+Latency: 123.010 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 144965 cycles
+number of packets: 1
+Latency: 36.700 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 221792 cycles
+number of packets: 1
+Latency: 56.150 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 100962 cycles
+number of packets: 1
+Latency: 25.560 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 136670 cycles
+number of packets: 1
+Latency: 34.600 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 259080 cycles
+number of packets: 1
+Latency: 65.590 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 99935 cycles
+number of packets: 1
+Latency: 25.300 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 102660 cycles
+number of packets: 1
+Latency: 25.990 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 205005 cycles
+number of packets: 1
+Latency: 51.900 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 244821 cycles
+number of packets: 1
+Latency: 61.980 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 294749 cycles
+number of packets: 1
+Latency: 74.620 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 505481 cycles
+number of packets: 1
+Latency: 127.970 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 235894 cycles
+number of packets: 1
+Latency: 59.720 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 494224 cycles
+number of packets: 1
+Latency: 125.120 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 117118 cycles
+number of packets: 1
+Latency: 29.650 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 161278 cycles
+number of packets: 1
+Latency: 40.830 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 245967 cycles
+number of packets: 1
+Latency: 62.270 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 365731 cycles
+number of packets: 1
+Latency: 92.590 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 237987 cycles
+number of packets: 1
+Latency: 60.250 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 183912 cycles
+number of packets: 1
+Latency: 46.560 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 239607 cycles
+number of packets: 1
+Latency: 60.660 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 143780 cycles
+number of packets: 1
+Latency: 36.400 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 204808 cycles
+number of packets: 1
+Latency: 51.850 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 160963 cycles
+number of packets: 1
+Latency: 40.750 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 73786 cycles
+number of packets: 1
+Latency: 18.680 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 70350 cycles
+number of packets: 1
+Latency: 17.810 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 312642 cycles
+number of packets: 1
+Latency: 79.150 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 198922 cycles
+number of packets: 1
+Latency: 50.360 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 264571 cycles
+number of packets: 1
+Latency: 66.980 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 187902 cycles
+number of packets: 1
+Latency: 47.570 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 181582 cycles
+number of packets: 1
+Latency: 45.970 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 167006 cycles
+number of packets: 1
+Latency: 42.280 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 129244 cycles
+number of packets: 1
+Latency: 32.720 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 120791 cycles
+number of packets: 1
+Latency: 30.580 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 103648 cycles
+number of packets: 1
+Latency: 26.240 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 116604 cycles
+number of packets: 1
+Latency: 29.520 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 150653 cycles
+number of packets: 1
+Latency: 38.140 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 98671 cycles
+number of packets: 1
+Latency: 24.980 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 262912 cycles
+number of packets: 1
+Latency: 66.560 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 297949 cycles
+number of packets: 1
+Latency: 75.430 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 108427 cycles
+number of packets: 1
+Latency: 27.450 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 115024 cycles
+number of packets: 1
+Latency: 29.120 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 200739 cycles
+number of packets: 1
+Latency: 50.820 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 156776 cycles
+number of packets: 1
+Latency: 39.690 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 101317 cycles
+number of packets: 1
+Latency: 25.650 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 139395 cycles
+number of packets: 1
+Latency: 35.290 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 126914 cycles
+number of packets: 1
+Latency: 32.130 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 362373 cycles
+number of packets: 1
+Latency: 91.740 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 281912 cycles
+number of packets: 1
+Latency: 71.370 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 838901 cycles
+number of packets: 1
+Latency: 212.380 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 421781 cycles
+number of packets: 1
+Latency: 106.780 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 163056 cycles
+number of packets: 1
+Latency: 41.280 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 258765 cycles
+number of packets: 1
+Latency: 65.510 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 122173 cycles
+number of packets: 1
+Latency: 30.930 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 185294 cycles
+number of packets: 1
+Latency: 46.910 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 182530 cycles
+number of packets: 1
+Latency: 46.210 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 198172 cycles
+number of packets: 1
+Latency: 50.170 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 141410 cycles
+number of packets: 1
+Latency: 35.800 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 173760 cycles
+number of packets: 1
+Latency: 43.990 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 269548 cycles
+number of packets: 1
+Latency: 68.240 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 130074 cycles
+number of packets: 1
+Latency: 32.930 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 112298 cycles
+number of packets: 1
+Latency: 28.430 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 315190 cycles
+number of packets: 1
+Latency: 79.795 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 95669 cycles
+number of packets: 1
+Latency: 24.220 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 384493 cycles
+number of packets: 1
+Latency: 97.340 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 144689 cycles
+number of packets: 1
+Latency: 36.630 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 231075 cycles
+number of packets: 1
+Latency: 58.500 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 153576 cycles
+number of packets: 1
+Latency: 38.880 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 101238 cycles
+number of packets: 1
+Latency: 25.630 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 332827 cycles
+number of packets: 1
+Latency: 84.260 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 136512 cycles
+number of packets: 1
+Latency: 34.560 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 226927 cycles
+number of packets: 1
+Latency: 57.450 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 184268 cycles
+number of packets: 1
+Latency: 46.650 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 118303 cycles
+number of packets: 1
+Latency: 29.950 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 221911 cycles
+number of packets: 1
+Latency: 56.180 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 221516 cycles
+number of packets: 1
+Latency: 56.080 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 166927 cycles
+number of packets: 1
+Latency: 42.260 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 380820 cycles
+number of packets: 1
+Latency: 96.410 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 120752 cycles
+number of packets: 1
+Latency: 30.570 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 191417 cycles
+number of packets: 1
+Latency: 48.460 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 136354 cycles
+number of packets: 1
+Latency: 34.520 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 234827 cycles
+number of packets: 1
+Latency: 59.450 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 119171 cycles
+number of packets: 1
+Latency: 30.170 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 175459 cycles
+number of packets: 1
+Latency: 44.420 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 171785 cycles
+number of packets: 1
+Latency: 43.490 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 170364 cycles
+number of packets: 1
+Latency: 43.130 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 172299 cycles
+number of packets: 1
+Latency: 43.620 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 270930 cycles
+number of packets: 1
+Latency: 68.590 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 132325 cycles
+number of packets: 1
+Latency: 33.500 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 140423 cycles
+number of packets: 1
+Latency: 35.550 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 351748 cycles
+number of packets: 1
+Latency: 89.050 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 179567 cycles
+number of packets: 1
+Latency: 45.460 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 256948 cycles
+number of packets: 1
+Latency: 65.050 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 230917 cycles
+number of packets: 1
+Latency: 58.460 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 150377 cycles
+number of packets: 1
+Latency: 38.070 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 117354 cycles
+number of packets: 1
+Latency: 29.710 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 74694 cycles
+number of packets: 1
+Latency: 18.910 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 149389 cycles
+number of packets: 1
+Latency: 37.820 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 131140 cycles
+number of packets: 1
+Latency: 33.200 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 323110 cycles
+number of packets: 1
+Latency: 81.800 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 237869 cycles
+number of packets: 1
+Latency: 60.220 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 182530 cycles
+number of packets: 1
+Latency: 46.210 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 119566 cycles
+number of packets: 1
+Latency: 30.270 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 129994 cycles
+number of packets: 1
+Latency: 32.910 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 117394 cycles
+number of packets: 1
+Latency: 29.720 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 156302 cycles
+number of packets: 1
+Latency: 39.570 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 165939 cycles
+number of packets: 1
+Latency: 42.010 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 245730 cycles
+number of packets: 1
+Latency: 62.210 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 160884 cycles
+number of packets: 1
+Latency: 40.730 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 88756 cycles
+number of packets: 1
+Latency: 22.470 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 154880 cycles
+number of packets: 1
+Latency: 39.210 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 142713 cycles
+number of packets: 1
+Latency: 36.130 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 211523 cycles
+number of packets: 1
+Latency: 53.550 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 93576 cycles
+number of packets: 1
+Latency: 23.690 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 184268 cycles
+number of packets: 1
+Latency: 46.650 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 371339 cycles
+number of packets: 1
+Latency: 94.010 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 116999 cycles
+number of packets: 1
+Latency: 29.620 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 106216 cycles
+number of packets: 1
+Latency: 26.890 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 117117 cycles
+number of packets: 1
+Latency: 29.650 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 214090 cycles
+number of packets: 1
+Latency: 54.200 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 201845 cycles
+number of packets: 1
+Latency: 51.100 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 117473 cycles
+number of packets: 1
+Latency: 29.740 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 97486 cycles
+number of packets: 1
+Latency: 24.680 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 355184 cycles
+number of packets: 1
+Latency: 89.920 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 124622 cycles
+number of packets: 1
+Latency: 31.550 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 109692 cycles
+number of packets: 1
+Latency: 27.770 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 150890 cycles
+number of packets: 1
+Latency: 38.200 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 223096 cycles
+number of packets: 1
+Latency: 56.480 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 193431 cycles
+number of packets: 1
+Latency: 48.970 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 163253 cycles
+number of packets: 1
+Latency: 41.330 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 175617 cycles
+number of packets: 1
+Latency: 44.460 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 228587 cycles
+number of packets: 1
+Latency: 57.870 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 145123 cycles
+number of packets: 1
+Latency: 36.740 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 168388 cycles
+number of packets: 1
+Latency: 42.630 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 260700 cycles
+number of packets: 1
+Latency: 66.000 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 226256 cycles
+number of packets: 1
+Latency: 57.280 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 130863 cycles
+number of packets: 1
+Latency: 33.130 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 195486 cycles
+number of packets: 1
+Latency: 49.490 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 185334 cycles
+number of packets: 1
+Latency: 46.920 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 210614 cycles
+number of packets: 1
+Latency: 53.320 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 163293 cycles
+number of packets: 1
+Latency: 41.340 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 187744 cycles
+number of packets: 1
+Latency: 47.530 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 178382 cycles
+number of packets: 1
+Latency: 45.160 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 203504 cycles
+number of packets: 1
+Latency: 51.520 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 165386 cycles
+number of packets: 1
+Latency: 41.870 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 153852 cycles
+number of packets: 1
+Latency: 38.950 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 105228 cycles
+number of packets: 1
+Latency: 26.640 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 173287 cycles
+number of packets: 1
+Latency: 43.870 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 98000 cycles
+number of packets: 1
+Latency: 24.810 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 128415 cycles
+number of packets: 1
+Latency: 32.510 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 167243 cycles
+number of packets: 1
+Latency: 42.340 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 1404739 cycles
+number of packets: 1
+Latency: 355.630 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 154919 cycles
+number of packets: 1
+Latency: 39.220 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 178974 cycles
+number of packets: 1
+Latency: 45.310 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 181226 cycles
+number of packets: 1
+Latency: 45.880 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 105702 cycles
+number of packets: 1
+Latency: 26.760 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 143346 cycles
+number of packets: 1
+Latency: 36.290 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 183517 cycles
+number of packets: 1
+Latency: 46.460 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 143425 cycles
+number of packets: 1
+Latency: 36.310 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 164281 cycles
+number of packets: 1
+Latency: 41.590 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 200936 cycles
+number of packets: 1
+Latency: 50.870 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 158948 cycles
+number of packets: 1
+Latency: 40.240 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 220134 cycles
+number of packets: 1
+Latency: 55.730 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 162266 cycles
+number of packets: 1
+Latency: 41.080 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 334328 cycles
+number of packets: 1
+Latency: 84.640 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 180673 cycles
+number of packets: 1
+Latency: 45.740 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 123280 cycles
+number of packets: 1
+Latency: 31.210 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 173761 cycles
+number of packets: 1
+Latency: 43.990 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 222977 cycles
+number of packets: 1
+Latency: 56.450 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 156775 cycles
+number of packets: 1
+Latency: 39.690 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 224320 cycles
+number of packets: 1
+Latency: 56.790 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 119764 cycles
+number of packets: 1
+Latency: 30.320 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 146348 cycles
+number of packets: 1
+Latency: 37.050 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 179211 cycles
+number of packets: 1
+Latency: 45.370 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 210812 cycles
+number of packets: 1
+Latency: 53.370 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 192128 cycles
+number of packets: 1
+Latency: 48.640 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 103451 cycles
+number of packets: 1
+Latency: 26.190 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 193195 cycles
+number of packets: 1
+Latency: 48.910 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 176486 cycles
+number of packets: 1
+Latency: 44.680 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 185650 cycles
+number of packets: 1
+Latency: 47.000 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 276026 cycles
+number of packets: 1
+Latency: 69.880 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 274130 cycles
+number of packets: 1
+Latency: 69.400 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 375803 cycles
+number of packets: 1
+Latency: 95.140 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 288310 cycles
+number of packets: 1
+Latency: 72.990 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 295026 cycles
+number of packets: 1
+Latency: 74.690 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 149665 cycles
+number of packets: 1
+Latency: 37.890 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 116920 cycles
+number of packets: 1
+Latency: 29.600 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 120831 cycles
+number of packets: 1
+Latency: 30.590 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 156262 cycles
+number of packets: 1
+Latency: 39.560 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 199238 cycles
+number of packets: 1
+Latency: 50.440 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 139001 cycles
+number of packets: 1
+Latency: 35.190 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 176723 cycles
+number of packets: 1
+Latency: 44.740 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 93062 cycles
+number of packets: 1
+Latency: 23.560 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 120396 cycles
+number of packets: 1
+Latency: 30.480 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 138289 cycles
+number of packets: 1
+Latency: 35.010 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 140620 cycles
+number of packets: 1
+Latency: 35.600 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 371695 cycles
+number of packets: 1
+Latency: 94.100 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 58499 cycles
+number of packets: 1
+Latency: 14.810 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 268876 cycles
+number of packets: 1
+Latency: 68.070 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 194182 cycles
+number of packets: 1
+Latency: 49.160 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 173050 cycles
+number of packets: 1
+Latency: 43.810 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 281359 cycles
+number of packets: 1
+Latency: 71.230 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 96617 cycles
+number of packets: 1
+Latency: 24.460 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 156420 cycles
+number of packets: 1
+Latency: 39.600 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 135445 cycles
+number of packets: 1
+Latency: 34.290 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 408825 cycles
+number of packets: 1
+Latency: 103.500 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 624061 cycles
+number of packets: 1
+Latency: 157.990 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 214327 cycles
+number of packets: 1
+Latency: 54.260 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 132759 cycles
+number of packets: 1
+Latency: 33.610 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 139632 cycles
+number of packets: 1
+Latency: 35.350 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 221872 cycles
+number of packets: 1
+Latency: 56.170 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 176288 cycles
+number of packets: 1
+Latency: 44.630 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 158592 cycles
+number of packets: 1
+Latency: 40.150 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 270219 cycles
+number of packets: 1
+Latency: 68.410 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 135604 cycles
+number of packets: 1
+Latency: 34.330 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 175854 cycles
+number of packets: 1
+Latency: 44.520 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 86940 cycles
+number of packets: 1
+Latency: 22.010 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 213971 cycles
+number of packets: 1
+Latency: 54.170 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 152865 cycles
+number of packets: 1
+Latency: 38.700 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 67585 cycles
+number of packets: 1
+Latency: 17.110 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 212431 cycles
+number of packets: 1
+Latency: 53.780 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 211522 cycles
+number of packets: 1
+Latency: 53.550 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 125531 cycles
+number of packets: 1
+Latency: 31.780 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 144373 cycles
+number of packets: 1
+Latency: 36.550 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 162187 cycles
+number of packets: 1
+Latency: 41.060 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 135090 cycles
+number of packets: 1
+Latency: 34.200 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 278357 cycles
+number of packets: 1
+Latency: 70.470 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 109099 cycles
+number of packets: 1
+Latency: 27.620 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 174235 cycles
+number of packets: 1
+Latency: 44.110 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 108704 cycles
+number of packets: 1
+Latency: 27.520 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 234709 cycles
+number of packets: 1
+Latency: 59.420 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 138684 cycles
+number of packets: 1
+Latency: 35.110 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 100093 cycles
+number of packets: 1
+Latency: 25.340 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 156302 cycles
+number of packets: 1
+Latency: 39.570 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 123675 cycles
+number of packets: 1
+Latency: 31.310 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 182174 cycles
+number of packets: 1
+Latency: 46.120 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 137934 cycles
+number of packets: 1
+Latency: 34.920 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 219738 cycles
+number of packets: 1
+Latency: 55.630 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 131653 cycles
+number of packets: 1
+Latency: 33.330 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 148678 cycles
+number of packets: 1
+Latency: 37.640 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 121502 cycles
+number of packets: 1
+Latency: 30.760 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 164083 cycles
+number of packets: 1
+Latency: 41.540 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 153615 cycles
+number of packets: 1
+Latency: 38.890 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 195209 cycles
+number of packets: 1
+Latency: 49.420 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 207336 cycles
+number of packets: 1
+Latency: 52.490 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 112101 cycles
+number of packets: 1
+Latency: 28.380 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 163096 cycles
+number of packets: 1
+Latency: 41.290 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 74062 cycles
+number of packets: 1
+Latency: 18.750 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 144609 cycles
+number of packets: 1
+Latency: 36.610 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 91838 cycles
+number of packets: 1
+Latency: 23.250 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 103450 cycles
+number of packets: 1
+Latency: 26.190 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 177671 cycles
+number of packets: 1
+Latency: 44.980 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 233603 cycles
+number of packets: 1
+Latency: 59.140 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 139396 cycles
+number of packets: 1
+Latency: 35.290 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 147256 cycles
+number of packets: 1
+Latency: 37.280 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 216697 cycles
+number of packets: 1
+Latency: 54.860 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 154011 cycles
+number of packets: 1
+Latency: 38.990 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 68888 cycles
+number of packets: 1
+Latency: 17.440 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 143780 cycles
+number of packets: 1
+Latency: 36.400 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 217842 cycles
+number of packets: 1
+Latency: 55.150 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 116288 cycles
+number of packets: 1
+Latency: 29.440 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 172497 cycles
+number of packets: 1
+Latency: 43.670 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 231667 cycles
+number of packets: 1
+Latency: 58.650 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 111192 cycles
+number of packets: 1
+Latency: 28.150 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 142595 cycles
+number of packets: 1
+Latency: 36.100 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 120791 cycles
+number of packets: 1
+Latency: 30.580 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 162740 cycles
+number of packets: 1
+Latency: 41.200 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 155985 cycles
+number of packets: 1
+Latency: 39.490 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 206585 cycles
+number of packets: 1
+Latency: 52.300 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 135604 cycles
+number of packets: 1
+Latency: 34.330 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 505797 cycles
+number of packets: 1
+Latency: 128.050 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 117789 cycles
+number of packets: 1
+Latency: 29.820 µs
+IPV6 packet sent
+packet length: 112
+Payload size: 18
+Latency = 276066 cycles
+number of packets: 1
+Latency: 69.890 µs
+IPV6 packet sent
+^C
+Script done on 2025-02-24 02:20:31+03:00 [COMMAND_EXIT_CODE="130"]

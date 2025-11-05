@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "stdio.h": "c",
+        "rte_udp.h": "c",
+        "inet.h": "c"
+    }
+}
