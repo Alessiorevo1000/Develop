@@ -22,11 +22,11 @@
 #include <stdalign.h>
 #include <stdlib.h>
 
-#define RX_RING_SIZE 2048
-#define TX_RING_SIZE 2048
+#define RX_RING_SIZE 1024
+#define TX_RING_SIZE 1024
 #define NUM_MBUFS 8191
 #define MBUF_CACHE_SIZE 250
-#define BURST_SIZE 256
+#define BURST_SIZE 32
 #define CUSTOM_HEADER_TYPE 0x0833
 
 #define HMAC_MAX_LENGTH 32 // Truncate HMAC to 32 bytes if needed
@@ -179,84 +179,53 @@ static uint16_t calc_latency(uint16_t port, uint16_t qidx __rte_unused,
 //////////////////////////////////////////////////////////////
 
 // Initialize a port
-static inline int
-port_init(uint16_t port, struct rte_mempool *mbuf_pool)
-{
-	struct rte_eth_conf port_conf;
-	const uint16_t rx_rings = 1, tx_rings = 1;
-	uint16_t nb_rxd = RX_RING_SIZE;
-	uint16_t nb_txd = TX_RING_SIZE;
-	int retval;
-	uint16_t q;
-	struct rte_eth_dev_info dev_info;
-	struct rte_eth_txconf txconf;
+static int port_init(uint16_t port, struct rte_mempool *mbuf_pool) {
+  struct rte_eth_conf port_conf = {0};
+  const uint16_t rx_rings = 1, tx_rings = 1;
+  int retval;
+  uint16_t q;
+  struct rte_eth_dev_info dev_info;
 
-	if (!rte_eth_dev_is_valid_port(port))
-		return -1;
+  retval = rte_eth_dev_info_get(port, &dev_info);
+  if (retval != 0) {
+    printf("Error during getting device (port %u) info: %s\n", port,
+           strerror(-retval));
 
-	memset(&port_conf, 0, sizeof(struct rte_eth_conf));
+    return retval;
+  }
+  if (dev_info.tx_offload_capa & RTE_ETH_TX_OFFLOAD_MBUF_FAST_FREE)
+    port_conf.txmode.offloads |= RTE_ETH_TX_OFFLOAD_MBUF_FAST_FREE;
 
-	retval = rte_eth_dev_info_get(port, &dev_info);
-	if (retval != 0) {
-		printf("Error during getting device (port %u) info: %s\n",
-				port, strerror(-retval));
-		return retval;
-	}
+  // Configure the Ethernet device
+  retval = rte_eth_dev_configure(port, rx_rings, tx_rings, &port_conf);
+  if (retval != 0)
+    return retval;
 
-	if (dev_info.tx_offload_capa & RTE_ETH_TX_OFFLOAD_MBUF_FAST_FREE)
-		port_conf.txmode.offloads |=
-			RTE_ETH_TX_OFFLOAD_MBUF_FAST_FREE;
+  // Allocate and set up RX queues
+  for (q = 0; q < rx_rings; q++) {
+    retval = rte_eth_rx_queue_setup(
+        port, q, RX_RING_SIZE, rte_eth_dev_socket_id(port), NULL, mbuf_pool);
+    if (retval < 0)
+      return retval;
+  }
 
-	/* Configure the Ethernet device. */
-	retval = rte_eth_dev_configure(port, rx_rings, tx_rings, &port_conf);
-	if (retval != 0)
-		return retval;
+  // Allocate and set up TX queues
+  for (q = 0; q < tx_rings; q++) {
+    retval = rte_eth_tx_queue_setup(port, q, TX_RING_SIZE,
+                                    rte_eth_dev_socket_id(port), NULL);
+    if (retval < 0)
+      return retval;
+  }
 
-	retval = rte_eth_dev_adjust_nb_rx_tx_desc(port, &nb_rxd, &nb_txd);
-	if (retval != 0)
-		return retval;
+  // Start the Ethernet port
+  retval = rte_eth_dev_start(port);
+  if (retval < 0)
+    return retval;
 
-	/* Allocate and set up 1 RX queue per Ethernet port. */
-	for (q = 0; q < rx_rings; q++) {
-		retval = rte_eth_rx_queue_setup(port, q, nb_rxd,
-				rte_eth_dev_socket_id(port), NULL, mbuf_pool);
-		if (retval < 0)
-			return retval;
-	}
+  // Enable RX in promiscuous mode for the port
+  rte_eth_promiscuous_enable(port);
 
-	txconf = dev_info.default_txconf;
-	txconf.offloads = port_conf.txmode.offloads;
-	/* Allocate and set up 1 TX queue per Ethernet port. */
-	for (q = 0; q < tx_rings; q++) {
-		retval = rte_eth_tx_queue_setup(port, q, nb_txd,
-				rte_eth_dev_socket_id(port), &txconf);
-		if (retval < 0)
-			return retval;
-	}
-
-	/* Starting Ethernet port. 8< */
-	retval = rte_eth_dev_start(port);
-	/* >8 End of starting of ethernet port. */
-	if (retval < 0)
-		return retval;
-
-	/* Display the port MAC address. */
-	struct rte_ether_addr addr;
-	retval = rte_eth_macaddr_get(port, &addr);
-	if (retval != 0)
-		return retval;
-
-	printf("Port %u MAC: %02" PRIx8 " %02" PRIx8 " %02" PRIx8
-			   " %02" PRIx8 " %02" PRIx8 " %02" PRIx8 "\n",
-			port, RTE_ETHER_ADDR_BYTES(&addr));
-
-	/* Enable RX in promiscuous mode for the Ethernet device. */
-	retval = rte_eth_promiscuous_enable(port);
-	/* End of setting RX port in promiscuous mode. */
-	if (retval != 0)
-		return retval;
-
-	return 0;
+  return 0;
 }
 
 int calculate_hmac(uint8_t *src_addr, // Source IPv6 address (16 bytes)
@@ -346,9 +315,7 @@ int decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,
 }
 
 int decrypt_pvf(uint8_t *k_pot_in, uint8_t *nonce, uint8_t pvf_out[32]) {
-  // k_pot_in is a 2d array of strings holding statically allocated keys for the
-  // nodes. In this proof of concept there is only one middle node and an egress
-  // node so the shape is [2][key-length]
+  // Decrypt once with the node's key (matching middlenode implementation)
   uint8_t plaintext[128];
   int cipher_len = 32;
   printf("\n----------Decrypting----------\n");
@@ -362,11 +329,12 @@ int decrypt_pvf(uint8_t *k_pot_in, uint8_t *nonce, uint8_t pvf_out[32]) {
   memcpy(pvf_out, plaintext, 32);
   printf("Decrypted text is : \n");
   BIO_dump_fp(stdout, (const char *)pvf_out, dec_len);
+  return 0;
 }
 
 int compare_hmac(struct hmac_tlv *hmac, uint8_t *hmac_out,
                  struct rte_mbuf *mbuf) {
-  if (strncmp(hmac->hmac_value, hmac_out, 32) != 0) {
+  if (memcmp(hmac->hmac_value, hmac_out, 32) != 0) {
     printf("The decrypted hmac is not the same as the computed hmac\n");
     printf("dropping the packet\n");
     rte_pktmbuf_free(mbuf);
@@ -397,8 +365,9 @@ int process_ip6_with_srh(struct rte_ether_hdr *eth_hdr, struct rte_mbuf *mbuf,
     struct pot_tlv *pot;
     hmac = (struct hmac_tlv *)(srh + 1);
     pot = (struct pot_tlv *)(hmac + 1);
-    // The key of this node (middle)
-    uint8_t k_pot_in[32] = "qqwwqqwwqqwwqqwwqqwwqqwwqqwwqqw";
+
+    // The key of this node (egress) - same as middlenode
+    uint8_t k_pot_in[32] = "eerreerreerreerreerreerreerreer";
     uint8_t k_hmac_ie[] = "my-hmac-key-for-pvf-calculation";
 
     // Display source and destination MAC addresses
@@ -438,8 +407,8 @@ int process_ip6_with_srh(struct rte_ether_hdr *eth_hdr, struct rte_mbuf *mbuf,
     for (int i = 0; i < 32; i++) {
       printf("%02x", pot->encrypted_hmac[i]);
     }
-    // decrypyt one time with the key of node
-    //  first declare the value to store decrypted pvf
+    // Decrypt once with the key of this node (egress)
+    // first declare the value to store decrypted pvf
     uint8_t hmac_out[32];
     memcpy(hmac_out, pot->encrypted_hmac, 32);
     decrypt_pvf(k_pot_in, pot->nonce, hmac_out);
@@ -453,6 +422,7 @@ int process_ip6_with_srh(struct rte_ether_hdr *eth_hdr, struct rte_mbuf *mbuf,
     fflush(stdout);
     return retval;
   }
+  return 0; // Not segment routing packet
 }
 
 void process_ip4(struct rte_mbuf *mbuf, uint16_t nb_rx,
@@ -523,6 +493,21 @@ void remove_headers(struct rte_mbuf *pkt) {
 
   payload = (uint8_t *)rte_pktmbuf_append(pkt, payload_size);
   memcpy(payload, tmp_payload, payload_size);
+
+  // Restore the original next header from SRH
+  // If SRH has wrong value (43), inspect payload to determine protocol
+  if (srh->next_header == 43 || srh->next_header == 59) {
+    // Default to TCP for iperf traffic
+    printf("DEBUG: SRH next_header=%u is invalid, defaulting to TCP (6)\n",
+           srh->next_header);
+    ipv6_hdr->proto = 6; // TCP
+  } else {
+    ipv6_hdr->proto = srh->next_header;
+  }
+
+  // Correct the payload length in the IPv6 header
+  ipv6_hdr->payload_len = rte_cpu_to_be_16(payload_size);
+
   free(tmp_payload);
 }
 
@@ -558,7 +543,7 @@ void remove_headers_only_srh(struct rte_mbuf *pkt) {
 
 void l_loop1(uint16_t port_id, uint16_t tap_port_id) {
   struct rte_ether_addr tap_mac_addr = {
-      {0x08, 0x00, 0x27, 0x7D, 0xDD, 0x01}}; // mac of end node (new added wm)
+      {0x08, 0x00, 0x27, 0x74, 0xBF, 0x65}}; // mac of dtap (enp0s8)
   printf("Capturing packets on port %d...\n", port_id);
 
   // Packet capture loop
@@ -586,8 +571,7 @@ void l_loop1(uint16_t port_id, uint16_t tap_port_id) {
           // send the packet to eggress node
           if (retval == 1) {
             remove_headers(mbuf);
-            send_packet_to(tap_mac_addr, mbuf, tap_port_id);
-            /*
+            // send_packet_to(tap_mac_addr, mbuf, tap_port_id);
             if (rte_eth_tx_burst(tap_port_id, 0, &mbuf, 1) == 0) {
               printf("Error sending packet\n");
               rte_pktmbuf_free(mbuf);
@@ -595,15 +579,13 @@ void l_loop1(uint16_t port_id, uint16_t tap_port_id) {
               printf("IPV6 packet sent\n");
             }
             rte_pktmbuf_free(mbuf);
-            */
           }
           printf("\n###########################################################"
                  "################\n");
           break;
         case 1:
           printf("All operations are bypassed. \n");
-          send_packet_to(tap_mac_addr, mbuf, tap_port_id);
-          /*
+          // send_packet_to(tap_mac_addr, mbuf, tap_port_id);
           if (rte_eth_tx_burst(tap_port_id, 0, &mbuf, 1) == 0) {
             printf("Error sending packet\n");
             rte_pktmbuf_free(mbuf);
@@ -611,13 +593,11 @@ void l_loop1(uint16_t port_id, uint16_t tap_port_id) {
             printf("IPV6 packet sent\n");
           }
           rte_pktmbuf_free(mbuf);
-          */
           break;
 
         case 2:
           remove_headers_only_srh(mbuf);
-          send_packet_to(tap_mac_addr, mbuf, tap_port_id);
-          /*
+          // send_packet_to(tap_mac_addr, mbuf, tap_port_id);
           if (rte_eth_tx_burst(tap_port_id, 0, &mbuf, 1) == 0) {
             printf("Error sending packet\n");
             rte_pktmbuf_free(mbuf);
@@ -625,8 +605,7 @@ void l_loop1(uint16_t port_id, uint16_t tap_port_id) {
             printf("IPV6 packet sent\n");
           }
           rte_pktmbuf_free(mbuf);
-          */
-          break;
+
         default:
           break;
         }
@@ -768,7 +747,7 @@ int main(int argc, char *argv[]) {
   // lcore_id = rte_get_next_lcore(-1, 1, 0);
   // rte_eal_remote_launch(lcore_main_forward, (void *)ports, lcore_id);
   lcore_id = rte_get_next_lcore(lcore_id, 1, 0);
-  // rte_eal_remote_launch(lcore_main_forward2, (void *)ports, lcore_id);
+  rte_eal_remote_launch(lcore_main_forward2, (void *)ports, lcore_id);
   lcore_main_forward((void *)ports);
   // rte_eal_mp_wait_lcore();
 

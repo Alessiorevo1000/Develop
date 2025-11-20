@@ -1,7 +1,6 @@
 // Melih
 #include <arpa/inet.h>
 #include <inttypes.h>
-#include <openssl/rand.h>
 #include <rte_eal.h>
 #include <rte_ethdev.h>
 #include <rte_ether.h>
@@ -11,7 +10,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include "crypto_dpdk.h"
 
 #include <getopt.h>
 #include <rte_cycles.h>
@@ -20,10 +18,16 @@
 #include <stdalign.h>
 #include <stdlib.h>
 
+// DPDK Cryptodev includes
+#include <rte_crypto.h>
+#include <rte_cryptodev.h>
+#include <rte_mempool.h>
+
 #define RX_RING_SIZE 2048
 #define TX_RING_SIZE 2048
 #define NUM_MBUFS 8191
 #define MBUF_CACHE_SIZE 250
+#define POOL_CACHE_SIZE 128
 #define BURST_SIZE 256
 #define CUSTOM_HEADER_TYPE 0x0833
 #define SID_NO                                                                 \
@@ -32,9 +36,145 @@
 #define EXTRA_SPACE 128
 
 #define HMAC_MAX_LENGTH 32 // Truncate HMAC to 32 bytes if needed
+#define MAX_CRYPTO_SESSIONS 16
+#define CRYPTO_OP_POOL_SIZE 1024
+#define AES_KEY_LENGTH 32 // AES-256
 
 static int operation_bypass_bit = 0;
 
+// Global cryptodev variables
+static uint8_t cdev_id = 0;
+static struct rte_mempool *crypto_op_pool = NULL;
+static struct rte_mempool *session_pool = NULL;
+static struct rte_mempool *crypto_mbuf_pool = NULL;
+static void *hmac_session = NULL;
+static void *cipher_session = NULL;
+
+// Function to initialize cryptodev
+static int init_cryptodev(uint8_t socket_id) {
+  struct rte_cryptodev_info dev_info;
+  unsigned int session_size;
+
+  // Check for available crypto devices
+  uint8_t cdev_count = rte_cryptodev_count();
+  printf("Found %d crypto device(s)\n", cdev_count);
+
+  if (cdev_count == 0) {
+    printf("ERROR: No crypto devices available!\n");
+    printf("Run with: --vdev=crypto_aesni_mb\n");
+    return -1;
+  }
+
+  // Get device info
+  rte_cryptodev_info_get(cdev_id, &dev_info);
+  printf("Using crypto device: %s\n", dev_info.driver_name);
+
+  // Get session size - needed for session pool creation
+  session_size = rte_cryptodev_sym_get_private_session_size(cdev_id);
+  printf("Session private data size: %u bytes\n", session_size);
+
+  // Create crypto mbuf pool
+  crypto_mbuf_pool = rte_pktmbuf_pool_create(
+      "crypto_mbuf_pool", NUM_MBUFS, MBUF_CACHE_SIZE, 0,
+      RTE_MBUF_DEFAULT_BUF_SIZE + EXTRA_SPACE, socket_id);
+  if (crypto_mbuf_pool == NULL) {
+    printf("Cannot create crypto mbuf pool\n");
+    return -1;
+  }
+
+  // Create crypto operation pool
+  crypto_op_pool = rte_crypto_op_pool_create(
+      "crypto_op_pool", RTE_CRYPTO_OP_TYPE_SYMMETRIC, CRYPTO_OP_POOL_SIZE,
+      POOL_CACHE_SIZE, HMAC_MAX_LENGTH, socket_id);
+  if (crypto_op_pool == NULL) {
+    printf("Cannot create crypto op pool\n");
+    return -1;
+  }
+
+  // Create session pool using rte_cryptodev_sym_session_pool_create
+  // In DPDK 23.11, we need to use the proper session pool creation with correct
+  // size
+  session_pool = rte_cryptodev_sym_session_pool_create(
+      "session_pool", MAX_CRYPTO_SESSIONS, session_size, 0, 0, socket_id);
+  if (session_pool == NULL) {
+    printf("Cannot create session pool (errno=%d)\n", rte_errno);
+    return -1;
+  }
+  printf("Created session pool successfully\n");
+
+  // Configure cryptodev
+  struct rte_cryptodev_config conf = {
+      .nb_queue_pairs = 1,
+      .socket_id = socket_id,
+      .ff_disable = 0,
+  };
+
+  if (rte_cryptodev_configure(cdev_id, &conf) < 0) {
+    printf("Failed to configure cryptodev\n");
+    return -1;
+  }
+
+  // Setup queue pair - mp_session may not be needed for all drivers
+  struct rte_cryptodev_qp_conf qp_conf = {
+      .nb_descriptors = 2048,
+      .mp_session = NULL, // Set to NULL - driver will manage sessions
+  };
+
+  if (rte_cryptodev_queue_pair_setup(cdev_id, 0, &qp_conf, socket_id) < 0) {
+    printf("Failed to setup queue pair\n");
+    return -1;
+  }
+  printf("Queue pair setup successfully\n");
+
+  // Start cryptodev
+  if (rte_cryptodev_start(cdev_id) < 0) {
+    printf("Failed to start cryptodev\n");
+    return -1;
+  }
+  printf("Cryptodev started successfully\n");
+
+  // Create HMAC session
+  uint8_t hmac_key[] = "my-hmac-key-for-pvf-calculation";
+  struct rte_crypto_sym_xform auth_xform = {
+      .next = NULL,
+      .type = RTE_CRYPTO_SYM_XFORM_AUTH,
+      .auth = {.op = RTE_CRYPTO_AUTH_OP_GENERATE,
+               .algo = RTE_CRYPTO_AUTH_SHA256_HMAC,
+               .key = {.data = hmac_key, .length = 32},
+               .digest_length = HMAC_MAX_LENGTH}};
+
+  hmac_session =
+      rte_cryptodev_sym_session_create(cdev_id, &auth_xform, session_pool);
+  if (hmac_session == NULL) {
+    printf("Failed to create HMAC session (errno=%d)\n", rte_errno);
+    return -1;
+  }
+  printf("HMAC session created successfully\n");
+
+  // Create cipher session for AES-256-CTR
+  uint8_t cipher_key[AES_KEY_LENGTH] =
+      "qqwwqqwwqqwwqqwwqqwwqqwwqqwwqqw"; // Default key
+  struct rte_crypto_sym_xform cipher_xform = {
+      .next = NULL,
+      .type = RTE_CRYPTO_SYM_XFORM_CIPHER,
+      .cipher = {.op = RTE_CRYPTO_CIPHER_OP_ENCRYPT,
+                 .algo = RTE_CRYPTO_CIPHER_AES_CTR,
+                 .key = {.data = cipher_key, .length = AES_KEY_LENGTH},
+                 .iv = {.offset = offsetof(struct rte_crypto_op, sym) +
+                                  sizeof(struct rte_crypto_sym_op),
+                        .length = NONCE_LENGTH}}};
+
+  cipher_session =
+      rte_cryptodev_sym_session_create(cdev_id, &cipher_xform, session_pool);
+  if (cipher_session == NULL) {
+    printf("Failed to create cipher session (errno=%d)\n", rte_errno);
+    return -1;
+  }
+  printf("Cipher session created successfully\n");
+
+  printf("Cryptodev initialized successfully\n");
+  return 0;
+}
 struct ipv6_srh {
   uint8_t next_header;  // Next header type
   uint8_t hdr_ext_len;  // Length of SRH in 8-byte units
@@ -125,7 +265,7 @@ static uint16_t calc_latency(uint16_t port, uint16_t qidx __rte_unused,
   double latency_us = (double)latency_numbers.total_cycles / rte_get_tsc_hz() *
                       1e6; // Convert to microseconds
 
-  printf("Latency: %.3f µs\n", latency_us);
+  printf("Latency: %.3f Âµs\n", latency_us);
 
   latency_numbers.total_cycles = 0;
   latency_numbers.total_queue_cycles = 0;
@@ -137,84 +277,81 @@ static uint16_t calc_latency(uint16_t port, uint16_t qidx __rte_unused,
 //////////////////////////////////////////////////////////////
 
 // Initialize a port
-static inline int
-port_init(uint16_t port, struct rte_mempool *mbuf_pool)
-{
-	struct rte_eth_conf port_conf;
-	const uint16_t rx_rings = 1, tx_rings = 1;
-	uint16_t nb_rxd = RX_RING_SIZE;
-	uint16_t nb_txd = TX_RING_SIZE;
-	int retval;
-	uint16_t q;
-	struct rte_eth_dev_info dev_info;
-	struct rte_eth_txconf txconf;
+static inline int port_init(uint16_t port, struct rte_mempool *mbuf_pool) {
+  struct rte_eth_conf port_conf;
+  const uint16_t rx_rings = 1, tx_rings = 1;
+  uint16_t nb_rxd = RX_RING_SIZE;
+  uint16_t nb_txd = TX_RING_SIZE;
+  int retval;
+  uint16_t q;
+  struct rte_eth_dev_info dev_info;
+  struct rte_eth_txconf txconf;
 
-	if (!rte_eth_dev_is_valid_port(port))
-		return -1;
+  if (!rte_eth_dev_is_valid_port(port))
+    return -1;
 
-	memset(&port_conf, 0, sizeof(struct rte_eth_conf));
+  memset(&port_conf, 0, sizeof(struct rte_eth_conf));
 
-	retval = rte_eth_dev_info_get(port, &dev_info);
-	if (retval != 0) {
-		printf("Error during getting device (port %u) info: %s\n",
-				port, strerror(-retval));
-		return retval;
-	}
+  retval = rte_eth_dev_info_get(port, &dev_info);
+  if (retval != 0) {
+    printf("Error during getting device (port %u) info: %s\n", port,
+           strerror(-retval));
+    return retval;
+  }
 
-	if (dev_info.tx_offload_capa & RTE_ETH_TX_OFFLOAD_MBUF_FAST_FREE)
-		port_conf.txmode.offloads |=
-			RTE_ETH_TX_OFFLOAD_MBUF_FAST_FREE;
+  if (dev_info.tx_offload_capa & RTE_ETH_TX_OFFLOAD_MBUF_FAST_FREE)
+    port_conf.txmode.offloads |= RTE_ETH_TX_OFFLOAD_MBUF_FAST_FREE;
 
-	/* Configure the Ethernet device. */
-	retval = rte_eth_dev_configure(port, rx_rings, tx_rings, &port_conf);
-	if (retval != 0)
-		return retval;
+  /* Configure the Ethernet device. */
+  retval = rte_eth_dev_configure(port, rx_rings, tx_rings, &port_conf);
+  if (retval != 0)
+    return retval;
 
-	retval = rte_eth_dev_adjust_nb_rx_tx_desc(port, &nb_rxd, &nb_txd);
-	if (retval != 0)
-		return retval;
+  retval = rte_eth_dev_adjust_nb_rx_tx_desc(port, &nb_rxd, &nb_txd);
+  if (retval != 0)
+    return retval;
 
-	/* Allocate and set up 1 RX queue per Ethernet port. */
-	for (q = 0; q < rx_rings; q++) {
-		retval = rte_eth_rx_queue_setup(port, q, nb_rxd,
-				rte_eth_dev_socket_id(port), NULL, mbuf_pool);
-		if (retval < 0)
-			return retval;
-	}
+  /* Allocate and set up 1 RX queue per Ethernet port. */
+  for (q = 0; q < rx_rings; q++) {
+    retval = rte_eth_rx_queue_setup(
+        port, q, nb_rxd, rte_eth_dev_socket_id(port), NULL, mbuf_pool);
+    if (retval < 0)
+      return retval;
+  }
 
-	txconf = dev_info.default_txconf;
-	txconf.offloads = port_conf.txmode.offloads;
-	/* Allocate and set up 1 TX queue per Ethernet port. */
-	for (q = 0; q < tx_rings; q++) {
-		retval = rte_eth_tx_queue_setup(port, q, nb_txd,
-				rte_eth_dev_socket_id(port), &txconf);
-		if (retval < 0)
-			return retval;
-	}
+  txconf = dev_info.default_txconf;
+  txconf.offloads = port_conf.txmode.offloads;
+  /* Allocate and set up 1 TX queue per Ethernet port. */
+  for (q = 0; q < tx_rings; q++) {
+    retval = rte_eth_tx_queue_setup(port, q, nb_txd,
+                                    rte_eth_dev_socket_id(port), &txconf);
+    if (retval < 0)
+      return retval;
+  }
 
-	/* Starting Ethernet port. 8< */
-	retval = rte_eth_dev_start(port);
-	/* >8 End of starting of ethernet port. */
-	if (retval < 0)
-		return retval;
+  /* Starting Ethernet port. 8< */
+  retval = rte_eth_dev_start(port);
+  /* >8 End of starting of ethernet port. */
+  if (retval < 0)
+    return retval;
 
-	/* Display the port MAC address. */
-	struct rte_ether_addr addr;
-	retval = rte_eth_macaddr_get(port, &addr);
-	if (retval != 0)
-		return retval;
+  /* Display the port MAC address. */
+  struct rte_ether_addr addr;
+  retval = rte_eth_macaddr_get(port, &addr);
+  if (retval != 0)
+    return retval;
 
-	printf("Port %u MAC: %02" PRIx8 " %02" PRIx8 " %02" PRIx8
-			   " %02" PRIx8 " %02" PRIx8 " %02" PRIx8 "\n",
-			port, RTE_ETHER_ADDR_BYTES(&addr));
+  printf("Port %u MAC: %02" PRIx8 " %02" PRIx8 " %02" PRIx8 " %02" PRIx8
+         " %02" PRIx8 " %02" PRIx8 "\n",
+         port, RTE_ETHER_ADDR_BYTES(&addr));
 
-	/* Enable RX in promiscuous mode for the Ethernet device. */
-	retval = rte_eth_promiscuous_enable(port);
-	/* End of setting RX port in promiscuous mode. */
-	if (retval != 0)
-		return retval;
+  /* Enable RX in promiscuous mode for the Ethernet device. */
+  retval = rte_eth_promiscuous_enable(port);
+  /* End of setting RX port in promiscuous mode. */
+  if (retval != 0)
+    return retval;
 
-	return 0;
+  return 0;
 }
 
 void display_mac_address(uint16_t port_id) {
@@ -421,7 +558,10 @@ int calculate_hmac(uint8_t *src_addr, // Source IPv6 address (16 bytes)
   // Input text buffer for HMAC computation
   size_t segment_list_len = sizeof(srh->segments);
 
-  size_t input_len = 16 + 1 + 1 + 2 + 4 + segment_list_len;
+  size_t input_len =
+      16 + 1 + 1 + 2 + 4 + segment_list_len; // IPv6 Source + Last Entry + Flags
+                                             // + Length + Key ID + Segment List
+
   uint8_t input[input_len];
 
   // Fill the input buffer
@@ -432,7 +572,8 @@ int calculate_hmac(uint8_t *src_addr, // Source IPv6 address (16 bytes)
   input[offset++] = srh->last_entry; // Last Entry
   input[offset++] = srh->flags;      // Flags (D-bit + Reserved)
 
-  input[offset++] = 0; // Placeholder for Length (2 bytes)
+  input[offset++] =
+      0; // Placeholder for Length (2 bytes, can be zero for this step)
   input[offset++] = 0;
 
   memcpy(input + offset, &hmac_tlv->hmac_key_id,
@@ -442,11 +583,77 @@ int calculate_hmac(uint8_t *src_addr, // Source IPv6 address (16 bytes)
   memcpy(input + offset, srh->segments, segment_list_len); // Segment List
   offset += segment_list_len;
 
-  // Use DPDK Cryptodev for hardware-accelerated HMAC
-  if (crypto_dpdk_hmac_sha256(input, input_len, key, key_len, hmac_out) < 0) {
-    printf("ERROR: HMAC computation failed\n");
+  // Perform HMAC computation using DPDK Cryptodev
+  struct rte_crypto_op *op;
+  struct rte_mbuf *m;
+
+  // Allocate crypto operation
+  if (rte_crypto_op_bulk_alloc(crypto_op_pool, RTE_CRYPTO_OP_TYPE_SYMMETRIC,
+                               &op, 1) == 0) {
+    rte_log(RTE_LOG_ERR, RTE_LOGTYPE_USER1,
+            "Not enough crypto operations available\n");
     return -1;
   }
+
+  // Allocate mbuf for data
+  m = rte_pktmbuf_alloc(crypto_mbuf_pool);
+  if (m == NULL) {
+    rte_log(RTE_LOG_ERR, RTE_LOGTYPE_USER1, "Failed to allocate mbuf\n");
+    rte_crypto_op_free(op);
+    return -1;
+  }
+
+  // Copy input data to mbuf
+  char *mbuf_data = rte_pktmbuf_append(m, input_len);
+  if (mbuf_data == NULL) {
+    rte_log(RTE_LOG_ERR, RTE_LOGTYPE_USER1, "Failed to append data to mbuf\n");
+    rte_pktmbuf_free(m);
+    rte_crypto_op_free(op);
+    return -1;
+  }
+  memcpy(mbuf_data, input, input_len);
+
+  op->sym->m_src = m;
+  op->sym->auth.data.offset = 0;
+  op->sym->auth.data.length = input_len;
+
+  // Set digest pointer
+  op->sym->auth.digest.data = hmac_out;
+  op->sym->auth.digest.phys_addr = rte_mem_virt2iova(hmac_out);
+
+  // Attach session
+  if (rte_crypto_op_attach_sym_session(op, hmac_session) < 0) {
+    rte_log(RTE_LOG_ERR, RTE_LOGTYPE_USER1, "Failed to attach session\n");
+    rte_pktmbuf_free(m);
+    rte_crypto_op_free(op);
+    return -1;
+  }
+
+  // Enqueue and dequeue
+  uint16_t num_enqueued = rte_cryptodev_enqueue_burst(cdev_id, 0, &op, 1);
+  if (num_enqueued == 0) {
+    rte_log(RTE_LOG_ERR, RTE_LOGTYPE_USER1, "Failed to enqueue crypto op\n");
+    rte_pktmbuf_free(m);
+    rte_crypto_op_free(op);
+    return -1;
+  }
+
+  struct rte_crypto_op *dequeued_op;
+  uint16_t num_dequeued = 0;
+  while (num_dequeued == 0) {
+    num_dequeued = rte_cryptodev_dequeue_burst(cdev_id, 0, &dequeued_op, 1);
+  }
+
+  if (dequeued_op->status != RTE_CRYPTO_OP_STATUS_SUCCESS) {
+    rte_log(RTE_LOG_ERR, RTE_LOGTYPE_USER1, "Crypto operation failed\n");
+    rte_pktmbuf_free(m);
+    rte_crypto_op_free(dequeued_op);
+    return -1;
+  }
+
+  // Cleanup
+  rte_pktmbuf_free(m);
+  rte_crypto_op_free(dequeued_op);
 
   return 0; // Success
 }
@@ -455,9 +662,9 @@ int calculate_hmac(uint8_t *src_addr, // Source IPv6 address (16 bytes)
 // k_hmac_ie
 
 int generate_nonce(uint8_t nonce[NONCE_LENGTH]) {
-  if (RAND_bytes(nonce, NONCE_LENGTH) != 1) {
-    printf("Error: Failed to generate random nonce.\n");
-    return 1;
+  // Generate random nonce using rte_rand()
+  for (int i = 0; i < NONCE_LENGTH; i++) {
+    nonce[i] = (uint8_t)(rte_rand() & 0xFF);
   }
   // printf("Generated Nonce: ");
   for (int i = 0; i < NONCE_LENGTH; i++) {
@@ -466,18 +673,91 @@ int generate_nonce(uint8_t nonce[NONCE_LENGTH]) {
   // printf("\n");
   return 0;
 }
-// Encrypt function now uses DPDK Cryptodev for hardware acceleration
 int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
             unsigned char *iv, unsigned char *ciphertext) {
-  // Use DPDK cryptodev instead of OpenSSL
-  return crypto_dpdk_encrypt(plaintext, plaintext_len, key, iv, ciphertext);
+  struct rte_crypto_op *op;
+  struct rte_mbuf *m;
+
+  // Allocate crypto operation
+  if (rte_crypto_op_bulk_alloc(crypto_op_pool, RTE_CRYPTO_OP_TYPE_SYMMETRIC,
+                               &op, 1) == 0) {
+    printf("Not enough crypto operations available\n");
+    return -1;
+  }
+
+  // Allocate mbuf for data
+  m = rte_pktmbuf_alloc(crypto_mbuf_pool);
+  if (m == NULL) {
+    printf("Failed to allocate mbuf\n");
+    rte_crypto_op_free(op);
+    return -1;
+  }
+
+  // Copy input data to mbuf
+  char *mbuf_data = rte_pktmbuf_append(m, plaintext_len);
+  if (mbuf_data == NULL) {
+    printf("Failed to append data to mbuf\n");
+    rte_pktmbuf_free(m);
+    rte_crypto_op_free(op);
+    return -1;
+  }
+  memcpy(mbuf_data, plaintext, plaintext_len);
+
+  op->sym->m_src = m;
+  op->sym->cipher.data.offset = 0;
+  op->sym->cipher.data.length = plaintext_len;
+
+  // Set IV - copy to the operation's private data area
+  uint8_t *iv_ptr = rte_crypto_op_ctod_offset(
+      op, uint8_t *,
+      offsetof(struct rte_crypto_op, sym) + sizeof(struct rte_crypto_sym_op));
+  memcpy(iv_ptr, iv, NONCE_LENGTH);
+
+  // Attach session
+  if (rte_crypto_op_attach_sym_session(op, cipher_session) < 0) {
+    printf("Failed to attach cipher session\n");
+    rte_pktmbuf_free(m);
+    rte_crypto_op_free(op);
+    return -1;
+  }
+
+  // Enqueue and dequeue
+  uint16_t num_enqueued = rte_cryptodev_enqueue_burst(cdev_id, 0, &op, 1);
+  if (num_enqueued == 0) {
+    printf("Failed to enqueue crypto op\n");
+    rte_pktmbuf_free(m);
+    rte_crypto_op_free(op);
+    return -1;
+  }
+
+  struct rte_crypto_op *dequeued_op;
+  uint16_t num_dequeued = 0;
+  while (num_dequeued == 0) {
+    num_dequeued = rte_cryptodev_dequeue_burst(cdev_id, 0, &dequeued_op, 1);
+  }
+
+  if (dequeued_op->status != RTE_CRYPTO_OP_STATUS_SUCCESS) {
+    printf("Crypto operation failed\n");
+    rte_pktmbuf_free(m);
+    rte_crypto_op_free(dequeued_op);
+    return -1;
+  }
+
+  // Copy encrypted data back
+  uint8_t *encrypted_data = rte_pktmbuf_mtod(m, uint8_t *);
+  memcpy(ciphertext, encrypted_data, plaintext_len);
+
+  // Cleanup
+  rte_pktmbuf_free(m);
+  rte_crypto_op_free(dequeued_op);
+
+  return plaintext_len;
 }
 
-// Decrypt function now uses DPDK Cryptodev for hardware acceleration
 int decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,
             unsigned char *iv, unsigned char *plaintext) {
-  // Use DPDK cryptodev instead of OpenSSL
-  return crypto_dpdk_decrypt(ciphertext, ciphertext_len, key, iv, plaintext);
+  // Decryption using AES-CTR is identical to encryption due to its nature
+  return encrypt(ciphertext, ciphertext_len, key, iv, plaintext);
 }
 
 void encrypt_pvf(uint8_t k_pot_in[SID_NO][HMAC_MAX_LENGTH], uint8_t *nonce,
@@ -486,56 +766,53 @@ void encrypt_pvf(uint8_t k_pot_in[SID_NO][HMAC_MAX_LENGTH], uint8_t *nonce,
   // nodes. In this proof of concept there is only one middle node and an egress
   // node so the shape is [2][key-length]
   uint8_t ciphertext[128];
-  printf("\n----------Encrypting with DPDK Cryptodev----------\n");
-  
+  uint8_t plaintext[128];
+  printf("\n----------Encrypting----------\n");
   for (int i = 0; i < SID_NO; i++) {
-    // Use DPDK hardware-accelerated encryption
-    int cipher_len = crypto_dpdk_encrypt(hmac_out, HMAC_MAX_LENGTH, 
-                                         k_pot_in[i], nonce, ciphertext);
-    
-    if (cipher_len < 0) {
-      printf("ERROR: Encryption failed at iteration %d\n", i);
-      return;
+    // printf("---Iteration: %d---\n", i);
+    // printf("original text is:\n");
+    for (int j = 0; j < HMAC_MAX_LENGTH; j++) {
+      printf("%02x", hmac_out[j]);
     }
-    
+    // printf("\n");
+    // printf("PVF size : %ld\n", strnlen(hmac_out, HMAC_MAX_LENGTH));
+    int cipher_len =
+        encrypt(hmac_out, HMAC_MAX_LENGTH, k_pot_in[i], nonce, ciphertext);
+    // printf("The cipher length is : %d\n", cipher_len);
+
+    // printf("Ciphertext is : \n");
+    // BIO_dump_fp(stdout, (const char *)ciphertext, cipher_len);
     memcpy(hmac_out, ciphertext, 32);
+    // printf("\n");
   }
-  printf("Encryption complete for %d nodes\n", SID_NO);
 }
 
 int decrypt_pvf(uint8_t k_pot_in[SID_NO][HMAC_MAX_LENGTH], uint8_t *nonce,
                 uint8_t pvf_out[32]) {
+  // k_pot_in is a 2d array of strings holding statically allocated keys for the
+  // nodes. In this proof of concept there is only one middle node and an egress
+  // node so the shape is [2][key-length]
   uint8_t plaintext[128];
   int cipher_len = 32;
-  printf("\n----------Decrypting with DPDK Cryptodev----------\n");
-  
+  printf("\n----------Decrypting----------\n");
   for (int i = SID_NO - 1; i >= 0; i--) {
     printf("---Iteration: %d---\n", i);
-    
-    // Use DPDK hardware-accelerated decryption
-    int dec_len = crypto_dpdk_decrypt(pvf_out, cipher_len, k_pot_in[i], nonce, plaintext);
-    
-    if (dec_len < 0) {
-      printf("ERROR: Decryption failed at iteration %d\n", i);
-      return -1;
-    }
-    
+    int dec_len = decrypt(pvf_out, cipher_len, k_pot_in[i], nonce, plaintext);
     printf("Dec len %d\n", dec_len);
-    printf("Encrypted text:\n");
+    printf("original text is:\n");
     for (int j = 0; j < HMAC_MAX_LENGTH; j++) {
       printf("%02x", pvf_out[j]);
     }
     printf("\n");
-    
     memcpy(pvf_out, plaintext, 32);
-    
-    printf("Decrypted text:\n");
-    for (int j = 0; j < 32; j++) {
-      printf("%02x", pvf_out[j]);
+    printf("Decrypted text is : \n");
+    for (int j = 0; j < dec_len; j++) {
+      printf("%02x ", pvf_out[j]);
+      if ((j + 1) % 16 == 0)
+        printf("\n");
     }
     printf("\n");
   }
-  
   return 0;
 }
 
@@ -566,7 +843,7 @@ int l_loop1(uint16_t rx_port_id, uint16_t tx_port_id) {
           printf("\n#######################################################\n");
           // 2 options here the packets already containing srh and the packets
           // does not contain
-          // TODO CHECK İP6 hdr if next_header field is 43 to determine if the
+          // TODO CHECK Ä°P6 hdr if next_header field is 43 to determine if the
           // packet is srh
           add_custom_header6(mbuf);
 
@@ -574,7 +851,7 @@ int l_loop1(uint16_t rx_port_id, uint16_t tx_port_id) {
           struct hmac_tlv *hmac;
           struct pot_tlv *pot;
           // realigning the hmac header since we added new headers the address
-          // is changed(bu alignment ı beğenmiyorum değiştir)
+          // is changed(bu alignment Ä± beÄŸenmiyorum deÄŸiÅŸtir)
           struct rte_ether_hdr *eth_hdr =
               rte_pktmbuf_mtod(mbuf, struct rte_ether_hdr *);
           struct rte_ipv6_hdr *ipv6_hdr = (struct rte_ipv6_hdr *)(eth_hdr + 1);
@@ -588,7 +865,7 @@ int l_loop1(uint16_t rx_port_id, uint16_t tx_port_id) {
           size_t key_len = strlen((char *)k_hmac_ie);
 
           // FOR PROOF OF CONCEPT THIS IS NOT DYNAMIC
-          // NORMALLY THİS SHOULD BE DYNAMIC ACCORDING TO THE NODES IN THE
+          // NORMALLY THÄ°S SHOULD BE DYNAMIC ACCORDING TO THE NODES IN THE
           // TOPOLOGY OR SPECIFIALLY ESPECTED PATH OF THE PACKET can use malloc
           // *
           char target_ip[16];
@@ -618,8 +895,7 @@ int l_loop1(uint16_t rx_port_id, uint16_t tx_port_id) {
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
-                ;
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"};
             memcpy(k_pot_in, temp, sizeof(temp));
           } else if (strncmp(target_ip, ip1, INET6_ADDRSTRLEN) == 0) {
             uint8_t temp[SID_NO][HMAC_MAX_LENGTH] = {
@@ -724,7 +1000,7 @@ void l_loop2(uint16_t rx_port_id, uint16_t tx_port_id) {
       switch (rte_be_to_cpu_16(eth_hdr->ether_type)) {
       case RTE_ETHER_TYPE_IPV4:
         break;
-      case RTE_ETHER_TYPE_IPV6:
+      case RTE_ETHER_TYPE_IPV6: {
         struct rte_ipv6_hdr *ipv6_hdr = (struct rte_ipv6_hdr *)(eth_hdr + 1);
         char target_ip[16];
         if (inet_ntop(AF_INET6, &ipv6_hdr->src_addr, target_ip,
@@ -744,6 +1020,7 @@ void l_loop2(uint16_t rx_port_id, uint16_t tx_port_id) {
           send_packet_to(traffic_mac_addr, mbuf, tx_port_id);
         }
         break;
+      }
       default:
         break;
       }
@@ -791,6 +1068,14 @@ int main(int argc, char *argv[]) {
   if (ret < 0)
     rte_exit(EXIT_FAILURE, "Error with EAL initialization\n");
 
+  printf("EAL initialization completed successfully\n");
+  fflush(stdout);
+
+  // Initialize cryptodev
+  uint8_t socket_id = rte_socket_id();
+  if (init_cryptodev(socket_id) < 0)
+    rte_exit(EXIT_FAILURE, "Error with Cryptodev initialization\n");
+
   // Check that there is at least one port available
   uint16_t portcount = 0;
   if (rte_eth_dev_count_avail() == 0) {
@@ -827,18 +1112,6 @@ int main(int argc, char *argv[]) {
     display_mac_address(tx_port_id);
   }
 
-  // Initialize DPDK Cryptodev for hardware-accelerated crypto
-  printf("\n=== Initializing DPDK Cryptodev ===\n");
-  if (crypto_dpdk_init() < 0) {
-    printf("WARNING: Failed to initialize crypto device\n");
-    printf("Falling back to software crypto (if available)\n");
-    // Don't exit - some systems may not have crypto devices
-  }
-  
-  // Set mbuf pool for crypto operations
-  crypto_dpdk_set_mbuf_pool(mbuf_pool);
-  printf("=== Cryptodev initialization complete ===\n\n");
-
   // MAKE ALL INITIAL PRINTS HERE
   printf("TSC frequency: %" PRIu64 " Hz\n", rte_get_tsc_hz());
 
@@ -850,9 +1123,6 @@ int main(int argc, char *argv[]) {
   // rte_eal_remote_launch(lcore_main_forward2, (void *)ports, lcore_id);
   lcore_main_forward((void *)ports);
   // rte_eal_mp_wait_lcore();
-
-  // Cleanup crypto resources
-  crypto_dpdk_cleanup();
 
   return 0;
 }

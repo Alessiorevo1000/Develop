@@ -1,5 +1,10 @@
 #include <arpa/inet.h>
 #include <inttypes.h>
+#include <openssl/conf.h>
+#include <openssl/err.h>
+#include <openssl/evp.h>
+#include <openssl/hmac.h>
+#include <openssl/rand.h>
 #include <rte_eal.h>
 #include <rte_ethdev.h>
 #include <rte_ether.h>
@@ -9,7 +14,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include "crypto_dpdk.h"
 
 #include <getopt.h>
 #include <rte_cycles.h>
@@ -251,42 +255,51 @@ port_init(uint16_t port, struct rte_mempool *mbuf_pool)
 	return 0;
 }
 
-// Decrypt function now uses DPDK Cryptodev for hardware acceleration
 int decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,
             unsigned char *iv, unsigned char *plaintext) {
-  // Use DPDK cryptodev instead of OpenSSL
-  return crypto_dpdk_decrypt(ciphertext, ciphertext_len, key, iv, plaintext);
+  EVP_CIPHER_CTX *ctx;
+  int len;
+  int plaintext_len;
+
+  if (!(ctx = EVP_CIPHER_CTX_new())) {
+    printf("Context creation failed\n");
+  }
+  // Use counter mode
+  if (1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_ctr(), NULL, key, iv)) {
+    printf("Decryption initialization failed\n");
+  }
+  if (1 !=
+      EVP_DecryptUpdate(ctx, plaintext, &len, ciphertext, ciphertext_len)) {
+    printf("Decryption update failed\n");
+  }
+  plaintext_len = len;
+
+  if (1 != EVP_DecryptFinal_ex(ctx, plaintext + len, &len)) {
+    printf("Decryption finalization failed\n");
+  }
+  plaintext_len += len;
+
+  EVP_CIPHER_CTX_free(ctx);
+  return plaintext_len;
 }
 
 int decrypt_pvf(uint8_t *k_pot_in, uint8_t *nonce, uint8_t pvf_out[32]) {
+  // k_pot_in is a 2d array of strings holding statically allocated keys for the
+  // nodes. In this proof of concept there is only one middle node and an egress
+  // node so the shape is [2][key-length]
   uint8_t plaintext[128];
   int cipher_len = 32;
-  printf("\n----------Decrypting with DPDK Cryptodev----------\n");
-  
-  // Use DPDK hardware-accelerated decryption
-  int dec_len = crypto_dpdk_decrypt(pvf_out, cipher_len, k_pot_in, nonce, plaintext);
-  
-  if (dec_len < 0) {
-    printf("ERROR: Hardware decryption failed\n");
-    return -1;
-  }
-  
-  printf("Decryption successful, length: %d bytes\n", dec_len);
-  printf("Encrypted PVF: ");
+  printf("\n----------Decrypting----------\n");
+  int dec_len = decrypt(pvf_out, cipher_len, k_pot_in, nonce, plaintext);
+  printf("Dec len %d\n", dec_len);
+  printf("original text is:\n");
   for (int j = 0; j < 32; j++) {
     printf("%02x", pvf_out[j]);
   }
   printf("\n");
-  
   memcpy(pvf_out, plaintext, 32);
-  
-  printf("Decrypted PVF: ");
-  for (int j = 0; j < 32; j++) {
-    printf("%02x", plaintext[j]);
-  }
-  printf("\n");
-  
-  return 0;
+  printf("Decrypted text is : \n");
+  BIO_dump_fp(stdout, (const char *)pvf_out, dec_len);
 }
 
 void process_ip6_with_srh(struct rte_ether_hdr *eth_hdr, struct rte_mbuf *mbuf,
@@ -546,18 +559,6 @@ int main(int argc, char *argv[]) {
   if (mbuf_pool == NULL)
     rte_exit(EXIT_FAILURE, "Cannot create mbuf pool\n");
 
-  // Initialize DPDK Cryptodev for hardware-accelerated crypto
-  printf("\n=== Initializing DPDK Cryptodev ===\n");
-  if (crypto_dpdk_init() < 0) {
-    printf("WARNING: Failed to initialize crypto device\n");
-    printf("Falling back to software crypto (if available)\n");
-    // Don't exit - some systems may not have crypto devices
-  }
-  
-  // Set mbuf pool for crypto operations
-  crypto_dpdk_set_mbuf_pool(mbuf_pool);
-  printf("=== Cryptodev initialization complete ===\n\n");
-
   tsc_dynfield_offset = rte_mbuf_dynfield_register(&tsc_dynfield_desc);
   if (tsc_dynfield_offset < 0)
     rte_exit(EXIT_FAILURE, "Cannot register mbuf field\n");
@@ -587,9 +588,6 @@ int main(int argc, char *argv[]) {
   //rte_eal_remote_launch(lcore_main_forward2, (void *)ports, lcore_id);
   lcore_main_forward((void *)ports);
   //rte_eal_mp_wait_lcore();
-
-  // Cleanup crypto resources
-  crypto_dpdk_cleanup();
 
   return 0;
 }
