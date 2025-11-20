@@ -9,6 +9,7 @@ CC = gcc
 CFLAGS = -O3 -Wall -Wextra
 CFLAGS += $(shell $(PKGCONF) --cflags)
 CFLAGS += -DALLOW_EXPERIMENTAL_API
+CFLAGS += -Wno-unused-variable -Wno-unused-parameter -Wno-maybe-uninitialized
 
 # Linker flags
 LDFLAGS = $(shell $(PKGCONF) --libs)
