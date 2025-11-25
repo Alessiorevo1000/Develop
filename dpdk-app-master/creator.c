@@ -382,6 +382,7 @@ void send_packet_to(struct rte_ether_addr mac_addr, struct rte_mbuf *mbuf,
                     uint16_t tx_port_id) {
   struct rte_ether_hdr *eth_hdr =
       rte_pktmbuf_mtod(mbuf, struct rte_ether_hdr *);
+  struct rte_ipv6_hdr *ipv6_hdr = (struct rte_ipv6_hdr *)(eth_hdr + 1);
 
   // Compare the current destination MAC address to the broadcast address
   if (rte_is_broadcast_ether_addr(&eth_hdr->dst_addr) != 1) {
@@ -395,11 +396,14 @@ void send_packet_to(struct rte_ether_addr mac_addr, struct rte_mbuf *mbuf,
     printf("Error sending packet\n");
     rte_pktmbuf_free(mbuf);
   } else {
-    printf("IPV6 packet sent to:");
-    printf("%02X:%02X:%02X:%02X:%02X:%02X\n", eth_hdr->dst_addr.addr_bytes[0],
-           eth_hdr->dst_addr.addr_bytes[1], eth_hdr->dst_addr.addr_bytes[2],
-           eth_hdr->dst_addr.addr_bytes[3], eth_hdr->dst_addr.addr_bytes[4],
-           eth_hdr->dst_addr.addr_bytes[5]);
+    char ipv6_dst_str[INET6_ADDRSTRLEN];
+    inet_ntop(AF_INET6, &ipv6_hdr->dst_addr, ipv6_dst_str, INET6_ADDRSTRLEN);
+
+    printf("IPV6 packet sent to MAC: %02X:%02X:%02X:%02X:%02X:%02X\n",
+           eth_hdr->dst_addr.addr_bytes[0], eth_hdr->dst_addr.addr_bytes[1],
+           eth_hdr->dst_addr.addr_bytes[2], eth_hdr->dst_addr.addr_bytes[3],
+           eth_hdr->dst_addr.addr_bytes[4], eth_hdr->dst_addr.addr_bytes[5]);
+    printf("IPv6 Destination: %s\n", ipv6_dst_str);
   }
   rte_pktmbuf_free(mbuf);
 }
