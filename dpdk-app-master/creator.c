@@ -409,85 +409,70 @@ void send_packet_to(struct rte_ether_addr mac_addr, struct rte_mbuf *mbuf,
 }
 
 void add_custom_header6(struct rte_mbuf *pkt) {
+
   struct ipv6_srh *srh_hdr;
   struct hmac_tlv *hmac_hdr;
   struct pot_tlv *pot_hdr;
+  struct rte_ether_hdr *eth_hdr_6 =
+      rte_pktmbuf_mtod(pkt, struct rte_ether_hdr *);
+  struct rte_ipv6_hdr *ipv6_hdr = (struct rte_ipv6_hdr *)(eth_hdr_6 + 1);
+  uint8_t *payload = (uint8_t *)(ipv6_hdr + 1);
 
-  // 1. Calculate Sizes
-  uint32_t srh_len = sizeof(struct ipv6_srh);
-  uint32_t hmac_len = sizeof(struct hmac_tlv);
-  uint32_t pot_len = sizeof(struct pot_tlv);
-  uint32_t total_custom_len = srh_len + hmac_len + pot_len;
+  // --- FIX 1: Salva il protocollo originale (es. 58 per ICMPv6, 6 per TCP) ---
+  uint8_t original_proto = ipv6_hdr->proto;
 
-  // Calculate TCP payload size (assuming input is Eth+IP6+TCP)
-  // Note: rte_pktmbuf_pkt_len includes everything. Subtract Eth(14) + IP6(40)
-  // = 54.
-  if (rte_pktmbuf_pkt_len(pkt) < 54)
-    return; // Safety check
+  // Assuming ip6 packets the size of ethernet header + ip6 header is 54 bytes
   size_t payload_size = rte_pktmbuf_pkt_len(pkt) - 54;
 
-  // 2. Save TCP Payload
   uint8_t *tmp_payload = (uint8_t *)malloc(payload_size);
   if (tmp_payload == NULL) {
     printf("malloc failed\n");
     return;
   }
+  // save the payload which will be deleted and added later
+  memcpy(tmp_payload, payload, payload_size);
 
-  // Locate payload in current packet
-  struct rte_ether_hdr *eth = rte_pktmbuf_mtod(pkt, struct rte_ether_hdr *);
-  struct rte_ipv6_hdr *ip6 = (struct rte_ipv6_hdr *)(eth + 1);
-  uint8_t *original_payload = (uint8_t *)(ip6 + 1);
+  // Remove the payload
+  rte_pktmbuf_trim(pkt, payload_size);
 
-  memcpy(tmp_payload, original_payload, payload_size);
+  // Add the custom headers in order and finally add the payload
+  srh_hdr = (struct ipv6_srh *)rte_pktmbuf_append(pkt, sizeof(struct ipv6_srh));
+  hmac_hdr =
+      (struct hmac_tlv *)rte_pktmbuf_append(pkt, sizeof(struct hmac_tlv));
+  pot_hdr = (struct pot_tlv *)rte_pktmbuf_append(pkt, sizeof(struct pot_tlv));
+  payload = (uint8_t *)rte_pktmbuf_append(pkt, payload_size);
 
-  // 3. Trim the packet down to just Eth + IPv6
-  // This effectively removes the old TCP payload from the mbuf
-  int ret = rte_pktmbuf_trim(pkt, payload_size);
-  if (ret < 0) {
-    printf("Error: Failed to trim packet\n");
-    free(tmp_payload);
-    return;
-  }
+  // Reinsert the payload
+  memcpy(payload, tmp_payload, payload_size);
+  free(tmp_payload);
 
-  // 4. Append New Headers SEQUENTIALLY
-  // Important: Check return values to ensure valid memory
-  srh_hdr = (struct ipv6_srh *)rte_pktmbuf_append(pkt, srh_len);
-  if (srh_hdr == NULL) {
-    printf("Fail append SRH\n");
-    free(tmp_payload);
-    return;
-  }
+  // Populate POT
+  pot_hdr->type = 1;
+  pot_hdr->length = 48;
+  pot_hdr->reserved = 0;
+  pot_hdr->nonce_length = 16;
+  pot_hdr->key_set_id = rte_cpu_to_be_32(1234);
+  memset(pot_hdr->nonce, 0, sizeof(pot_hdr->nonce));
+  memset(pot_hdr->encrypted_hmac, 0, sizeof(pot_hdr->encrypted_hmac));
 
-  hmac_hdr = (struct hmac_tlv *)rte_pktmbuf_append(pkt, hmac_len);
-  if (hmac_hdr == NULL) {
-    printf("Fail append HMAC\n");
-    free(tmp_payload);
-    return;
-  }
+  // Populate HMAC
+  hmac_hdr->type = 5;
+  hmac_hdr->length = 16;
+  hmac_hdr->d_flag = 0;
+  hmac_hdr->reserved = 0;
+  hmac_hdr->hmac_key_id = rte_cpu_to_be_32(1234);
+  memset(hmac_hdr->hmac_value, 0, sizeof(hmac_hdr->hmac_value));
 
-  pot_hdr = (struct pot_tlv *)rte_pktmbuf_append(pkt, pot_len);
-  if (pot_hdr == NULL) {
-    printf("Fail append POT\n");
-    free(tmp_payload);
-    return;
-  }
+  // --- FIX 2: Usa il protocollo originale invece di 61 ---
+  // Così il Controller saprà che dopo aver tolto SRH c'è un ICMPv6 (58) o TCP
+  // (6)
+  srh_hdr->next_header = original_proto;
 
-  // 5. Append TCP Payload back at the END
-  uint8_t *new_payload_ptr = (uint8_t *)rte_pktmbuf_append(pkt, payload_size);
-  if (new_payload_ptr == NULL) {
-    printf("Fail append Payload\n");
-    free(tmp_payload);
-    return;
-  }
-
-  // 6. Populate Headers (Writes to SRH/HMAC/POT memory)
-  // Initialize SRH
-  srh_hdr->next_header = 61;
   srh_hdr->hdr_ext_len = 2;
   srh_hdr->routing_type = 4;
-  srh_hdr->segments_left = 1;
   srh_hdr->last_entry = 0;
   srh_hdr->flags = 0;
+  srh_hdr->segments_left = 1;
   memset(srh_hdr->reserved, 0, 2);
 
   struct in6_addr segments[] = {
@@ -495,31 +480,20 @@ void add_custom_header6(struct rte_mbuf *pkt) {
                    0x00, 0x00, 0x00, 0x00, 0x00, 0x01}},
       {.s6_addr = {0x20, 0x01, 0x0d, 0xb8, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00,
                    0x00, 0x00, 0x00, 0x00, 0x00, 0x01}}};
-  // CRITICAL: This memcpy was likely overwriting the payload due to overlap.
-  // With the explicit sequential appends above, pointers should now be
-  // distinct.
+
   memcpy(srh_hdr->segments, segments, sizeof(segments));
 
-  // Initialize others
-  pot_hdr->type = 1;
-  pot_hdr->length = 48;
-  memset(pot_hdr->nonce, 0, 16);
-  memset(pot_hdr->encrypted_hmac, 0, 32); // Ensure this is zeroed
+  // --- FIX 3: Imposta il protocollo dell'header IPv6 a Routing (43) ---
+  ipv6_hdr->proto = 43; // IPPROTO_ROUTING
 
-  hmac_hdr->type = 5;
-  hmac_hdr->length = 16;
-  hmac_hdr->hmac_key_id = rte_cpu_to_be_32(1234);
-  memset(hmac_hdr->hmac_value, 0, 32);
+  // --- FIX 4: Aggiorna la lunghezza del payload nell'header IPv6 ---
+  // La lunghezza deve includere tutti gli header di estensione + payload
+  ipv6_hdr->payload_len =
+      rte_cpu_to_be_16(pkt->pkt_len - sizeof(struct rte_ether_hdr) -
+                       sizeof(struct rte_ipv6_hdr));
 
-  // 7. Restore TCP Payload (Write to the very end)
-  memcpy(new_payload_ptr, tmp_payload, payload_size);
-
-  // 8. Update IPv6 Payload Length
-  ip6->payload_len = rte_cpu_to_be_16(total_custom_len + payload_size);
-  // ip6->proto = 43; // (Optional: Controller expects 43 or the value in
-  // srh->next_header)
-
-  free(tmp_payload);
+  printf("Custom header added. Next Proto set to: %d, IPv6 Proto set to: 43\n",
+         original_proto);
 }
 
 void add_custom_header6_only_srh(struct rte_mbuf *pkt) {
