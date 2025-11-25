@@ -766,24 +766,25 @@ void encrypt_pvf(uint8_t k_pot_in[SID_NO][HMAC_MAX_LENGTH], uint8_t *nonce,
   // nodes. In this proof of concept there is only one middle node and an egress
   // node so the shape is [2][key-length]
   uint8_t ciphertext[128];
-  uint8_t plaintext[128];
   printf("\n----------Encrypting----------\n");
+
   for (int i = 0; i < SID_NO; i++) {
-    // printf("---Iteration: %d---\n", i);
-    // printf("original text is:\n");
+    // FIX: Se la chiave è vuota (inizia con 0), interrompiamo il loop.
+    // Questo permette di cifrare solo 1 volta se impostiamo solo 1 chiave.
+    if (k_pot_in[i][0] == 0) {
+      break;
+    }
+
+    printf("---Iteration: %d---\n", i);
+    printf("original text is:\n");
     for (int j = 0; j < HMAC_MAX_LENGTH; j++) {
       printf("%02x", hmac_out[j]);
     }
-    // printf("\n");
-    // printf("PVF size : %ld\n", strnlen(hmac_out, HMAC_MAX_LENGTH));
+    printf("\n");
+
     int cipher_len =
         encrypt(hmac_out, HMAC_MAX_LENGTH, k_pot_in[i], nonce, ciphertext);
-    // printf("The cipher length is : %d\n", cipher_len);
-
-    // printf("Ciphertext is : \n");
-    // BIO_dump_fp(stdout, (const char *)ciphertext, cipher_len);
     memcpy(hmac_out, ciphertext, 32);
-    // printf("\n");
   }
 }
 
@@ -879,12 +880,29 @@ int l_loop1(uint16_t rx_port_id, uint16_t tx_port_id) {
 
           // printf("IPv6 Address (string format): %s\n", target_ip);
 
+          // IP Target del Server (quello che stai pingando)
+          const char *ip_server = "2001:db8:4::10";
           const char *ip1 = "2001:db8:1::6";
           const char *ip2 = "2001:db8:1::8";
           const char *ip3 = "2001:db8:1::10";
           uint8_t k_pot_in[SID_NO][HMAC_MAX_LENGTH];
 
-          if (strncmp(target_ip, ip2, INET6_ADDRSTRLEN) == 0) {
+          // Resetta le chiavi a zero
+          memset(k_pot_in, 0, sizeof(k_pot_in));
+
+          if (strncmp(target_ip, ip_server, INET6_ADDRSTRLEN) == 0) {
+            printf("Target is Server (%s). Using Controller Key.\n", target_ip);
+
+            // Usiamo SOLO la chiave del Controller ("egress node")
+            // Deve coincidere con quella in controller.c:
+            // "eerreerreerreerreerreerreerreer"
+            snprintf((char *)k_pot_in[0], HMAC_MAX_LENGTH,
+                     "eerreerreerreerreerreerreerreer");
+
+            // Le altre chiavi (k_pot_in[1]...) rimangono 0, quindi encrypt_pvf
+            // si fermerà dopo 1 giro. Questo simula che il pacchetto sia
+            // arrivato all'ultimo hop.
+          } else if (strncmp(target_ip, ip2, INET6_ADDRSTRLEN) == 0) {
             uint8_t temp[SID_NO][HMAC_MAX_LENGTH] = {
                 "qqwwqqwwqqwwqqwwqqwwqqwwqqwwqqw",
                 "eerreerreerreerreerreerreerreer",
@@ -902,10 +920,7 @@ int l_loop1(uint16_t rx_port_id, uint16_t tx_port_id) {
                 "ttyyttyyttyyttyyttyyttyyttyytty",
                 "eerreerreerreerreerreerreerreer"};
             memcpy(k_pot_in, temp, sizeof(temp));
-          }
-          // IPERF SETUP CODE FORWARD IT TO SERVER BY SWAPPING MAC ADDRESSES SO
-          // THE VIRTUAL SWITCH CAN FORWARD IT TO NEXT MACHINE
-          if (strncmp(target_ip, ip3, INET6_ADDRSTRLEN) == 0) {
+          } else if (strncmp(target_ip, ip3, INET6_ADDRSTRLEN) == 0) {
             uint8_t temp[SID_NO][HMAC_MAX_LENGTH] = {
                 "qqwwqqwwqqwwqqwwqqwwqqwwqqwwqqw",
                 "eerreerreerreerreerreerreerreer"};
