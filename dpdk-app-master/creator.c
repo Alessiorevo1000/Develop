@@ -767,13 +767,11 @@ void encrypt_pvf(uint8_t k_pot_in[SID_NO][HMAC_MAX_LENGTH], uint8_t *nonce,
   uint8_t ciphertext[128];
   printf("\n----------Encrypting----------\n");
 
-  for (int i = 0; i < SID_NO; i++) {
-    // FIX: Se la chiave è vuota (inizia con 0), interrompiamo il loop.
-    // Questo permette di cifrare solo 1 volta se impostiamo solo 1 chiave.
-    if (k_pot_in[i][0] == 0) {
-      break;
-    }
-
+  // [FIX] Encrypt only ONCE since Controller decrypts only once
+  // If Middlenode is in the path and decrypts, then we need 2 encryptions.
+  // If Middlenode is bypassed, we need only 1 encryption.
+  // Current topology: Creator -> Controller (no Middlenode processing)
+  for (int i = 0; i < 1; i++) {
     printf("---Iteration: %d---\n", i);
     printf("original text is:\n");
     for (int j = 0; j < HMAC_MAX_LENGTH; j++) {
@@ -783,7 +781,12 @@ void encrypt_pvf(uint8_t k_pot_in[SID_NO][HMAC_MAX_LENGTH], uint8_t *nonce,
 
     int cipher_len =
         encrypt(hmac_out, HMAC_MAX_LENGTH, k_pot_in[i], nonce, ciphertext);
-    memcpy(hmac_out, ciphertext, 32);
+    if (cipher_len > 0) {
+      printf("Encryption successful, cipher_len=%d\n", cipher_len);
+      memcpy(hmac_out, ciphertext, 32);
+    } else {
+      printf("Encryption FAILED!\n");
+    }
   }
 }
 
@@ -868,28 +871,40 @@ int l_loop1(uint16_t rx_port_id, uint16_t tx_port_id) {
           // NORMALLY THÄ°S SHOULD BE DYNAMIC ACCORDING TO THE NODES IN THE
           // TOPOLOGY OR SPECIFIALLY ESPECTED PATH OF THE PACKET can use malloc
           // *
-          char target_ip[16];
-          inet_pton(AF_INET6, "2001:db8:1::1", target_ip);
+          // [FIX] Use correct size for IPv6 string (46 chars, not 16)
+          char target_ip[INET6_ADDRSTRLEN];
 
           if (inet_ntop(AF_INET6, &ipv6_hdr->dst_addr, target_ip,
-                        INET6_ADDRSTRLEN) == NULL) {
+                        sizeof(target_ip)) == NULL) {
             perror("inet_ntop failed");
             return 1;
           }
 
           // printf("IPv6 Address (string format): %s\n", target_ip);
 
-          // IP Target del Server (quello che stai pingando)
+          // IP Targets - including the server being pinged
           const char *ip_server = "2001:db8:4::10";
+          const char *ip_server2 =
+              "2001:db8:2::2"; // [FIX] Added: Server ns_server
           const char *ip1 = "2001:db8:1::6";
           const char *ip2 = "2001:db8:1::8";
           const char *ip3 = "2001:db8:1::10";
           uint8_t k_pot_in[SID_NO][HMAC_MAX_LENGTH];
 
-          // Resetta le chiavi a zero
+          // Reset keys to zero
           memset(k_pot_in, 0, sizeof(k_pot_in));
 
-          if (strncmp(target_ip, ip_server, INET6_ADDRSTRLEN) == 0) {
+          // [FIX] Handle traffic to 2001:db8:2::2 (the server being pinged)
+          if (strncmp(target_ip, ip_server2, INET6_ADDRSTRLEN) == 0) {
+            printf("Target is Server ns_server (%s). Using Controller Key.\n",
+                   target_ip);
+            // Use keys matching middlenode.c and controller.c
+            uint8_t temp[SID_NO][HMAC_MAX_LENGTH] = {
+                "eerreerreerreerreerreerreerreer", // Key for Middle Node
+                "eerreerreerreerreerreerreerreer", // Key for Controller
+            };
+            memcpy(k_pot_in, temp, sizeof(temp));
+          } else if (strncmp(target_ip, ip_server, INET6_ADDRSTRLEN) == 0) {
             printf("Target is Server (%s). Using Controller Key.\n", target_ip);
 
             // Usiamo SOLO la chiave del Controller ("egress node")
@@ -1136,7 +1151,6 @@ int main(int argc, char *argv[]) {
   lcore_id = rte_get_next_lcore(lcore_id, 1, 0);
   // rte_eal_remote_launch(lcore_main_forward2, (void *)ports, lcore_id);
   lcore_main_forward((void *)ports);
-  // rte_eal_mp_wait_lcore();
-
+  // rte_eal_mp_wait_lcore();  cd /home/melih/Desktop/dpdk-app/dpdk-app-master
   return 0;
 }
