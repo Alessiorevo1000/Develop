@@ -151,9 +151,8 @@ static int init_cryptodev(uint8_t socket_id) {
   }
   printf("HMAC session created successfully\n");
 
-  // Create cipher session for AES-256-CTR
-  uint8_t cipher_key[AES_KEY_LENGTH] =
-      "qqwwqqwwqqwwqqwwqqwwqqwwqqwwqqw"; // Default key
+  // Sostituisci con:
+  uint8_t cipher_key[AES_KEY_LENGTH] = "eerreerreerreerreerreerreerreer";
   struct rte_crypto_sym_xform cipher_xform = {
       .next = NULL,
       .type = RTE_CRYPTO_SYM_XFORM_CIPHER,
