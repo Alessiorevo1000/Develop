@@ -571,14 +571,29 @@ void l_loop1(uint16_t port_id, uint16_t tap_port_id) {
           // send the packet to eggress node
           if (retval == 1) {
             remove_headers(mbuf);
-            // send_packet_to(tap_mac_addr, mbuf, tap_port_id);
+
+            // --- FIX: Aggiornamento MAC Address ---
+            struct rte_ether_hdr *eth_hdr_out =
+                rte_pktmbuf_mtod(mbuf, struct rte_ether_hdr *);
+
+            // MAC Destinazione: IL TUO SERVER (enp0s8)
+            // Modifica questi byte se il MAC del server è diverso!
+            struct rte_ether_addr server_mac = {
+                {0x08, 0x00, 0x27, 0x74, 0xBF, 0x65}};
+
+            // MAC Sorgente: Diventa il MAC di questa porta del Controller
+            rte_ether_addr_copy(&eth_hdr_out->dst_addr, &eth_hdr_out->src_addr);
+            // MAC Destinazione: Diventa il Server
+            rte_ether_addr_copy(&server_mac, &eth_hdr_out->dst_addr);
+
+            // --- FIX: Invio corretto senza Double Free ---
             if (rte_eth_tx_burst(tap_port_id, 0, &mbuf, 1) == 0) {
-              printf("Error sending packet\n");
-              rte_pktmbuf_free(mbuf);
+              printf("Error sending packet to Server\n");
+              rte_pktmbuf_free(mbuf); // Libera SOLO se non inviato
             } else {
-              printf("IPV6 packet sent\n");
+              printf("IPV6 packet forwarded to Server (MAC updated)\n");
+              // NON liberare mbuf qui! Se ne occupa il driver.
             }
-            rte_pktmbuf_free(mbuf);
           }
           printf("\n###########################################################"
                  "################\n");
