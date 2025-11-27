@@ -358,7 +358,7 @@ int process_ip6_with_srh(struct rte_ether_hdr *eth_hdr, struct rte_mbuf *mbuf,
   pot = (struct pot_tlv *)(srh + 1);
 
   printf("the proto nums are %d and %d\n", ipv6_hdr->proto, srh->next_header);
-  if (srh->next_header == 61) {
+  if (srh->next_header != 1) {
     printf("segment routing detected\n");
 
     struct hmac_tlv *hmac;
