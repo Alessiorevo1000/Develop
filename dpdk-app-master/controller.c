@@ -357,9 +357,16 @@ int process_ip6_with_srh(struct rte_ether_hdr *eth_hdr, struct rte_mbuf *mbuf,
   srh = (struct ipv6_srh *)(ipv6_hdr + 1); // SRH follows IPv6 header
   pot = (struct pot_tlv *)(srh + 1);
 
-  printf("the proto nums are %d and %d\n", ipv6_hdr->proto, srh->next_header);
-  if (srh->next_header != 1) {
-    printf("segment routing detected\n");
+  // DEBUG: Stampa cosa vediamo
+  printf("Proto Outer: %d, SRH Next Header: %d, Routing Type: %d\n",
+         ipv6_hdr->proto, srh->next_header, srh->routing_type);
+
+  // --- FILTRO UNIVERSALE ---
+  // 1. ipv6_hdr->proto == 43  -> Conferma che c'è un Routing Header
+  // 2. srh->routing_type == 4 -> Conferma che è un Segment Routing Header
+  // (SRv6) Accetta qualsiasi pacchetto che sia SRv6 valido
+  if (ipv6_hdr->proto == 43 && srh->routing_type == 4) {
+    printf("Valid SRv6 packet detected. Processing...\n");
 
     struct hmac_tlv *hmac;
     struct pot_tlv *pot;
