@@ -841,9 +841,35 @@ int l_loop1(uint16_t rx_port_id, uint16_t tx_port_id) {
         switch (operation_bypass_bit) {
         case 0:
           printf("\n#######################################################\n");
+
+          // Check destination IP to handle return traffic (Ping Reply)
+          struct rte_ipv6_hdr *ipv6_hdr_check =
+              (struct rte_ipv6_hdr *)(eth_hdr + 1);
+          char target_ip_str[INET6_ADDRSTRLEN];
+
+          // 1. Read destination IP address
+          if (inet_ntop(AF_INET6, &ipv6_hdr_check->dst_addr, target_ip_str,
+                        sizeof(target_ip_str)) == NULL) {
+            perror("inet_ntop failed");
+            rte_pktmbuf_free(mbuf);
+            continue;
+          }
+
+          // 2. CRITICAL CHECK: If destined to Server (Ping Reply), forward
+          // as-is Address 2001:db8:2::2 is the server ns_server
+          if (strncmp(target_ip_str, "2001:db8:2::2", INET6_ADDRSTRLEN) == 0) {
+            printf("Detected return traffic to Server (%s). Bypass SRv6.\n",
+                   target_ip_str);
+            // Send packet as-is (destination MAC is already Broadcast thanks to
+            // OVS)
+            send_packet_to(middle_node_mac_addr, mbuf, tx_port_id);
+            continue; // Skip the rest of the code for this packet!
+          }
+
+          // If not the server, proceed with normal logic (SRH, Crypto, etc.)
           // 2 options here the packets already containing srh and the packets
           // does not contain
-          // TODO CHECK Ä°P6 hdr if next_header field is 43 to determine if the
+          // TODO CHECK IP6 hdr if next_header field is 43 to determine if the
           // packet is srh
           add_custom_header6(mbuf);
 
