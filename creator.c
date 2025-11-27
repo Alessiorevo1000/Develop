@@ -401,7 +401,7 @@ void send_packet_to(struct rte_ether_addr mac_addr, struct rte_mbuf *mbuf,
            eth_hdr->dst_addr.addr_bytes[3], eth_hdr->dst_addr.addr_bytes[4],
            eth_hdr->dst_addr.addr_bytes[5]);
   }
-  rte_pktmbuf_free(mbuf);
+  // Note: Do NOT free mbuf here - rte_eth_tx_burst takes ownership on success
 }
 
 void add_custom_header6(struct rte_mbuf *pkt) {
@@ -413,6 +413,7 @@ void add_custom_header6(struct rte_mbuf *pkt) {
 
   */
   // Definitions
+
   struct ipv6_srh *srh_hdr;
   struct hmac_tlv *hmac_hdr;
   struct pot_tlv *pot_hdr;
@@ -836,6 +837,7 @@ int l_loop1(uint16_t rx_port_id, uint16_t tx_port_id) {
 
       switch (rte_be_to_cpu_16(eth_hdr->ether_type)) {
       case RTE_ETHER_TYPE_IPV4:
+        rte_pktmbuf_free(mbuf); // IPv4 not handled, free the packet
         break;
       case RTE_ETHER_TYPE_IPV6:
         switch (operation_bypass_bit) {
@@ -997,10 +999,16 @@ int l_loop1(uint16_t rx_port_id, uint16_t tx_port_id) {
 
         default:
           // printf("\nonly ip4 or ip6 ethernet headers accepted\n");
+          rte_pktmbuf_free(mbuf); // Free only for unhandled cases
           break;
         }
-        // Free the mbuf after processing
+        // Note: mbuf is freed by send_packet_to on error, or ownership
+        // transferred on success
+        break; // End of RTE_ETHER_TYPE_IPV6 case
+      default:
+        // Unknown ether type, free the packet
         rte_pktmbuf_free(mbuf);
+        break;
       }
     }
   }
