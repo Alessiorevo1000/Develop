@@ -502,14 +502,42 @@ void remove_headers(struct rte_mbuf *pkt) {
   memcpy(payload, tmp_payload, payload_size);
 
   // Restore the original next header from SRH
-  // If SRH has wrong value (43), inspect payload to determine protocol
-  if (srh->next_header == 43 || srh->next_header == 59) {
-    // Default to TCP for iperf traffic
-    printf("DEBUG: SRH next_header=%u is invalid, defaulting to TCP (6)\n",
-           srh->next_header);
-    ipv6_hdr->proto = 6; // TCP
+  // Validate that next_header contains a valid transport protocol
+  // Valid protocols: 6=TCP, 17=UDP, 58=ICMPv6
+  // If SRH has invalid value, try to detect from payload
+  uint8_t next_proto = srh->next_header;
+
+  if (next_proto == 6 || next_proto == 17 || next_proto == 58) {
+    // Valid protocol, use it directly
+    ipv6_hdr->proto = next_proto;
+    printf("DEBUG: Using SRH next_header=%u as protocol\n", next_proto);
   } else {
-    ipv6_hdr->proto = srh->next_header;
+    // Invalid protocol in SRH, try to detect from payload
+    // Check first byte of payload for hints
+    printf("DEBUG: SRH next_header=%u is invalid, attempting auto-detection\n",
+           next_proto);
+
+    // For ICMPv6 Echo Request, first byte is type (128)
+    // For ICMPv6 Echo Reply, first byte is type (129)
+    if (payload_size >= 1) {
+      uint8_t first_byte = tmp_payload[0];
+      if (first_byte == 128 || first_byte == 129) {
+        // Looks like ICMPv6
+        ipv6_hdr->proto = 58; // ICMPv6
+        printf("DEBUG: Detected ICMPv6 (first byte=%u)\n", first_byte);
+      } else if (payload_size >= 4) {
+        // Check for TCP/UDP port patterns (ports are in first 4 bytes)
+        // This is a heuristic - default to TCP for iperf
+        ipv6_hdr->proto = 6; // TCP
+        printf("DEBUG: Defaulting to TCP\n");
+      } else {
+        ipv6_hdr->proto = 6; // TCP default
+        printf("DEBUG: Defaulting to TCP (small payload)\n");
+      }
+    } else {
+      ipv6_hdr->proto = 6; // TCP default
+      printf("DEBUG: Defaulting to TCP (no payload)\n");
+    }
   }
 
   // Correct the payload length in the IPv6 header
@@ -585,9 +613,9 @@ void l_loop1(uint16_t port_id, uint16_t tap_port_id) {
 
             // MAC Destinazione: IL TUO SERVER (enp0s8)
             // Modifica questi byte se il MAC del server è diverso!
+            // MAC STATICO CHE ABBIAMO APPENA SCELTO
             struct rte_ether_addr server_mac = {
                 {0x08, 0x00, 0x27, 0x74, 0xBF, 0x65}};
-
             // MAC Sorgente: Diventa il MAC di questa porta del Controller
             rte_ether_addr_copy(&eth_hdr_out->dst_addr, &eth_hdr_out->src_addr);
             // MAC Destinazione: Diventa il Server
