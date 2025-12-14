@@ -2,7 +2,7 @@
 
 # DPDK configuration
 PKG_CONFIG ?= pkg-config
-PKGCONF = $(PKG_CONFIG) --define-prefix libdpdk
+PKGCONF = $(PKG_CONFIG) libdpdk
 
 # Compiler flags
 CC = gcc

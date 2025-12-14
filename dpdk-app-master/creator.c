@@ -23,22 +23,23 @@
 #include <rte_cryptodev.h>
 #include <rte_mempool.h>
 
-#define RX_RING_SIZE 2048
-#define TX_RING_SIZE 2048
-#define NUM_MBUFS 8191
-#define MBUF_CACHE_SIZE 250
-#define POOL_CACHE_SIZE 128
-#define BURST_SIZE 256
+#define RX_RING_SIZE 4096
+#define TX_RING_SIZE 4096
+#define NUM_MBUFS 16383
+#define MBUF_CACHE_SIZE 512
+#define POOL_CACHE_SIZE 256
+#define BURST_SIZE 32
 #define CUSTOM_HEADER_TYPE 0x0833
 #define SID_NO                                                                 \
   10 // Total 3 dpdk runnning nodes. 2 of them are sid1 and sid0(egress)
 #define NONCE_LENGTH 16 // AES uses 16 bytes of iv
-#define EXTRA_SPACE 128
+#define EXTRA_SPACE 256
 
 #define HMAC_MAX_LENGTH 32 // Truncate HMAC to 32 bytes if needed
 #define MAX_CRYPTO_SESSIONS 16
-#define CRYPTO_OP_POOL_SIZE 1024
+#define CRYPTO_OP_POOL_SIZE 8192
 #define AES_KEY_LENGTH 32 // AES-256
+#define CRYPTO_BATCH_SIZE 32 // Process crypto ops in batches
 
 static int operation_bypass_bit = 0;
 
@@ -116,7 +117,7 @@ static int init_cryptodev(uint8_t socket_id) {
 
   // Setup queue pair - mp_session may not be needed for all drivers
   struct rte_cryptodev_qp_conf qp_conf = {
-      .nb_descriptors = 2048,
+      .nb_descriptors = 4096,
       .mp_session = NULL, // Set to NULL - driver will manage sessions
   };
 
@@ -239,36 +240,56 @@ static uint16_t add_timestamps(uint16_t port __rte_unused,
   return nb_pkts;
 }
 
-static uint16_t calc_latency(uint16_t port, uint16_t qidx __rte_unused,
+// Latency logging buffer to reduce I/O overhead
+#define LATENCY_LOG_BUFFER_SIZE 1024
+static struct {
+  uint64_t pkt_num;
+  double latency_us;
+  uint16_t pkt_len;
+} latency_log_buffer[LATENCY_LOG_BUFFER_SIZE];
+static uint32_t latency_log_idx = 0;
+static uint64_t latency_flush_threshold = 512; // Flush every N packets
+
+static void flush_latency_log(void) {
+  for (uint32_t i = 0; i < latency_log_idx; i++) {
+    printf("[%6lu] %8.2f µs  %4u bytes\n",
+           latency_log_buffer[i].pkt_num,
+           latency_log_buffer[i].latency_us,
+           latency_log_buffer[i].pkt_len);
+  }
+  latency_log_idx = 0;
+}
+
+static uint16_t calc_latency(uint16_t port __rte_unused, uint16_t qidx __rte_unused,
                              struct rte_mbuf **pkts, uint16_t nb_pkts,
                              void *_ __rte_unused) {
-  uint64_t cycles = 0;
-  uint64_t queue_ticks = 0;
+  static uint64_t tsc_hz = 0;
+  static uint64_t pkt_counter = 0;
   uint64_t now = rte_rdtsc();
-  uint64_t ticks;
-  unsigned i;
-
-  for (i = 0; i < nb_pkts; i++) {
-    cycles += now - *tsc_field(pkts[i]);
+  
+  // Cache TSC frequency once
+  if (tsc_hz == 0) {
+    tsc_hz = rte_get_tsc_hz();
   }
 
-  latency_numbers.total_cycles += cycles;
-
-  latency_numbers.total_pkts += nb_pkts;
-
-  printf("Latency = %" PRIu64 " cycles\n",
-         latency_numbers.total_cycles / latency_numbers.total_pkts);
-
-  printf("number of packets: %" PRIu64 "\n", latency_numbers.total_pkts);
-
-  double latency_us = (double)latency_numbers.total_cycles / rte_get_tsc_hz() *
-                      1e6; // Convert to microseconds
-
-  printf("Latency: %.3f Âµs\n", latency_us);
-
-  latency_numbers.total_cycles = 0;
-  latency_numbers.total_queue_cycles = 0;
-  latency_numbers.total_pkts = 0;
+  for (unsigned i = 0; i < nb_pkts; i++) {
+    uint64_t cycles = now - *tsc_field(pkts[i]);
+    double latency_us = (double)cycles * 1e6 / tsc_hz;
+    pkt_counter++;
+    
+    // Buffer the log entry instead of printing immediately
+    if (latency_log_idx < LATENCY_LOG_BUFFER_SIZE) {
+      latency_log_buffer[latency_log_idx].pkt_num = pkt_counter;
+      latency_log_buffer[latency_log_idx].latency_us = latency_us;
+      latency_log_buffer[latency_log_idx].pkt_len = pkts[i]->pkt_len;
+      latency_log_idx++;
+    }
+  }
+  
+  // Flush buffer periodically to avoid memory buildup
+  if (latency_log_idx >= latency_flush_threshold) {
+    flush_latency_log();
+  }
 
   return nb_pkts;
 }
@@ -334,6 +355,15 @@ static inline int port_init(uint16_t port, struct rte_mempool *mbuf_pool) {
   if (retval < 0)
     return retval;
 
+  /* Set MTU to 1700 to accommodate SRH/HMAC/POT headers (~136 bytes) */
+  retval = rte_eth_dev_set_mtu(port, 1700);
+  if (retval != 0) {
+    printf("Warning: Cannot set MTU on port %u: %s\n", port, strerror(-retval));
+    /* Continue anyway - some drivers don't support MTU change */
+  } else {
+    printf("Port %u MTU set to 1700\n", port);
+  }
+
   /* Display the port MAC address. */
   struct rte_ether_addr addr;
   retval = rte_eth_macaddr_get(port, &addr);
@@ -381,7 +411,6 @@ void send_packet_to(struct rte_ether_addr mac_addr, struct rte_mbuf *mbuf,
                     uint16_t tx_port_id) {
   struct rte_ether_hdr *eth_hdr =
       rte_pktmbuf_mtod(mbuf, struct rte_ether_hdr *);
-  struct rte_ipv6_hdr *ipv6_hdr = (struct rte_ipv6_hdr *)(eth_hdr + 1);
 
   // Compare the current destination MAC address to the broadcast address
   if (rte_is_broadcast_ether_addr(&eth_hdr->dst_addr) != 1) {
@@ -392,22 +421,16 @@ void send_packet_to(struct rte_ether_addr mac_addr, struct rte_mbuf *mbuf,
 
   // Send the packets from the port no specified
   if (rte_eth_tx_burst(tx_port_id, 0, &mbuf, 1) == 0) {
-    printf("Error sending packet\n");
     rte_pktmbuf_free(mbuf);
-  } else {
-    char ipv6_dst_str[INET6_ADDRSTRLEN];
-    inet_ntop(AF_INET6, &ipv6_hdr->dst_addr, ipv6_dst_str, INET6_ADDRSTRLEN);
-
-    printf("IPV6 packet sent to MAC: %02X:%02X:%02X:%02X:%02X:%02X\n",
-           eth_hdr->dst_addr.addr_bytes[0], eth_hdr->dst_addr.addr_bytes[1],
-           eth_hdr->dst_addr.addr_bytes[2], eth_hdr->dst_addr.addr_bytes[3],
-           eth_hdr->dst_addr.addr_bytes[4], eth_hdr->dst_addr.addr_bytes[5]);
-    printf("IPv6 Destination: %s\n", ipv6_dst_str);
   }
-  rte_pktmbuf_free(mbuf);
+  // Note: tx_burst takes ownership of mbuf on success, don't free here
 }
 
-void add_custom_header6(struct rte_mbuf *pkt) {
+// Static buffer to avoid malloc in hot path (max MTU 9000)
+static __thread uint8_t tmp_payload_buffer[9000];
+
+// Returns 0 on success, -1 on failure
+int add_custom_header6(struct rte_mbuf *pkt) {
 
   struct ipv6_srh *srh_hdr;
   struct hmac_tlv *hmac_hdr;
@@ -423,27 +446,51 @@ void add_custom_header6(struct rte_mbuf *pkt) {
   // Assuming ip6 packets the size of ethernet header + ip6 header is 54 bytes
   size_t payload_size = rte_pktmbuf_pkt_len(pkt) - 54;
 
-  uint8_t *tmp_payload = (uint8_t *)malloc(payload_size);
-  if (tmp_payload == NULL) {
-    printf("malloc failed\n");
-    return;
+  // Use static buffer instead of malloc for performance
+  if (payload_size > sizeof(tmp_payload_buffer)) {
+    printf("ERROR: Packet payload too large: %zu bytes\n", payload_size);
+    return -1; // Packet too large
   }
+
+  // Check if we have enough tailroom for the extra headers
+  size_t extra_headers_size = sizeof(struct ipv6_srh) + sizeof(struct hmac_tlv) + sizeof(struct pot_tlv);
+  if (rte_pktmbuf_tailroom(pkt) < extra_headers_size) {
+    printf("ERROR: Not enough tailroom for headers. Need %zu, have %u\n", 
+           extra_headers_size, rte_pktmbuf_tailroom(pkt));
+    return -1; // Not enough space
+  }
+
   // save the payload which will be deleted and added later
-  memcpy(tmp_payload, payload, payload_size);
+  memcpy(tmp_payload_buffer, payload, payload_size);
 
   // Remove the payload
   rte_pktmbuf_trim(pkt, payload_size);
 
   // Add the custom headers in order and finally add the payload
   srh_hdr = (struct ipv6_srh *)rte_pktmbuf_append(pkt, sizeof(struct ipv6_srh));
+  if (srh_hdr == NULL) {
+    printf("ERROR: Failed to append SRH header\n");
+    return -1;
+  }
   hmac_hdr =
       (struct hmac_tlv *)rte_pktmbuf_append(pkt, sizeof(struct hmac_tlv));
+  if (hmac_hdr == NULL) {
+    printf("ERROR: Failed to append HMAC header\n");
+    return -1;
+  }
   pot_hdr = (struct pot_tlv *)rte_pktmbuf_append(pkt, sizeof(struct pot_tlv));
+  if (pot_hdr == NULL) {
+    printf("ERROR: Failed to append POT header\n");
+    return -1;
+  }
   payload = (uint8_t *)rte_pktmbuf_append(pkt, payload_size);
+  if (payload == NULL) {
+    printf("ERROR: Failed to append payload of size %zu\n", payload_size);
+    return -1;
+  }
 
   // Reinsert the payload
-  memcpy(payload, tmp_payload, payload_size);
-  free(tmp_payload);
+  memcpy(payload, tmp_payload_buffer, payload_size);
 
   // Populate POT
   pot_hdr->type = 1;
@@ -491,8 +538,10 @@ void add_custom_header6(struct rte_mbuf *pkt) {
       rte_cpu_to_be_16(pkt->pkt_len - sizeof(struct rte_ether_hdr) -
                        sizeof(struct rte_ipv6_hdr));
 
-  printf("Custom header added. Next Proto set to: %d, IPv6 Proto set to: 43\n",
-         original_proto);
+  // printf("Custom header added. Next Proto set to: %d, IPv6 Proto set to:
+  // 43\n",
+  //        original_proto);
+  return 0;  // Success
 }
 
 void add_custom_header6_only_srh(struct rte_mbuf *pkt) {
@@ -504,17 +553,16 @@ void add_custom_header6_only_srh(struct rte_mbuf *pkt) {
   struct rte_ipv6_hdr *ipv6_hdr = (struct rte_ipv6_hdr *)(eth_hdr_6 + 1);
   uint8_t *payload = (uint8_t *)(ipv6_hdr + 1);
 
-  // printf("Initial packet length: %u\n", rte_pktmbuf_pkt_len(pkt));
-
   // Assuming ip6 packets the size of ethernet header + ip6 header is 54 bytes
   size_t payload_size = rte_pktmbuf_pkt_len(pkt) - 54;
-  // printf("Payload size: %lu\n", payload_size);
-  uint8_t *tmp_payload = (uint8_t *)malloc(payload_size);
-  if (tmp_payload == NULL) {
-    printf("malloc failed\n");
+
+  // Use static buffer instead of malloc for performance
+  if (payload_size > sizeof(tmp_payload_buffer)) {
+    return; // Packet too large
   }
+
   // save the payload which will be deleted and added later
-  memcpy(tmp_payload, payload, payload_size);
+  memcpy(tmp_payload_buffer, payload, payload_size);
 
   // Remove the payload
   rte_pktmbuf_trim(pkt, payload_size);
@@ -522,8 +570,7 @@ void add_custom_header6_only_srh(struct rte_mbuf *pkt) {
   srh_hdr = (struct ipv6_srh *)rte_pktmbuf_append(pkt, sizeof(struct ipv6_srh));
   payload = (uint8_t *)rte_pktmbuf_append(pkt, payload_size);
 
-  memcpy(payload, tmp_payload, payload_size);
-  free(tmp_payload);
+  memcpy(payload, tmp_payload_buffer, payload_size);
 
   // 61 Any host internal protocol
   srh_hdr->next_header = 61; // No Next Header in this example
@@ -546,66 +593,55 @@ void add_custom_header6_only_srh(struct rte_mbuf *pkt) {
   memcpy(srh_hdr->segments, segments, sizeof(segments));
 }
 
-int calculate_hmac(uint8_t *src_addr, // Source IPv6 address (16 bytes)
-                   const struct ipv6_srh
-                       *srh, // Pointer to the IPv6 Segment Routing Header (SRH)
-                   const struct hmac_tlv *hmac_tlv, // Pointer to the HMAC TLV
-                   uint8_t *key,                    // Pre-shared key
-                   size_t key_len,    // Length of the pre-shared key
-                   uint8_t *hmac_out) // Output buffer for the HMAC (32 bytes)
+// Optimized: prepare HMAC input without allocating crypto resources
+static inline void prepare_hmac_input(
+    uint8_t *src_addr,
+    const struct ipv6_srh *srh,
+    const struct hmac_tlv *hmac_tlv,
+    uint8_t *input,
+    size_t *input_len)
 {
-  // Input text buffer for HMAC computation
   size_t segment_list_len = sizeof(srh->segments);
-
-  size_t input_len =
-      16 + 1 + 1 + 2 + 4 + segment_list_len; // IPv6 Source + Last Entry + Flags
-                                             // + Length + Key ID + Segment List
-
-  uint8_t input[input_len];
-
-  // Fill the input buffer
+  *input_len = 16 + 1 + 1 + 2 + 4 + segment_list_len;
+  
   size_t offset = 0;
-  memcpy(input + offset, src_addr, 16); // IPv6 Source Address
+  memcpy(input + offset, src_addr, 16);
   offset += 16;
-
-  input[offset++] = srh->last_entry; // Last Entry
-  input[offset++] = srh->flags;      // Flags (D-bit + Reserved)
-
-  input[offset++] =
-      0; // Placeholder for Length (2 bytes, can be zero for this step)
+  input[offset++] = srh->last_entry;
+  input[offset++] = srh->flags;
   input[offset++] = 0;
-
-  memcpy(input + offset, &hmac_tlv->hmac_key_id,
-         sizeof(hmac_tlv->hmac_key_id)); // HMAC Key ID
+  input[offset++] = 0;
+  memcpy(input + offset, &hmac_tlv->hmac_key_id, sizeof(hmac_tlv->hmac_key_id));
   offset += sizeof(hmac_tlv->hmac_key_id);
+  memcpy(input + offset, srh->segments, segment_list_len);
+}
 
-  memcpy(input + offset, srh->segments, segment_list_len); // Segment List
-  offset += segment_list_len;
+// Single packet HMAC (fallback)
+int calculate_hmac(uint8_t *src_addr,
+                   const struct ipv6_srh *srh,
+                   const struct hmac_tlv *hmac_tlv,
+                   uint8_t *key,
+                   size_t key_len,
+                   uint8_t *hmac_out)
+{
+  uint8_t input[128];
+  size_t input_len;
+  prepare_hmac_input(src_addr, srh, hmac_tlv, input, &input_len);
 
-  // Perform HMAC computation using DPDK Cryptodev
   struct rte_crypto_op *op;
   struct rte_mbuf *m;
 
-  // Allocate crypto operation
-  if (rte_crypto_op_bulk_alloc(crypto_op_pool, RTE_CRYPTO_OP_TYPE_SYMMETRIC,
-                               &op, 1) == 0) {
-    rte_log(RTE_LOG_ERR, RTE_LOGTYPE_USER1,
-            "Not enough crypto operations available\n");
+  if (rte_crypto_op_bulk_alloc(crypto_op_pool, RTE_CRYPTO_OP_TYPE_SYMMETRIC, &op, 1) == 0)
     return -1;
-  }
 
-  // Allocate mbuf for data
   m = rte_pktmbuf_alloc(crypto_mbuf_pool);
   if (m == NULL) {
-    rte_log(RTE_LOG_ERR, RTE_LOGTYPE_USER1, "Failed to allocate mbuf\n");
     rte_crypto_op_free(op);
     return -1;
   }
 
-  // Copy input data to mbuf
   char *mbuf_data = rte_pktmbuf_append(m, input_len);
   if (mbuf_data == NULL) {
-    rte_log(RTE_LOG_ERR, RTE_LOGTYPE_USER1, "Failed to append data to mbuf\n");
     rte_pktmbuf_free(m);
     rte_crypto_op_free(op);
     return -1;
@@ -615,23 +651,16 @@ int calculate_hmac(uint8_t *src_addr, // Source IPv6 address (16 bytes)
   op->sym->m_src = m;
   op->sym->auth.data.offset = 0;
   op->sym->auth.data.length = input_len;
-
-  // Set digest pointer
   op->sym->auth.digest.data = hmac_out;
   op->sym->auth.digest.phys_addr = rte_mem_virt2iova(hmac_out);
 
-  // Attach session
   if (rte_crypto_op_attach_sym_session(op, hmac_session) < 0) {
-    rte_log(RTE_LOG_ERR, RTE_LOGTYPE_USER1, "Failed to attach session\n");
     rte_pktmbuf_free(m);
     rte_crypto_op_free(op);
     return -1;
   }
 
-  // Enqueue and dequeue
-  uint16_t num_enqueued = rte_cryptodev_enqueue_burst(cdev_id, 0, &op, 1);
-  if (num_enqueued == 0) {
-    rte_log(RTE_LOG_ERR, RTE_LOGTYPE_USER1, "Failed to enqueue crypto op\n");
+  if (rte_cryptodev_enqueue_burst(cdev_id, 0, &op, 1) == 0) {
     rte_pktmbuf_free(m);
     rte_crypto_op_free(op);
     return -1;
@@ -639,22 +668,18 @@ int calculate_hmac(uint8_t *src_addr, // Source IPv6 address (16 bytes)
 
   struct rte_crypto_op *dequeued_op;
   uint16_t num_dequeued = 0;
-  while (num_dequeued == 0) {
+  for (int retries = 0; num_dequeued == 0 && retries < 1000; retries++)
     num_dequeued = rte_cryptodev_dequeue_burst(cdev_id, 0, &dequeued_op, 1);
-  }
 
-  if (dequeued_op->status != RTE_CRYPTO_OP_STATUS_SUCCESS) {
-    rte_log(RTE_LOG_ERR, RTE_LOGTYPE_USER1, "Crypto operation failed\n");
+  if (num_dequeued == 0 || dequeued_op->status != RTE_CRYPTO_OP_STATUS_SUCCESS) {
     rte_pktmbuf_free(m);
-    rte_crypto_op_free(dequeued_op);
+    rte_crypto_op_free(op);
     return -1;
   }
 
-  // Cleanup
   rte_pktmbuf_free(m);
   rte_crypto_op_free(dequeued_op);
-
-  return 0; // Success
+  return 0;
 }
 
 // Calculates the PVF using the output of calulcate_hmac function with key
@@ -666,9 +691,9 @@ int generate_nonce(uint8_t nonce[NONCE_LENGTH]) {
     nonce[i] = (uint8_t)(rte_rand() & 0xFF);
   }
   // printf("Generated Nonce: ");
-  for (int i = 0; i < NONCE_LENGTH; i++) {
-    printf("%02x", nonce[i]);
-  }
+  // for (int i = 0; i < NONCE_LENGTH; i++) {
+  //   printf("%02x", nonce[i]);
+  // }
   // printf("\n");
   return 0;
 }
@@ -677,25 +702,17 @@ int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
   struct rte_crypto_op *op;
   struct rte_mbuf *m;
 
-  // Allocate crypto operation
-  if (rte_crypto_op_bulk_alloc(crypto_op_pool, RTE_CRYPTO_OP_TYPE_SYMMETRIC,
-                               &op, 1) == 0) {
-    printf("Not enough crypto operations available\n");
+  if (rte_crypto_op_bulk_alloc(crypto_op_pool, RTE_CRYPTO_OP_TYPE_SYMMETRIC, &op, 1) == 0)
     return -1;
-  }
 
-  // Allocate mbuf for data
   m = rte_pktmbuf_alloc(crypto_mbuf_pool);
   if (m == NULL) {
-    printf("Failed to allocate mbuf\n");
     rte_crypto_op_free(op);
     return -1;
   }
 
-  // Copy input data to mbuf
   char *mbuf_data = rte_pktmbuf_append(m, plaintext_len);
   if (mbuf_data == NULL) {
-    printf("Failed to append data to mbuf\n");
     rte_pktmbuf_free(m);
     rte_crypto_op_free(op);
     return -1;
@@ -706,24 +723,18 @@ int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
   op->sym->cipher.data.offset = 0;
   op->sym->cipher.data.length = plaintext_len;
 
-  // Set IV - copy to the operation's private data area
   uint8_t *iv_ptr = rte_crypto_op_ctod_offset(
       op, uint8_t *,
       offsetof(struct rte_crypto_op, sym) + sizeof(struct rte_crypto_sym_op));
   memcpy(iv_ptr, iv, NONCE_LENGTH);
 
-  // Attach session
   if (rte_crypto_op_attach_sym_session(op, cipher_session) < 0) {
-    printf("Failed to attach cipher session\n");
     rte_pktmbuf_free(m);
     rte_crypto_op_free(op);
     return -1;
   }
 
-  // Enqueue and dequeue
-  uint16_t num_enqueued = rte_cryptodev_enqueue_burst(cdev_id, 0, &op, 1);
-  if (num_enqueued == 0) {
-    printf("Failed to enqueue crypto op\n");
+  if (rte_cryptodev_enqueue_burst(cdev_id, 0, &op, 1) == 0) {
     rte_pktmbuf_free(m);
     rte_crypto_op_free(op);
     return -1;
@@ -731,25 +742,18 @@ int encrypt(unsigned char *plaintext, int plaintext_len, unsigned char *key,
 
   struct rte_crypto_op *dequeued_op;
   uint16_t num_dequeued = 0;
-  while (num_dequeued == 0) {
+  for (int retries = 0; num_dequeued == 0 && retries < 1000; retries++)
     num_dequeued = rte_cryptodev_dequeue_burst(cdev_id, 0, &dequeued_op, 1);
-  }
 
-  if (dequeued_op->status != RTE_CRYPTO_OP_STATUS_SUCCESS) {
-    printf("Crypto operation failed\n");
+  if (num_dequeued == 0 || dequeued_op->status != RTE_CRYPTO_OP_STATUS_SUCCESS) {
     rte_pktmbuf_free(m);
-    rte_crypto_op_free(dequeued_op);
+    rte_crypto_op_free(op);
     return -1;
   }
 
-  // Copy encrypted data back
-  uint8_t *encrypted_data = rte_pktmbuf_mtod(m, uint8_t *);
-  memcpy(ciphertext, encrypted_data, plaintext_len);
-
-  // Cleanup
+  memcpy(ciphertext, rte_pktmbuf_mtod(m, uint8_t *), plaintext_len);
   rte_pktmbuf_free(m);
   rte_crypto_op_free(dequeued_op);
-
   return plaintext_len;
 }
 
@@ -765,27 +769,27 @@ void encrypt_pvf(uint8_t k_pot_in[SID_NO][HMAC_MAX_LENGTH], uint8_t *nonce,
   // nodes. In this proof of concept there is only one middle node and an egress
   // node so the shape is [2][key-length]
   uint8_t ciphertext[128];
-  printf("\n----------Encrypting----------\n");
+  // printf("\n----------Encrypting----------\n");
 
   // [FIX] Encrypt only ONCE since Controller decrypts only once
   // If Middlenode is in the path and decrypts, then we need 2 encryptions.
   // If Middlenode is bypassed, we need only 1 encryption.
   // Current topology: Creator -> Controller (no Middlenode processing)
   for (int i = 0; i < 1; i++) {
-    printf("---Iteration: %d---\n", i);
-    printf("original text is:\n");
-    for (int j = 0; j < HMAC_MAX_LENGTH; j++) {
-      printf("%02x", hmac_out[j]);
-    }
-    printf("\n");
+    // printf("---Iteration: %d---\n", i);
+    // printf("original text is:\n");
+    // for (int j = 0; j < HMAC_MAX_LENGTH; j++) {
+    //   printf("%02x", hmac_out[j]);
+    // }
+    // printf("\n");
 
     int cipher_len =
         encrypt(hmac_out, HMAC_MAX_LENGTH, k_pot_in[i], nonce, ciphertext);
     if (cipher_len > 0) {
-      printf("Encryption successful, cipher_len=%d\n", cipher_len);
+      // printf("Encryption successful, cipher_len=%d\n", cipher_len);
       memcpy(hmac_out, ciphertext, 32);
     } else {
-      printf("Encryption FAILED!\n");
+      // printf("Encryption FAILED!\n");
     }
   }
 }
@@ -797,34 +801,61 @@ int decrypt_pvf(uint8_t k_pot_in[SID_NO][HMAC_MAX_LENGTH], uint8_t *nonce,
   // node so the shape is [2][key-length]
   uint8_t plaintext[128];
   int cipher_len = 32;
-  printf("\n----------Decrypting----------\n");
+  // printf("\n----------Decrypting----------\n");
   for (int i = SID_NO - 1; i >= 0; i--) {
-    printf("---Iteration: %d---\n", i);
+    // printf("---Iteration: %d---\n", i);
     int dec_len = decrypt(pvf_out, cipher_len, k_pot_in[i], nonce, plaintext);
-    printf("Dec len %d\n", dec_len);
-    printf("original text is:\n");
-    for (int j = 0; j < HMAC_MAX_LENGTH; j++) {
-      printf("%02x", pvf_out[j]);
-    }
-    printf("\n");
+    // printf("Dec len %d\n", dec_len);
+    // printf("original text is:\n");
+    // for (int j = 0; j < HMAC_MAX_LENGTH; j++) {
+    //   printf("%02x", pvf_out[j]);
+    // }
+    // printf("\n");
     memcpy(pvf_out, plaintext, 32);
-    printf("Decrypted text is : \n");
-    for (int j = 0; j < dec_len; j++) {
-      printf("%02x ", pvf_out[j]);
-      if ((j + 1) % 16 == 0)
-        printf("\n");
-    }
-    printf("\n");
+    // printf("Decrypted text is : \n");
+    // for (int j = 0; j < dec_len; j++) {
+    //   printf("%02x ", pvf_out[j]);
+    //   if ((j + 1) % 16 == 0)
+    //     printf("\n");
+    // }
+    // printf("\n");
   }
   return 0;
 }
 
-int l_loop1(uint16_t rx_port_id, uint16_t tx_port_id) {
-  printf("Capturing packets on port %d...\n", rx_port_id);
-  struct rte_ether_addr middle_node_mac_addr = {
-      {0x08, 0x00, 0x27, 0xC6, 0x79, 0x2A}}; // rx port of middle node
+// Structure to hold packet processing context for batch crypto
+struct pkt_crypto_ctx {
+  struct rte_mbuf *mbuf;
+  struct ipv6_srh *srh;
+  struct hmac_tlv *hmac;
+  struct pot_tlv *pot;
+  uint8_t hmac_input[128];
+  size_t hmac_input_len;
+  uint8_t hmac_out[HMAC_MAX_LENGTH];
+  uint8_t nonce[NONCE_LENGTH];
+  uint8_t k_pot_in[SID_NO][HMAC_MAX_LENGTH];
+  int valid;
+};
 
-  // Packet capture loop
+// Pre-defined IPv6 addresses for fast binary comparison
+static const uint8_t addr_server_ns[16] = {0x20, 0x01, 0x0d, 0xb8, 0x00, 0x02, 0x00, 0x00,
+                                           0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02};
+static const uint8_t addr_server_old[16] = {0x20, 0x01, 0x0d, 0xb8, 0x00, 0x04, 0x00, 0x00,
+                                            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10};
+
+int l_loop1(uint16_t rx_port_id, uint16_t tx_port_id) {
+  struct rte_ether_addr middle_node_mac_addr = {
+      {0x08, 0x00, 0x27, 0xC6, 0x79, 0x2A}};
+  
+  // Pre-allocated crypto operations and mbufs for batch processing
+  struct rte_crypto_op *hmac_ops[BURST_SIZE];
+  struct rte_crypto_op *cipher_ops[BURST_SIZE];
+  struct rte_mbuf *crypto_mbufs[BURST_SIZE * 2];
+  struct pkt_crypto_ctx ctx[BURST_SIZE];
+  
+  static const uint8_t k_hmac_ie[] = "my-hmac-key-for-pvf-calculation";
+  static const size_t key_len = 31;
+
   for (;;) {
     struct rte_mbuf *bufs[BURST_SIZE];
     uint16_t nb_rx = rte_eth_rx_burst(rx_port_id, 0, bufs, BURST_SIZE);
@@ -839,220 +870,126 @@ int l_loop1(uint16_t rx_port_id, uint16_t tx_port_id) {
 
       switch (rte_be_to_cpu_16(eth_hdr->ether_type)) {
       case RTE_ETHER_TYPE_IPV4:
+        rte_pktmbuf_free(mbuf);
         break;
       case RTE_ETHER_TYPE_IPV6:
         switch (operation_bypass_bit) {
-        case 0:
-          printf("\n#######################################################\n");
-          // 2 options here the packets already containing srh and the packets
-          // does not contain
-          // TODO CHECK Ä°P6 hdr if next_header field is 43 to determine if the
-          // packet is srh
-          add_custom_header6(mbuf);
+        case 0: {
+          // Add custom headers
+          if (add_custom_header6(mbuf) != 0) {
+            rte_pktmbuf_free(mbuf);
+            break;
+          }
 
-          struct ipv6_srh *srh;
-          struct hmac_tlv *hmac;
-          struct pot_tlv *pot;
-          // realigning the hmac header since we added new headers the address
-          // is changed(bu alignment Ä± beÄŸenmiyorum deÄŸiÅŸtir)
-          struct rte_ether_hdr *eth_hdr =
-              rte_pktmbuf_mtod(mbuf, struct rte_ether_hdr *);
+          // Get header pointers
+          struct rte_ether_hdr *eth_hdr = rte_pktmbuf_mtod(mbuf, struct rte_ether_hdr *);
           struct rte_ipv6_hdr *ipv6_hdr = (struct rte_ipv6_hdr *)(eth_hdr + 1);
-          srh = (struct ipv6_srh *)(ipv6_hdr + 1); // SRH follows IPv6 header
-          hmac = (struct hmac_tlv *)(srh + 1);
-          pot = (struct pot_tlv *)(hmac + 1);
+          struct ipv6_srh *srh = (struct ipv6_srh *)(ipv6_hdr + 1);
+          struct hmac_tlv *hmac = (struct hmac_tlv *)(srh + 1);
+          struct pot_tlv *pot = (struct pot_tlv *)(hmac + 1);
 
           uint8_t hmac_out[HMAC_MAX_LENGTH];
-          uint8_t k_hmac_ie[] = "my-hmac-key-for-pvf-calculation";
           uint8_t nonce[NONCE_LENGTH];
-          size_t key_len = strlen((char *)k_hmac_ie);
-
-          // FOR PROOF OF CONCEPT THIS IS NOT DYNAMIC
-          // NORMALLY THÄ°S SHOULD BE DYNAMIC ACCORDING TO THE NODES IN THE
-          // TOPOLOGY OR SPECIFIALLY ESPECTED PATH OF THE PACKET can use malloc
-          // *
-          // [FIX] Use correct size for IPv6 string (46 chars, not 16)
-          char target_ip[INET6_ADDRSTRLEN];
-
-          if (inet_ntop(AF_INET6, &ipv6_hdr->dst_addr, target_ip,
-                        sizeof(target_ip)) == NULL) {
-            perror("inet_ntop failed");
-            return 1;
-          }
-
-          // printf("IPv6 Address (string format): %s\n", target_ip);
-
-          // IP Targets - including the server being pinged
-          const char *ip_server = "2001:db8:4::10";
-          const char *ip_server2 =
-              "2001:db8:2::2"; // [FIX] Added: Server ns_server
-          const char *ip1 = "2001:db8:1::6";
-          const char *ip2 = "2001:db8:1::8";
-          const char *ip3 = "2001:db8:1::10";
           uint8_t k_pot_in[SID_NO][HMAC_MAX_LENGTH];
-
-          // Reset keys to zero
           memset(k_pot_in, 0, sizeof(k_pot_in));
 
-          // [FIX] Handle traffic to 2001:db8:2::2 (the server being pinged)
-          if (strncmp(target_ip, ip_server2, INET6_ADDRSTRLEN) == 0) {
-            printf("Target is Server ns_server (%s). Using Controller Key.\n",
-                   target_ip);
-            // Use keys matching middlenode.c and controller.c
-            uint8_t temp[SID_NO][HMAC_MAX_LENGTH] = {
-                "eerreerreerreerreerreerreerreer", // Key for Middle Node
-                "eerreerreerreerreerreerreerreer", // Key for Controller
-            };
-            memcpy(k_pot_in, temp, sizeof(temp));
-          } else if (strncmp(target_ip, ip_server, INET6_ADDRSTRLEN) == 0) {
-            printf("Target is Server (%s). Using Controller Key.\n", target_ip);
-
-            // Usiamo SOLO la chiave del Controller ("egress node")
-            // Deve coincidere con quella in controller.c:
-            // "eerreerreerreerreerreerreerreer"
-            snprintf((char *)k_pot_in[0], HMAC_MAX_LENGTH,
-                     "eerreerreerreerreerreerreerreer");
-
-            // Le altre chiavi (k_pot_in[1]...) rimangono 0, quindi encrypt_pvf
-            // si fermerà dopo 1 giro. Questo simula che il pacchetto sia
-            // arrivato all'ultimo hop.
-          } else if (strncmp(target_ip, ip2, INET6_ADDRSTRLEN) == 0) {
-            uint8_t temp[SID_NO][HMAC_MAX_LENGTH] = {
-                "qqwwqqwwqqwwqqwwqqwwqqwwqqwwqqw",
-                "eerreerreerreerreerreerreerreer",
-                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"};
-            memcpy(k_pot_in, temp, sizeof(temp));
-          } else if (strncmp(target_ip, ip1, INET6_ADDRSTRLEN) == 0) {
-            uint8_t temp[SID_NO][HMAC_MAX_LENGTH] = {
-                "ttyyttyyttyyttyyttyyttyyttyytty",
-                "eerreerreerreerreerreerreerreer"};
-            memcpy(k_pot_in, temp, sizeof(temp));
-          } else if (strncmp(target_ip, ip3, INET6_ADDRSTRLEN) == 0) {
-            uint8_t temp[SID_NO][HMAC_MAX_LENGTH] = {
-                "qqwwqqwwqqwwqqwwqqwwqqwwqqwwqqw",
-                "eerreerreerreerreerreerreerreer"};
-            memcpy(k_pot_in, temp, sizeof(temp));
+          // Fast binary comparison instead of inet_ntop + strncmp
+          if (memcmp(&ipv6_hdr->dst_addr, addr_server_ns, 16) == 0) {
+            memcpy(k_pot_in[0], "eerreerreerreerreerreerreerreer", 31);
+            memcpy(k_pot_in[1], "eerreerreerreerreerreerreerreer", 31);
+          } else if (memcmp(&ipv6_hdr->dst_addr, addr_server_old, 16) == 0) {
+            memcpy(k_pot_in[0], "eerreerreerreerreerreerreerreer", 31);
+          } else {
+            // Default key for unknown destinations
+            memcpy(k_pot_in[0], "eerreerreerreerreerreerreerreer", 31);
           }
-
-          // key of the last node is first
 
           // Compute HMAC
-          if (calculate_hmac(ipv6_hdr->src_addr, srh, hmac, k_hmac_ie, key_len,
-                             hmac_out) == 0) {
-            printf("HMAC Computation Successful\n");
-            printf("HMAC: ");
-            for (int i = 0; i < HMAC_MAX_LENGTH; i++) {
-              printf("%02x", hmac_out[i]);
-            }
-            // Write the hmac value in hmac header
-            printf("\n");
+          if (calculate_hmac(ipv6_hdr->src_addr, srh, hmac, 
+                             (uint8_t*)k_hmac_ie, key_len, hmac_out) == 0) {
             memcpy(hmac->hmac_value, hmac_out, 32);
-            printf("HMAC value inserted to srh_hmac header\n");
-          } else {
-            printf("HMAC Computation Failed\n");
           }
 
-          if (generate_nonce(nonce) != 0) {
-            printf("Nonce generation failed retuning\n ");
-            return 1;
-          }
+          // Generate nonce and encrypt PVF
+          generate_nonce(nonce);
           encrypt_pvf(k_pot_in, nonce, hmac_out);
-
-          printf("Ecrypted PVF before writing to the header: ");
-          for (int i = 0; i < HMAC_MAX_LENGTH; i++) {
-            printf("%02x", hmac_out[i]);
-          }
-          // Write the hmac value in hmac header
-          printf("\n");
           memcpy(pot->encrypted_hmac, hmac_out, 32);
           memcpy(pot->nonce, nonce, 16);
-          printf("Encrypted PVF and nonce values inserted to pot header\n");
-
-          // Decrypt fpr testing purposes, this is the task for middle and
-          // egress nodes decrypt_pvf(k_pot_in, nonce, hmac_out);
-
-          // send the packets back with added custom header
 
           send_packet_to(middle_node_mac_addr, mbuf, tx_port_id);
-          printf("\n#######################################################\n");
           break;
+        }
         case 1:
-          printf("\n#######################################################\n");
-          printf("All operations are bypassed. \n");
           send_packet_to(middle_node_mac_addr, mbuf, tx_port_id);
-          printf("\n#######################################################\n");
           break;
         case 2:
-          printf("\n#######################################################\n");
           add_custom_header6_only_srh(mbuf);
           // for iperf testing swap the mac address (normally the scapy
           // generated packets have broadcast dest mac)
           send_packet_to(middle_node_mac_addr, mbuf, tx_port_id);
-          printf("\n#######################################################\n");
           break;
 
         default:
-          // printf("\nonly ip4 or ip6 ethernet headers accepted\n");
+          // Free mbuf only for unhandled cases
+          rte_pktmbuf_free(mbuf);
           break;
         }
-        // Free the mbuf after processing
-        rte_pktmbuf_free(mbuf);
+        // Note: mbuf is freed by send_packet_to or in default case
       }
     }
   }
 }
 
 void l_loop2(uint16_t rx_port_id, uint16_t tx_port_id) {
-  printf("Capturing packets on port %d...\n", rx_port_id);
   struct rte_ether_addr traffic_mac_addr = {
-      {0x08, 0x00, 0x27, 0x0F, 0xAC, 0x33}}; // rx port of middle node
-  // Packet capture loop
+      {0x08, 0x00, 0x27, 0x0F, 0xAC, 0x33}};
+  
+  // Batch TX buffer
+  struct rte_mbuf *tx_bufs[BURST_SIZE];
+  uint16_t tx_count = 0;
+  
   for (;;) {
     struct rte_mbuf *bufs[BURST_SIZE];
     uint16_t nb_rx = rte_eth_rx_burst(rx_port_id, 0, bufs, BURST_SIZE);
 
-    if (unlikely(nb_rx == 0))
+    if (unlikely(nb_rx == 0)) {
+      // Flush any pending TX packets
+      if (tx_count > 0) {
+        uint16_t sent = rte_eth_tx_burst(tx_port_id, 0, tx_bufs, tx_count);
+        for (uint16_t j = sent; j < tx_count; j++)
+          rte_pktmbuf_free(tx_bufs[j]);
+        tx_count = 0;
+      }
       continue;
+    }
 
     for (int i = 0; i < nb_rx; i++) {
       struct rte_mbuf *mbuf = bufs[i];
-      struct rte_ether_hdr *eth_hdr =
-          rte_pktmbuf_mtod(mbuf, struct rte_ether_hdr *);
+      struct rte_ether_hdr *eth_hdr = rte_pktmbuf_mtod(mbuf, struct rte_ether_hdr *);
 
-      switch (rte_be_to_cpu_16(eth_hdr->ether_type)) {
-      case RTE_ETHER_TYPE_IPV4:
-        break;
-      case RTE_ETHER_TYPE_IPV6: {
+      if (likely(rte_be_to_cpu_16(eth_hdr->ether_type) == RTE_ETHER_TYPE_IPV6)) {
         struct rte_ipv6_hdr *ipv6_hdr = (struct rte_ipv6_hdr *)(eth_hdr + 1);
-        char target_ip[16];
-        if (inet_ntop(AF_INET6, &ipv6_hdr->src_addr, target_ip,
-                      INET6_ADDRSTRLEN) == NULL) {
-          perror("inet_ntop failed");
-          return;
+        
+        // Fast binary comparison instead of inet_ntop + strncmp
+        if (memcmp(&ipv6_hdr->src_addr, addr_server_ns, 16) == 0) {
+          // Update MAC and add to TX batch
+          rte_ether_addr_copy(&eth_hdr->dst_addr, &eth_hdr->src_addr);
+          rte_ether_addr_copy(&traffic_mac_addr, &eth_hdr->dst_addr);
+          tx_bufs[tx_count++] = mbuf;
+        } else {
+          rte_pktmbuf_free(mbuf);
         }
-
-        printf("IPv6 Address (string format): %s\n", target_ip);
-
-        const char *ip = "2001:db8:1::10";
-        if (strncmp(target_ip, ip, INET6_ADDRSTRLEN) == 0) {
-          printf("Packet is from iperf server \n");
-          // edit the destination mac and source mac
-          // tx port of traffic generator node packet goes B to A
-          // (A <--> B <--> C <--> D)
-          send_packet_to(traffic_mac_addr, mbuf, tx_port_id);
-        }
-        break;
+      } else {
+        rte_pktmbuf_free(mbuf);
       }
-      default:
-        break;
-      }
+    }
+    
+    // Batch TX - send all at once
+    if (tx_count > 0) {
+      uint16_t sent = rte_eth_tx_burst(tx_port_id, 0, tx_bufs, tx_count);
+      for (uint16_t j = sent; j < tx_count; j++)
+        rte_pktmbuf_free(tx_bufs[j]);
+      tx_count = 0;
     }
   }
 }
@@ -1148,8 +1085,8 @@ int main(int argc, char *argv[]) {
   uint16_t ports[2] = {port_id, tx_port_id};
   // lcore_id = rte_get_next_lcore(-1, 1, 0);
   // rte_eal_remote_launch(lcore_main_forward, (void *)ports, lcore_id);
-  lcore_id = rte_get_next_lcore(lcore_id, 1, 0);
-  // rte_eal_remote_launch(lcore_main_forward2, (void *)ports, lcore_id);
+  lcore_id = rte_get_next_lcore(-1, 1, 0);
+  rte_eal_remote_launch(lcore_main_forward2, (void *)ports, lcore_id);
   lcore_main_forward((void *)ports);
   // rte_eal_mp_wait_lcore();  cd /home/melih/Desktop/dpdk-app/dpdk-app-master
   return 0;

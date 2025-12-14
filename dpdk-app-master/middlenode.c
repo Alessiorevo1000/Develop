@@ -30,6 +30,15 @@
 
 static int operation_bypass_bit = 0;
 
+// Global EVP context for decrypt - initialized once
+static EVP_CIPHER_CTX *g_decrypt_ctx = NULL;
+static uint8_t g_decrypt_key[32] = "eerreerreerreerreerreerreerreer";
+
+// Pre-defined IPv6 addresses for fast binary comparison
+// 2001:db8:2::2
+static const uint8_t addr_server_ns[16] = {0x20, 0x01, 0x0d, 0xb8, 0x00, 0x02, 0x00, 0x00,
+                                           0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02};
+
 struct ipv6_srh {
   uint8_t next_header;  // Next header type
   uint8_t hdr_ext_len;  // Length of SRH in 8-byte units
@@ -93,36 +102,40 @@ static uint16_t add_timestamps(uint16_t port __rte_unused,
   return nb_pkts;
 }
 
-static uint16_t calc_latency(uint16_t port, uint16_t qidx __rte_unused,
+static uint16_t calc_latency(uint16_t port __rte_unused, uint16_t qidx __rte_unused,
                              struct rte_mbuf **pkts, uint16_t nb_pkts,
                              void *_ __rte_unused) {
+  static uint64_t print_threshold = 10000;  // Print every 10000 packets
+  static uint64_t tsc_hz = 0;
   uint64_t cycles = 0;
-  uint64_t queue_ticks = 0;
   uint64_t now = rte_rdtsc();
-  uint64_t ticks;
   unsigned i;
+
+  // Cache TSC frequency
+  if (tsc_hz == 0) {
+    tsc_hz = rte_get_tsc_hz();
+  }
 
   for (i = 0; i < nb_pkts; i++) {
     cycles += now - *tsc_field(pkts[i]);
   }
 
   latency_numbers.total_cycles += cycles;
-
   latency_numbers.total_pkts += nb_pkts;
 
-  printf("Latency = %" PRIu64 " cycles\n",
-         latency_numbers.total_cycles / latency_numbers.total_pkts);
+  // Print only every 10000 packets to reduce I/O overhead
+  if (latency_numbers.total_pkts >= print_threshold) {
+    // Calculate AVERAGE latency per packet (divide by packet count)
+    double avg_latency_us = (double)latency_numbers.total_cycles / 
+                            latency_numbers.total_pkts / tsc_hz * 1e6;
 
-  printf("number of packets: %" PRIu64 "\n", latency_numbers.total_pkts);
+    printf("Packets: %" PRIu64 ", Avg Latency: %.3f µs\n", 
+           latency_numbers.total_pkts, avg_latency_us);
 
-  double latency_us = (double)latency_numbers.total_cycles / rte_get_tsc_hz() *
-                      1e6; // Convert to microseconds
-
-  printf("Latency: %.3f µs\n", latency_us);
-
-  latency_numbers.total_cycles = 0;
-  latency_numbers.total_queue_cycles = 0;
-  latency_numbers.total_pkts = 0;
+    latency_numbers.total_cycles = 0;
+    latency_numbers.total_queue_cycles = 0;
+    latency_numbers.total_pkts = 0;
+  }
 
   return nb_pkts;
 }
@@ -167,12 +180,12 @@ void send_packet_to(struct rte_ether_addr mac_addr, struct rte_mbuf *mbuf,
 
   // Send the packets from the port no specified
   if (rte_eth_tx_burst(tx_port_id, 0, &mbuf, 1) == 0) {
-    printf("Error sending packet\n");
+    // printf("Error sending packet\n");
     rte_pktmbuf_free(mbuf);
   } else {
-    printf("IPV6 packet sent\n");
+    // printf("IPV6 packet sent\n");
   }
-  rte_pktmbuf_free(mbuf);
+  // Note: tx_burst takes ownership on success, don't free here
 }
 // Initialize a port
 static inline int
@@ -230,11 +243,19 @@ port_init(uint16_t port, struct rte_mempool *mbuf_pool)
 			return retval;
 	}
 
-	/* Starting Ethernet port. 8< */
+  /* Starting Ethernet port. 8< */
 	retval = rte_eth_dev_start(port);
 	/* >8 End of starting of ethernet port. */
 	if (retval < 0)
 		return retval;
+
+	/* Set MTU to 1700 to accommodate SRH/HMAC/POT headers (~136 bytes) */
+	retval = rte_eth_dev_set_mtu(port, 1700);
+	if (retval != 0) {
+		printf("Warning: Cannot set MTU on port %u: %s\n", port, strerror(-retval));
+	} else {
+		printf("Port %u MTU set to 1700\n", port);
+	}
 
 	/* Display the port MAC address. */
 	struct rte_ether_addr addr;
@@ -255,31 +276,45 @@ port_init(uint16_t port, struct rte_mempool *mbuf_pool)
 	return 0;
 }
 
+// Initialize global decrypt context - call once at startup
+static int init_decrypt_ctx(void) {
+  g_decrypt_ctx = EVP_CIPHER_CTX_new();
+  if (!g_decrypt_ctx) {
+    printf("Failed to create global decrypt context\n");
+    return -1;
+  }
+  printf("Global decrypt context initialized\n");
+  return 0;
+}
+
+// Cleanup global decrypt context
+static void cleanup_decrypt_ctx(void) {
+  if (g_decrypt_ctx) {
+    EVP_CIPHER_CTX_free(g_decrypt_ctx);
+    g_decrypt_ctx = NULL;
+  }
+}
+
+// Optimized decrypt using global context - avoids malloc per packet
 int decrypt(unsigned char *ciphertext, int ciphertext_len, unsigned char *key,
             unsigned char *iv, unsigned char *plaintext) {
-  EVP_CIPHER_CTX *ctx;
   int len;
   int plaintext_len;
 
-  if (!(ctx = EVP_CIPHER_CTX_new())) {
-    printf("Context creation failed\n");
+  // Reinitialize with new IV (key stays the same)
+  if (1 != EVP_DecryptInit_ex(g_decrypt_ctx, EVP_aes_256_ctr(), NULL, key, iv)) {
+    return -1;
   }
-  // Use counter mode
-  if (1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_ctr(), NULL, key, iv)) {
-    printf("Decryption initialization failed\n");
-  }
-  if (1 !=
-      EVP_DecryptUpdate(ctx, plaintext, &len, ciphertext, ciphertext_len)) {
-    printf("Decryption update failed\n");
+  if (1 != EVP_DecryptUpdate(g_decrypt_ctx, plaintext, &len, ciphertext, ciphertext_len)) {
+    return -1;
   }
   plaintext_len = len;
 
-  if (1 != EVP_DecryptFinal_ex(ctx, plaintext + len, &len)) {
-    printf("Decryption finalization failed\n");
+  if (1 != EVP_DecryptFinal_ex(g_decrypt_ctx, plaintext + len, &len)) {
+    return -1;
   }
   plaintext_len += len;
 
-  EVP_CIPHER_CTX_free(ctx);
   return plaintext_len;
 }
 
@@ -289,136 +324,129 @@ int decrypt_pvf(uint8_t *k_pot_in, uint8_t *nonce, uint8_t pvf_out[32]) {
   // node so the shape is [2][key-length]
   uint8_t plaintext[128];
   int cipher_len = 32;
-  printf("\n----------Decrypting----------\n");
+  // printf("\n----------Decrypting----------\n");
   int dec_len = decrypt(pvf_out, cipher_len, k_pot_in, nonce, plaintext);
-  printf("Dec len %d\n", dec_len);
-  printf("original text is:\n");
-  for (int j = 0; j < 32; j++) {
-    printf("%02x", pvf_out[j]);
-  }
-  printf("\n");
+  // printf("Dec len %d\n", dec_len);
+  // printf("original text is:\n");
+  // for (int j = 0; j < 32; j++) {
+  //   printf("%02x", pvf_out[j]);
+  // }
+  // printf("\n");
   memcpy(pvf_out, plaintext, 32);
-  printf("Decrypted text is : \n");
-  BIO_dump_fp(stdout, (const char *)pvf_out, dec_len);
+  // printf("Decrypted text is : \n");
+  // BIO_dump_fp(stdout, (const char *)pvf_out, dec_len);
+  return 0;
 }
 
 void process_ip6_with_srh(struct rte_ether_hdr *eth_hdr, struct rte_mbuf *mbuf,
                           int i) {
-  printf("\n###################################################################"
-         "########\n");
-  printf("\nip6 packet is encountered\n");
+  // printf("\n###################################################################"
+  //        "########\n");
+  // printf("\nip6 packet is encountered\n");
   struct ipv6_srh *srh;
   struct pot_tlv *pot;
   struct rte_ipv6_hdr *ipv6_hdr = (struct rte_ipv6_hdr *)(eth_hdr + 1);
   srh = (struct ipv6_srh *)(ipv6_hdr + 1); // SRH follows IPv6 header
-  pot = (struct pot_tlv *)(srh + 1);
 
-  printf("the proto nums are %d and %d\n", ipv6_hdr->proto, srh->next_header);
-  if (srh->next_header == 61) {
-    printf("segment routing detected\n");
+  // printf("the proto nums are %d and %d\n", ipv6_hdr->proto, srh->next_header);
+  
+  // Check if this is an SRv6 packet (IPv6 proto == 43 and routing_type == 4)
+  if (ipv6_hdr->proto != 43 || srh->routing_type != 4) {
+    // printf("Not an SRv6 packet, skipping processing\n");
+    return;
+  }
+  
+  // printf("segment routing detected (next_header=%d, could be TCP=6, ICMPv6=58, etc.)\n", srh->next_header);
 
-    struct hmac_tlv *hmac;
-    struct pot_tlv *pot;
-    hmac = (struct hmac_tlv *)(srh + 1);
-    pot = (struct pot_tlv *)(hmac + 1);
-    // The key of this node (middle)
-    uint8_t k_pot_in[32] = "eerreerreerreerreerreerreerreer";
-
-    // FOR IPERF TESTING: IF THE DESTINATION MAC
-
-    char target_ip[16];
-    if (inet_ntop(AF_INET6, &ipv6_hdr->dst_addr, target_ip, INET6_ADDRSTRLEN) ==
-        NULL) {
-      perror("inet_ntop failed");
-      return;
-    }
-    printf("IPv6 address as string : %s\n", target_ip);
+  struct hmac_tlv *hmac;
+  hmac = (struct hmac_tlv *)(srh + 1);
+  pot = (struct pot_tlv *)(hmac + 1);
+  // Use global key instead of allocating on stack each time
 
     // Display source and destination MAC addresses
-    printf("Packet %d:\n", i + 1);
-    printf("  Src MAC: %02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8
-           ":%02" PRIx8 ":%02" PRIx8 "\n",
-           eth_hdr->src_addr.addr_bytes[0], eth_hdr->src_addr.addr_bytes[1],
-           eth_hdr->src_addr.addr_bytes[2], eth_hdr->src_addr.addr_bytes[3],
-           eth_hdr->src_addr.addr_bytes[4], eth_hdr->src_addr.addr_bytes[5]);
-    printf("  Dst MAC: %02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8
-           ":%02" PRIx8 ":%02" PRIx8 "\n",
-           eth_hdr->dst_addr.addr_bytes[0], eth_hdr->dst_addr.addr_bytes[1],
-           eth_hdr->dst_addr.addr_bytes[2], eth_hdr->dst_addr.addr_bytes[3],
-           eth_hdr->dst_addr.addr_bytes[4], eth_hdr->dst_addr.addr_bytes[5]);
-    printf("  EtherType: 0x%04x\n", rte_be_to_cpu_16(eth_hdr->ether_type));
+    // printf("Packet %d:\n", i + 1);
+    // printf("  Src MAC: %02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8
+    //        ":%02" PRIx8 ":%02" PRIx8 "\n",
+    //        eth_hdr->src_addr.addr_bytes[0], eth_hdr->src_addr.addr_bytes[1],
+    //        eth_hdr->src_addr.addr_bytes[2], eth_hdr->src_addr.addr_bytes[3],
+    //        eth_hdr->src_addr.addr_bytes[4], eth_hdr->src_addr.addr_bytes[5]);
+    // printf("  Dst MAC: %02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8
+    //        ":%02" PRIx8 ":%02" PRIx8 "\n",
+    //        eth_hdr->dst_addr.addr_bytes[0], eth_hdr->dst_addr.addr_bytes[1],
+    //        eth_hdr->dst_addr.addr_bytes[2], eth_hdr->dst_addr.addr_bytes[3],
+    //        eth_hdr->dst_addr.addr_bytes[4], eth_hdr->dst_addr.addr_bytes[5]);
+    // printf("  EtherType: 0x%04x\n", rte_be_to_cpu_16(eth_hdr->ether_type));
 
-    print_ipv6_address((struct in6_addr *)&ipv6_hdr->src_addr, "source");
-    print_ipv6_address((struct in6_addr *)&ipv6_hdr->dst_addr, "destination");
+    // print_ipv6_address((struct in6_addr *)&ipv6_hdr->src_addr, "source");
+    // print_ipv6_address((struct in6_addr *)&ipv6_hdr->dst_addr, "destination");
 
     // Get srh pointer after ipv6 header
 
-    printf("The size of srh is %lu\n", sizeof(*srh));
-    printf("The size of hmac is %lu\n", sizeof(*hmac));
-    printf("The size of pot is %lu\n", sizeof(*pot));
+    // printf("The size of srh is %lu\n", sizeof(*srh));
+    // printf("The size of hmac is %lu\n", sizeof(*hmac));
+    // printf("The size of pot is %lu\n", sizeof(*pot));
 
-    printf("HMAC type: %u\n", hmac->type);
-    printf("HMAC length: %u\n", hmac->length);
-    printf("HMAC key ID: %u\n", rte_be_to_cpu_32(hmac->hmac_key_id));
-    printf("HMAC size: %ld\n", sizeof(hmac->hmac_value));
+    // printf("HMAC type: %u\n", hmac->type);
+    // printf("HMAC length: %u\n", hmac->length);
+    // printf("HMAC key ID: %u\n", rte_be_to_cpu_32(hmac->hmac_key_id));
+    // printf("HMAC size: %ld\n", sizeof(hmac->hmac_value));
 
     // TODO burayı dinamik olarak bastır çünkü hmac 8 octet (8 byte 64 bit) veya
     // katı olabilir şimdilik i 1 den başıyor ve i-1 yazdırıyor
-    printf("HMAC value: \n");
-    for (int i = 0; i < 32; i++) {
-      printf("%02x", hmac->hmac_value[i]);
-    }
-    printf("\nPVF value before decrypting: \n");
-    for (int i = 0; i < 32; i++) {
-      printf("%02x", pot->encrypted_hmac[i]);
-    }
+    // printf("HMAC value: \n");
+    // for (int i = 0; i < 32; i++) {
+    //   printf("%02x", hmac->hmac_value[i]);
+    // }
+    // printf("\nPVF value before decrypting: \n");
+    // for (int i = 0; i < 32; i++) {
+    //   printf("%02x", pot->encrypted_hmac[i]);
+    // }
     // decrypyt one time with the key of node
     //  first declare the value to store decrypted pvf
     uint8_t pvf_out[32];
     memcpy(pvf_out, pot->encrypted_hmac, 32);
-    decrypt_pvf(k_pot_in, pot->nonce, pvf_out);
+    decrypt_pvf(g_decrypt_key, pot->nonce, pvf_out);
 
     // update the pot header pvf field
     memcpy(pot->encrypted_hmac, pvf_out, 32);
 
     //fflush(stdout);
-  }
 }
 
 void process_ip4(struct rte_mbuf *mbuf, uint16_t nb_rx,
                  struct rte_ether_hdr *eth_hdr, int i) {
-  printf("number of the packets received is %d", nb_rx);
+  // printf("number of the packets received is %d", nb_rx);
 
   struct rte_ipv4_hdr *ipv4_hdr = (struct rte_ipv4_hdr *)(eth_hdr + 1);
 
   // Display source and destination MAC addresses
-  printf("Packet %d:\n", i + 1);
-  printf("  Src MAC: %02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8
-         ":%02" PRIx8 ":%02" PRIx8 "\n",
-         eth_hdr->src_addr.addr_bytes[0], eth_hdr->src_addr.addr_bytes[1],
-         eth_hdr->src_addr.addr_bytes[2], eth_hdr->src_addr.addr_bytes[3],
-         eth_hdr->src_addr.addr_bytes[4], eth_hdr->src_addr.addr_bytes[5]);
-  printf("  Dst MAC: %02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8
-         ":%02" PRIx8 ":%02" PRIx8 "\n",
-         eth_hdr->dst_addr.addr_bytes[0], eth_hdr->dst_addr.addr_bytes[1],
-         eth_hdr->dst_addr.addr_bytes[2], eth_hdr->dst_addr.addr_bytes[3],
-         eth_hdr->dst_addr.addr_bytes[4], eth_hdr->dst_addr.addr_bytes[5]);
-  printf("  EtherType: 0x%04x\n", rte_be_to_cpu_16(eth_hdr->ether_type));
+  // printf("Packet %d:\n", i + 1);
+  // printf("  Src MAC: %02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8
+  //        ":%02" PRIx8 ":%02" PRIx8 "\n",
+  //        eth_hdr->src_addr.addr_bytes[0], eth_hdr->src_addr.addr_bytes[1],
+  //        eth_hdr->src_addr.addr_bytes[2], eth_hdr->src_addr.addr_bytes[3],
+  //        eth_hdr->src_addr.addr_bytes[4], eth_hdr->src_addr.addr_bytes[5]);
+  // printf("  Dst MAC: %02" PRIx8 ":%02" PRIx8 ":%02" PRIx8 ":%02" PRIx8
+  //        ":%02" PRIx8 ":%02" PRIx8 "\n",
+  //        eth_hdr->dst_addr.addr_bytes[0], eth_hdr->dst_addr.addr_bytes[1],
+  //        eth_hdr->dst_addr.addr_bytes[2], eth_hdr->dst_addr.addr_bytes[3],
+  //        eth_hdr->dst_addr.addr_bytes[4], eth_hdr->dst_addr.addr_bytes[5]);
+  // printf("  EtherType: 0x%04x\n", rte_be_to_cpu_16(eth_hdr->ether_type));
   // If the packet is IPv4, display source and destination IP addresses
 
-  printf("  Src IP: %d.%d.%d.%d\n", (ipv4_hdr->src_addr & 0xff),
-         (ipv4_hdr->src_addr >> 8) & 0xff, (ipv4_hdr->src_addr >> 16) & 0xff,
-         (ipv4_hdr->src_addr >> 24) & 0xff);
-  printf("  Dst IP: %d.%d.%d.%d\n", (ipv4_hdr->dst_addr & 0xff),
-         (ipv4_hdr->dst_addr >> 8) & 0xff, (ipv4_hdr->dst_addr >> 16) & 0xff,
-         (ipv4_hdr->dst_addr >> 24) & 0xff);
+  // printf("  Src IP: %d.%d.%d.%d\n", (ipv4_hdr->src_addr & 0xff),
+  //        (ipv4_hdr->src_addr >> 8) & 0xff, (ipv4_hdr->src_addr >> 16) & 0xff,
+  //        (ipv4_hdr->src_addr >> 24) & 0xff);
+  // printf("  Dst IP: %d.%d.%d.%d\n", (ipv4_hdr->dst_addr & 0xff),
+  //        (ipv4_hdr->dst_addr >> 8) & 0xff, (ipv4_hdr->dst_addr >> 16) & 0xff,
+  //        (ipv4_hdr->dst_addr >> 24) & 0xff);
 
   // Free the mbuf after processing
   rte_pktmbuf_free(mbuf);
 }
 
 void l_loop1(uint16_t rx_port_id, uint16_t tx_port_id) {
-  printf("Capturing packets on port %d...\n", rx_port_id);
+  // printf("Capturing packets on port %d...\n", rx_port_id);
   struct rte_ether_addr egress_mac_addr = {
       {0x08, 0x00, 0x27, 0xF5, 0x60, 0xC2}};
   // Packet capture loop
@@ -442,11 +470,11 @@ void l_loop1(uint16_t rx_port_id, uint16_t tx_port_id) {
         case 0:
           process_ip6_with_srh(eth_hdr, mbuf, i);
           send_packet_to(egress_mac_addr, mbuf, tx_port_id);
-          printf("\n###########################################################"
-                 "################\n");
+          // printf("\n###########################################################"
+          //        "################\n");
           break;
         case 1:
-          printf("All operations are bypassed. \n");
+          // printf("All operations are bypassed. \n");
           send_packet_to(egress_mac_addr, mbuf, tx_port_id);
           break;
         }
@@ -458,7 +486,7 @@ void l_loop1(uint16_t rx_port_id, uint16_t tx_port_id) {
 }
 
 void l_loop2(uint16_t rx_port_id, uint16_t tx_port_id) {
-  printf("Capturing packets on port %d...\n", rx_port_id);
+  // printf("Capturing packets on port %d...\n", rx_port_id);
   struct rte_ether_addr ingress_mac_addr = {
       {0x08, 0x00, 0x27, 0x91, 0x32, 0x3B}}; // rx port of middle node
   // Packet capture loop
@@ -478,28 +506,19 @@ void l_loop2(uint16_t rx_port_id, uint16_t tx_port_id) {
       case RTE_ETHER_TYPE_IPV4:
         process_ip4(mbuf, nb_rx, eth_hdr, i);
         break;
-      case RTE_ETHER_TYPE_IPV6:
+      case RTE_ETHER_TYPE_IPV6: {
         struct rte_ipv6_hdr *ipv6_hdr = (struct rte_ipv6_hdr *)(eth_hdr + 1);
-        char target_ip[16];
-        if (inet_ntop(AF_INET6, &ipv6_hdr->src_addr, target_ip,
-                      INET6_ADDRSTRLEN) == NULL) {
-          perror("inet_ntop failed");
-          return;
-        }
-
-        printf("IPv6 Address (string format): %s\n", target_ip);
-
-        const char *ip = "2001:db8:1::10";
-        if (strncmp(target_ip, ip, INET6_ADDRSTRLEN) == 0) {
-          printf("Packet is from iperf server \n");
-          // edit the destination mac and source mac
-          // tx port of ingress node packet goes C to B (A <--> B
-          // <--> C <--> D)
-
-          // send the packet to eggress node
+        
+        // Fast binary comparison instead of inet_ntop + strncmp
+        // Forward return traffic from the server (2001:db8:2::2)
+        if (memcmp(&ipv6_hdr->src_addr, addr_server_ns, 16) == 0) {
+          // send the packet to ingress node
           send_packet_to(ingress_mac_addr, mbuf, tx_port_id);
+        } else {
+          rte_pktmbuf_free(mbuf);  // Free non-matching packets
         }
         break;
+      }
       default:
         break;
       }
@@ -547,6 +566,10 @@ int main(int argc, char *argv[]) {
   if (ret < 0)
     rte_exit(EXIT_FAILURE, "Error with EAL initialization\n");
 
+  // Initialize global decrypt context
+  if (init_decrypt_ctx() < 0)
+    rte_exit(EXIT_FAILURE, "Error with decrypt context initialization\n");
+
   // Check that there is at least one port available
   if (rte_eth_dev_count_avail() == 0) {
     rte_exit(EXIT_FAILURE, "No Ethernet ports available\n");
@@ -584,8 +607,8 @@ int main(int argc, char *argv[]) {
   uint16_t ports[2] = {port_id, tx_port_id};
   // lcore_id = rte_get_next_lcore(-1, 1, 0);
   // rte_eal_remote_launch(lcore_main_forward, (void *)ports, lcore_id);
-  //lcore_id = rte_get_next_lcore(lcore_id, 1, 0);
-  //rte_eal_remote_launch(lcore_main_forward2, (void *)ports, lcore_id);
+  lcore_id = rte_get_next_lcore(-1, 1, 0);
+  rte_eal_remote_launch(lcore_main_forward2, (void *)ports, lcore_id);
   lcore_main_forward((void *)ports);
   //rte_eal_mp_wait_lcore();
 

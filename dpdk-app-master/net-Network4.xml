@@ -1,0 +1,9 @@
+<network>
+  <name>Network4</name>
+  <bridge name='virbrNetwork4' stp='on' delay='0'/>
+  <ip address='10.0.5.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='10.0.5.2' end='10.0.5.254'/>
+    </dhcp>
+  </ip>
+</network>

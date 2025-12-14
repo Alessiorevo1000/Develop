@@ -1,0 +1,89 @@
+traffic
+# Abilita IPv6 e forwarding
+sudo sysctl -w net.ipv6.conf.all.disable_ipv6=0
+sudo sysctl -w net.ipv6.conf.all.forwarding=1
+
+# Pulisci gli indirizzi IP esistenti
+sudo ip addr flush dev enp1s0
+sudo ip addr flush dev enp7s0
+
+# Assegna gli indirizzi IPv6
+sudo ip addr add fd00:2::5/64 dev enp1s0   # Verso Creator
+sudo ip addr add fd00:52001:db8:2::2 dev enp8s0 lladdr 52:54:00:aa:bb:02 PERMANENT::8/64 dev enp7s0   # Verso Controller
+
+# Porta le interfacce UP
+sudo ip link set enp1s0 up
+sudo ip link set enp7s0 up
+
+# Rotte: Per raggiungere Middle (Net2, Net3) invia verso Creator
+sudo ip -6 route add fd00:3::/64 via fd00:2::4
+sudo ip -6 route add fd00:4::/64 via fd00:2::4
+--------------------------------------------------------------------------------------
+creator
+# Abilita IPv6 e forwarding
+sudo sysctl -w net.ipv6.conf.all.disable_ipv6=0
+sudo sysctl -w net.ipv6.conf.all.forwarding=1
+
+# Pulisci gli indirizzi IP esistenti
+sudo ip addr flush dev enp7s0
+sudo ip addr flush dev enp8s0
+
+# Assegna gli indirizzi IPv6
+sudo ip addr add fd00:2::4/64 dev enp7s0   # Verso traffic-server
+sudo ip addr add fd00:3::4/64 dev enp8s0   # Verso middle
+
+# Porta le interfacce UP
+sudo ip link set enp7s0 up
+sudo ip link set enp8s0 up
+
+# Rotte: Per raggiungere Controller (Net4) invia verso traffic-server
+sudo ip -6 route add fd00:5::/64 via fd00:2::5
+
+# Rotte: Per raggiungere Middle (Net3) invia verso middle
+sudo ip -6 route add fd00:4::/64 via fd00:3::5
+-------------------------------------------------------------
+middle
+# Configurazione IPv6 per middle
+sudo sysctl -w net.ipv6.conf.all.disable_ipv6=0
+sudo sysctl -w net.ipv6.conf.all.forwarding=1
+
+# Pulisci gli indirizzi IP esistenti
+sudo ip addr flush dev enp7s0
+sudo ip addr flush dev enp8s0
+
+# Assegna gli indirizzi IPv6
+sudo ip addr add fd00:3::5/64 dev enp7s0   # Verso creator
+sudo ip addr add fd00:4::5/64 dev enp8s0   # Verso controller
+
+# Porta le interfacce UP
+sudo ip link set enp7s0 up
+sudo ip link set enp8s0 up
+
+# Rotte: Per raggiungere traffic-server (Net2, Net5) invia verso creator
+sudo ip -6 route add fd00:2::/64 via fd00:3::4
+sudo ip -6 route add fd00:5::/64 via fd00:3::4
+------------------------------------------
+controller
+# Configurazione IPv6 per controller
+sudo sysctl -w net.ipv6.conf.all.disable_ipv6=0
+sudo sysctl -w net.ipv6.conf.all.forwarding=1
+
+# Pulisci gli indirizzi IP esistenti
+sudo ip addr flush dev enp7s0
+sudo ip addr flush dev enp8s0
+
+# Assegna gli indirizzi IPv6
+sudo ip addr add fd00:4::7/64 dev enp7s0   # Verso middle
+sudo ip addr add fd00:5::6/64 dev enp8s0   # Verso traffic-server
+
+# Porta le interfacce UP
+sudo ip link set enp7s0 up
+sudo ip link set enp8s0 up
+
+# Rotte: Per raggiungere creator (Net2, Net3) invia verso middle
+sudo ip -6 route add fd00:2::/64 via fd00:4::5
+sudo ip -6 route add fd00:3::/64 via fd00:4::5
+
+
+
+printf("forward Packet to broadcast");
